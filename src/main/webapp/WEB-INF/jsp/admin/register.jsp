@@ -47,8 +47,9 @@
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="lock icon"></i>
-                                <input type="password" name="password" id="password-input" placeholder="密码"><span id="error_password"></span>
+                                <input type="password" name="password" id="password-input" placeholder="密码">
                             </div>
+                            <span id="error_password"></span>
                         </div>
                         <div class="field">
                             <div class="ui left icon input">
@@ -74,11 +75,20 @@
 <!--引入semantic的js库-->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script>
-    var err_username = false;
+    var flag_username = false;
     $("#username-input").blur(function (){
-        var checkurl = "<%=path%>/admin/checkusername";
+        var checkurl = "<%=path%>/admin/checkusername?username=";
         var username_input = $("#username-input").val()
         var err_username = $("#error_username");
+        if(username_input!=''&&username_input!=null){
+            err_username.text("");
+            flag_username = true;
+        }
+        else {
+            err_username.text("请输入用户名");
+            flag_username = false;
+            return ;
+        }
         $.ajax({
             url:checkurl + username_input,
             type:'GET',
@@ -86,15 +96,30 @@
             success:function (data){
                 if(data.success){
                     err_username.text("用户名可以使用");
-                    err_username = true;
+                    flag_username = true;
                 }
                 else {
                     err_username.text("用户名已存在");
-                    err_username = false;
-
+                    flag_username = false;
                 }
             }
-        })
+        });
+
+    });
+    var flag_password= false;
+    $("#password-input").blur(function () {
+        var password = $("#password-input").val();
+        var reg =/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
+        if(reg.test(password)){
+            $("#error_password").text("密码符合要求");
+            flag_password = true;
+        }
+        else {
+            $("#error_password").text("密码不符合要求，需要至少包含数字和英文，长度6-20");
+            flag_password = false;              
+        }
+
+
     })
     $("#register").click(function (){
         $("#register-form").submit();

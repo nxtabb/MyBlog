@@ -16,7 +16,6 @@ public class RegisterController {
     @Autowired
     private UserService userService;
 
-
     @RequestMapping(value = "/checkusername",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> checkUsername(@Param("username")String username){
