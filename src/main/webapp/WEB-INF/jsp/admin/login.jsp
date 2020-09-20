@@ -70,12 +70,6 @@
     var flag_pwd = false;
     var username_input = $("#username-input");
     var password_input = $("#password-input");
-    if(username_input.val()!=null){
-        flag_user = true;
-    }
-    if(username_input.val()!=null){
-        flag_pwd = true;
-    }
     username_input.blur(function () {
         if(username_input.val()==null){
             flag_user = false;
