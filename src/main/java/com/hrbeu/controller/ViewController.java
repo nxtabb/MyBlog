@@ -11,5 +11,9 @@ public class ViewController {
     public String login(){
         return "admin/login";
     }
+    @RequestMapping(value = "/admin/register",method = RequestMethod.GET)
+    public String register(){
+        return "admin/register";
+    }
 
 }

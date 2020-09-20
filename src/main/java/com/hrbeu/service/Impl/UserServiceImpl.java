@@ -26,4 +26,15 @@ public class UserServiceImpl implements UserService {
             }
         }
     }
+
+    @Override
+    public int userExists(String username) {
+        User user = userDao.queryUser(username);
+        if(user!=null){
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
 }
