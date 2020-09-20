@@ -9,9 +9,6 @@ public class ViewController {
 
     @RequestMapping(value = "/admin",method = RequestMethod.GET)
     public String login(){
-        int a=10;
-        int b=0;
-        int c= a/b;
         return "admin/login";
     }
 
