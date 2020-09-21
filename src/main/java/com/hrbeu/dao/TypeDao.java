@@ -12,4 +12,5 @@ public interface TypeDao {
     int updateType(@Param("typeId") Long typeId,@Param("type") Type type);
     void deleteType(Long typeId);
     int typeCount();
+    int checkType(String typeName);
 }

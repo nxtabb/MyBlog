@@ -66,11 +66,11 @@
 <!--博客内容-->
 <div class="m-padded-tb-large m-container-small">
     <div class="ui container">
-        <form class="ui form" action="<%=path%>/admin/types/addtype" method="post">
+        <form class="ui form" action="<%=path%>/admin/types/updateType/${typeId}" method="post">
             <div class="field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">名称</label>
-                    <input type="text" name="name" id="type_input"  placeholder="分类名称">
+                    <input type="text" name="name" id="type_input" value="${type.typeName}" placeholder="分类名称">
 
                 </div>
                 <span id="err_type"></span>

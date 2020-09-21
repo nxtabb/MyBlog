@@ -12,4 +12,5 @@ public interface TypeService {
     int updateType(Long typeId,Type type);
     void deleteType(Long typeId);
     int typeCount();
+    int checkType(String typeName);
 }

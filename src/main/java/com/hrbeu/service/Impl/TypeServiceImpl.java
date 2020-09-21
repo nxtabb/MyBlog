@@ -43,4 +43,9 @@ public class TypeServiceImpl implements TypeService {
     public int typeCount() {
         return typeDao.typeCount();
     }
+
+    @Override
+    public int checkType(String typeName) {
+        return typeDao.checkType(typeName);
+    }
 }

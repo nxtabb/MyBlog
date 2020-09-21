@@ -50,24 +50,25 @@
     <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
         <i class="sidebar icon"></i>
     </a>
-
 </nav>
-
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
             <a href="#" class="item">发布</a>
             <a href="#" class="teal item active">列表</a>
         </div>
-
     </div>
-
 </div>
 <!--中间内容容器-->
 <div class="m-padded-tb-large m-container-small">
     <div class="ui container">
         <!--显示信息的表格-->
-        <table class="ui table">
+        <div class="ui success message">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p>现在可以对分类进行操作</p>
+        </div>
+        <table class="ui celled table">
             <thead>
             <tr>
                 <th></th>
@@ -76,14 +77,13 @@
             </tr>
             </thead>
             <tbody>
-            <%int i=1;%>
             <c:forEach var="type" items="${typeList}">
                 <tr>
-                    <td><%=i++%></td>
+                    <td>${type.typeId}</td>
                     <td>${type.typeName}</td>
                     <td>
-                        <a href="#" class="ui mini teal button">编辑</a>
-                        <a href="#" class="ui mini red button">删除</a>
+                        <a href="<%=path%>/admin/types/updateType/${type.typeId}" class="ui mini teal button">编辑</a>
+                        <a href="<%=path%>/admin/types/deleteById/${type.typeId}" class="ui mini red button">删除</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -96,7 +96,7 @@
                         <a class="icon item" id="nextPage">下一页</a>
                     </div>
 
-                    <a href="#" class="ui mini right floated basic button">新增</a>
+                    <a href="<%=path%>/admin/types/input" class="ui mini right floated basic button">新增</a>
                 </th>
             </tr>
             </tfoot>
@@ -162,6 +162,10 @@
     $("#prePage").click(function () {
         window.location.href="<%=path%>/admin/types/"+${prePage};
     })
+    $(".message.close").on('click',function () {
+        $(this).closest('.message').transition('fade');
+
+    });
 
 </script>
 </body>
