@@ -1,25 +1,21 @@
-<%@ page import="com.hrbeu.pojo.User" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2020/9/20
-  Time: 11:54
+  Time: 11:42
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<%String path=request.getContextPath();%>
-<%User user = (User)session.getAttribute("user");%>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%String path = request.getContextPath();%>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <!--设置移动端-->
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>后台管理</title>
+    <title>分类管理</title>
     <!--引入css-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-    <link rel="stylesheet" href="<%=path%>/resources/css/typo.css" >
-    <link rel="stylesheet" href="<%=path%>/resources/css/animate.css">
-    <link rel="stylesheet" href="<%=path%>/resources/lib/prism/prism.css">
-    <link rel="stylesheet" href="<%=path%>/resources/lib/tocbot/tocbot.css">
     <link rel="stylesheet" href="<%=path%>/resources/css/me.css">
 </head>
 
@@ -33,15 +29,15 @@
             <!--创建一个logo-->
             <h2 class="ui teal header item">Liujie's Lib后台管理</h2>
             <!--菜单栏-->
-            <a href="<%=path%>/admin/blogs" class="m-item item m-mobile-hide"><i class="home icon"></i>博客</a>
-            <a href="<%=path%>/admin/types/1" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="#" class="m-item item m-mobile-hide" ><i class="home icon"></i>博客</a>
+            <a href="#" class="active m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <!--头像-->
             <div class="right m-item m-mobile-hide menu">
                 <div class="ui dropdown item">
                     <div class="text">
                         <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" >
-                        <%=user.getNickname()%>
+                        宁熙桐
                     </div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
@@ -54,20 +50,59 @@
     <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
         <i class="sidebar icon"></i>
     </a>
+
 </nav>
 
-<div class="m-container-small m-padded-tb-big">
+<div class="ui attached pointing menu">
     <div class="ui container">
-        <div class="ui success large message">
-            <h2>Hi,</h2>
-            <p><%=user.getNickname()%>，欢迎登录</p>
+        <div class="right menu">
+            <a href="#" class="item">发布</a>
+            <a href="#" class="teal item active">列表</a>
         </div>
-        <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=800x600&quality=96&stripmeta=0&type=jpg" class="ui rounded bordered fluid image">
 
     </div>
 
 </div>
+<!--中间内容容器-->
+<div class="m-padded-tb-large m-container-small">
+    <div class="ui container">
+        <!--显示信息的表格-->
+        <table class="ui table">
+            <thead>
+            <tr>
+                <th></th>
+                <th>分类名称</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%int i=1;%>
+            <c:forEach var="type" items="${typeList}">
+                <tr>
+                    <td><%=i++%></td>
+                    <td>${type.typeName}</td>
+                    <td>
+                        <a href="#" class="ui mini teal button">编辑</a>
+                        <a href="#" class="ui mini red button">删除</a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="6">
+                    <div class="ui mini floated pagination menu">
+                        <a class="icon item" id="prePage">上一页</a>
+                        <a class="icon item" id="nextPage">下一页</a>
+                    </div>
 
+                    <a href="#" class="ui mini right floated basic button">新增</a>
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
 <!--底部容器-->
 <footer class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
@@ -77,7 +112,7 @@
             <div class="three wide column">
                 <div class="ui inverted link list">
                     <div class="item">
-                        <img src="<%=path%>/resources/images/wechat.png"  class="ui rounded image" style="width: 150px">
+                        <img src="<%=path%>/resources/images/wechat.png" class="ui rounded image" style="width: 150px">
                     </div>
                 </div>
             </div>
@@ -110,13 +145,10 @@
 
     </div>
 </footer>
-
+<!--引入jquery-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
 <!--引入semantic的js库-->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
-<script src="<%=path%>/resources/lib/prism/prism.js" ></script>
-<script src="<%=path%>/resources/lib/tocbot/tocbot.min.js"></script>
 <script>
     $(".menu.toggle").click(function (){
         $(".m-item").toggleClass('m-mobile-hide');
@@ -124,6 +156,13 @@
     $('.ui.dropdown').dropdown({
         on:'hover'
     });
+    $("#nextPage").click(function () {
+        window.location.href="<%=path%>/admin/types/"+${nextPage};
+    })
+    $("#prePage").click(function () {
+        window.location.href="<%=path%>/admin/types/"+${prePage};
+    })
+
 </script>
 </body>
 </html>

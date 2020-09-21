@@ -47,20 +47,28 @@
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="lock icon"></i>
-                                <input type="password" name="password" id="password-input" placeholder="密码">
+                                <input type="password" name="password" id="password-input" placeholder="密码,需要至少包含数字和英文，长度6-20">
                             </div>
                             <span id="error_password"></span>
                         </div>
                         <div class="field">
                             <div class="ui left icon input">
-                                <i class="user icon"></i>
-                                <input type="text" name="nickname" id="nickname-input" placeholder="昵称"><span id="error_nickname"></span>
+                                <i class="lock icon"></i>
+                                <input type="password" id="password-input-confirm" placeholder="确认密码">
                             </div>
+                            <span id="error_password-confirm"></span>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="mail icon"></i>
+                                <input type="text" name="email" id="email-input" placeholder="邮箱">
+                            </div>
+                            <span id="error_email"></span>
                         </div>
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="user icon"></i>
-                                <input type="text" name="email" id="email-input" placeholder="邮箱"><span id="error_email"></span>
+                                <input type="text" name="nickname" id="nickname-input" placeholder="昵称">
                             </div>
                         </div>
                         <div class="ui fluid large teal submit button" id="register">注册</div>
@@ -76,6 +84,8 @@
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script>
     var flag_username = false;
+    var flag_password = false;
+    var flag_email= false;
     $("#username-input").blur(function (){
         var checkurl = "<%=path%>/admin/checkusername?username=";
         var username_input = $("#username-input").val()
@@ -106,7 +116,6 @@
         });
 
     });
-    var flag_password= false;
     $("#password-input").blur(function () {
         var password = $("#password-input").val();
         var reg =/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$/;
@@ -121,8 +130,40 @@
 
 
     })
+    $("#password-input-confirm").blur(function () {
+        if($("#password-input-confirm").val()==$("#password-input").val()){
+            flag_password = true;
+            $("#error_password-confirm").text("");
+        }
+        else {
+            $("#error_password-confirm").text("两次输入密码不一致");
+            flag_password = false;
+        }
+
+    })
+    var email_input = $("#email-input");
+
+    email_input.blur(function () {
+        var reg_email = /^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/;
+        if(reg_email.test(email_input.val())){
+            flag_email = true;
+            $("#error_email").text("邮箱可以使用");
+        }else {
+            flag_email = false;
+            $("#error_email").text("邮箱格式不正确");
+        }
+
+
+    })
+
     $("#register").click(function (){
-        $("#register-form").submit();
+        if(flag_username&&flag_password&&flag_email){
+            $("#register-form").submit();
+        }
+        else {
+            alert("输入信息有误");
+        }
+
     })
 </script>
 </body>

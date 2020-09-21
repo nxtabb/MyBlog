@@ -53,7 +53,7 @@
                     </div>
                     <div class="ui error message"></div>
                     <div class="ui message">
-                        New to us?<a href="#">Sign Up</a>
+                        New to us?<a href="<%=path%>/admin/register">Sign Up</a>
                     </div>
                 </form>
                 <h1>${requestScope.errMsg}</h1>

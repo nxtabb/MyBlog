@@ -16,4 +16,9 @@ public class ViewController {
         return "admin/register";
     }
 
+    @RequestMapping(value = "/admin/index",method = RequestMethod.GET)
+    public String admin_index(){
+        return "admin/index";
+    }
+
 }
