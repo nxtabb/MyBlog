@@ -40,7 +40,7 @@
                     </div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                        <a href="#" class="item">注销</a>
+                        <a href="<%=path%>/admin/logout" class="item">注销</a>
                     </div>
                 </div>
             </div>

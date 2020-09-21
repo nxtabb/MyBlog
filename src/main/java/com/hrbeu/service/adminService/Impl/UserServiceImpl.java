@@ -1,8 +1,8 @@
-package com.hrbeu.service.Impl;
+package com.hrbeu.service.adminService.Impl;
 
 import com.hrbeu.dao.UserDao;
 import com.hrbeu.pojo.User;
-import com.hrbeu.service.UserService;
+import com.hrbeu.service.adminService.UserService;
 import com.hrbeu.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

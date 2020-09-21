@@ -5,26 +5,13 @@ import java.util.List;
 public class Tag {
     private Long tagId;
     private String tagName;
-    private List<Document> documentList;
     public Tag(){}
 
-    public List<Document> getDocumentList() {
-        return documentList;
-    }
 
     public Tag(Long tagId, String tagName) {
         this.tagId = tagId;
         this.tagName = tagName;
-    }
 
-    public Tag(Long tagId, String tagName, List<Document> documentList) {
-        this.tagId = tagId;
-        this.tagName = tagName;
-        this.documentList = documentList;
-    }
-
-    public void setDocumentList(List<Document> documentList) {
-        this.documentList = documentList;
     }
 
     public Long getTagId() {

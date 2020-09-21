@@ -1,7 +1,7 @@
 package com.hrbeu.controller.admin.TypeController;
 
 import com.hrbeu.pojo.Type;
-import com.hrbeu.service.TypeService;
+import com.hrbeu.service.adminService.TypeService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,10 +44,13 @@ public class typeController {
         } else if (currentPage <= 1) {
             nextPage = currentPage + 1;
             prePage = 1;
-
         } else {
             nextPage = currentPage + 1;
             prePage = currentPage - 1;
+        }
+        if(maxPage==1){
+            prePage = 1;
+            nextPage = 1;
         }
         modelAndView.addObject("maxCount",maxCount);
         modelAndView.addObject("nextPage", nextPage);

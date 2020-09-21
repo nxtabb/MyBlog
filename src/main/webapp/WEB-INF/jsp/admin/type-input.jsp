@@ -42,7 +42,7 @@
                     </div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                        <a href="#" class="item">注销</a>
+                        <a href="<%=path%>/admin/logout" class="item">注销</a>
                     </div>
                 </div>
             </div>
@@ -57,8 +57,8 @@
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" class="teal item active">发布</a>
-            <a href="#" class="item">列表</a>
+            <a href="<%=path%>/admin/types/input" class="item active">发布</a>
+            <a href="<%=path%>/admin/types/1" class="teal item ">列表</a>
         </div>
     </div>
 

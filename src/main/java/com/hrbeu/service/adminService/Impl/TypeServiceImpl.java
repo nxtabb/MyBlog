@@ -1,8 +1,8 @@
-package com.hrbeu.service.Impl;
+package com.hrbeu.service.adminService.Impl;
 
 import com.hrbeu.dao.TypeDao;
 import com.hrbeu.pojo.Type;
-import com.hrbeu.service.TypeService;
+import com.hrbeu.service.adminService.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

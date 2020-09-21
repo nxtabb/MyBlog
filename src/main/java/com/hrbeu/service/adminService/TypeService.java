@@ -1,4 +1,4 @@
-package com.hrbeu.service;
+package com.hrbeu.service.adminService;
 
 import com.hrbeu.pojo.Type;
 import org.apache.ibatis.annotations.Param;

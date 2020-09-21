@@ -54,8 +54,8 @@
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" class="item">发布</a>
-            <a href="#" class="teal item active">列表</a>
+            <a href="<%=path%>/admin/types/input" class="item">发布</a>
+            <a href="<%=path%>/admin/types/1" class="teal item active">列表</a>
         </div>
     </div>
 </div>
@@ -81,7 +81,7 @@
                 <tr>
                     <td>${type.typeId}</td>
                     <td>${type.typeName}</td>
-                    <td>
+                    <td class="center-pill">
                         <a href="<%=path%>/admin/types/updateType/${type.typeId}" class="ui mini teal button">编辑</a>
                         <a href="<%=path%>/admin/types/deleteById/${type.typeId}" class="ui mini red button">删除</a>
                     </td>
