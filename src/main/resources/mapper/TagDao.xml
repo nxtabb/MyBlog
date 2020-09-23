@@ -22,7 +22,7 @@
     <select id="tagCount" resultType="int">
         select count(*) from tb_type
     </select>
-    <select id="checkType" parameterType="java.lang.String" resultType="int">
-        select count(*) from tb_type where type_name = #{typeName}
+    <select id="checkTag" parameterType="java.lang.String" resultType="int">
+        select count(*) from tb_tag where tag_name = #{tagName}
     </select>
 </mapper>

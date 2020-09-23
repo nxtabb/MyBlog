@@ -33,15 +33,15 @@
             <!--创建一个logo-->
             <h2 class="ui teal header item">Liujie's Lib后台管理</h2>
             <!--菜单栏-->
-            <a href="<%=path%>/admin/blogs" class="m-item item m-mobile-hide"><i class="home icon"></i>博客</a>
+            <a href="<%=path%>/admin/documentsIndex/1" class="m-item item m-mobile-hide"><i class="home icon"></i>文档</a>
             <a href="<%=path%>/admin/types/1" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="<%=path%>/admin/tags/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <!--头像-->
             <div class="right m-item m-mobile-hide menu">
                 <div class="ui dropdown item">
                     <div class="text">
                         <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" >
-                        <%=user.getNickname()%>
+                        ${user.nickname}
                     </div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
@@ -82,7 +82,7 @@
                 </div>
             </div>
             <div class="three wide column">
-                <h4 class="ui inverted header">最新博客</h4>
+                <h4 class="ui inverted header">最新文档</h4>
                 <div class="ui inverted link list">
                     <a href="#" class="item">用户故事</a>
                     <a href="#" class="item">java教程大全</a>
@@ -100,7 +100,7 @@
             <div class="seven wide column">
                 <h4 class="ui inverted header">介绍</h4>
                 <p>
-                    这是我的博客，会分享关于编程 写作 思考等任何相关的内容，希望可以对你起到帮助
+                    这是我的系统，会分享关于编程 写作 思考等任何相关的内容，希望可以对你起到帮助
                 </p>
             </div>
 

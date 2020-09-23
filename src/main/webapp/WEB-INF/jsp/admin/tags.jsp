@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <!--设置移动端-->
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>分类管理</title>
+    <title>标签管理</title>
     <!--引入css-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="<%=path%>/resources/css/me.css">
@@ -30,8 +30,8 @@
             <h2 class="ui teal header item">Liujie's Lib后台管理</h2>
             <!--菜单栏-->
             <a href="<%=path%>/admin/documentsIndex/1" class="m-item item m-mobile-hide" ><i class="home icon"></i>博客</a>
-            <a href="<%=path%>/admin/types/1" class="active m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
-            <a href="<%=path%>/admin/tags/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="<%=path%>/admin/types/1" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
+            <a href="<%=path%>/admin/tags/1" class="active m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <!--头像-->
             <div class="right m-item m-mobile-hide menu">
                 <div class="ui dropdown item">
@@ -54,8 +54,8 @@
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="<%=path%>/admin/types/input" class="item">发布</a>
-            <a href="<%=path%>/admin/types/1" class="teal item active">列表</a>
+            <a href="<%=path%>/admin/tags/input" class="item">发布</a>
+            <a href="<%=path%>/admin/tags/1" class="teal item active">列表</a>
         </div>
     </div>
 </div>
@@ -66,24 +66,24 @@
         <div class="ui success message">
             <i class="close icon"></i>
             <div class="header">提示：</div>
-            <p>现在可以对分类进行操作</p>
+            <p>现在可以对标签进行操作</p>
         </div>
         <table class="ui celled table">
             <thead>
             <tr>
                 <th></th>
-                <th>分类名称</th>
+                <th>操作名称</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="type" items="${typeList}">
+            <c:forEach var="tag" items="${tagList}">
                 <tr>
-                    <td>${type.typeId}</td>
-                    <td>${type.typeName}</td>
+                    <td>${tag.tagId}</td>
+                    <td>${tag.tagName}</td>
                     <td class="center-pill">
-                        <a href="<%=path%>/admin/types/updateType/${type.typeId}" class="ui mini teal button">编辑</a>
-                        <a href="<%=path%>/admin/types/deleteById/${type.typeId}" class="ui mini red button">删除</a>
+                        <a href="<%=path%>/admin/tags/updateTag/${tag.tagId}" class="ui mini teal button">编辑</a>
+                        <a href="<%=path%>/admin/tags/deleteById/${tag.tagId}" class="ui mini red button">删除</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -96,7 +96,7 @@
                         <a class="icon item" id="nextPage">下一页</a>
                     </div>
 
-                    <a href="<%=path%>/admin/types/input" class="ui mini right floated basic button">新增</a>
+                    <a href="<%=path%>/admin/tags/input" class="ui mini right floated basic button">新增</a>
                 </th>
             </tr>
             </tfoot>
@@ -157,10 +157,10 @@
         on:'hover'
     });
     $("#nextPage").click(function () {
-        window.location.href="<%=path%>/admin/types/"+${nextPage};
+        window.location.href="<%=path%>/admin/tags/"+${nextPage};
     })
     $("#prePage").click(function () {
-        window.location.href="<%=path%>/admin/types/"+${prePage};
+        window.location.href="<%=path%>/admin/tags/"+${prePage};
     })
     $(".message.close").on('click',function () {
         $(this).closest('.message').transition('fade');
@@ -170,3 +170,4 @@
 </script>
 </body>
 </html>
+

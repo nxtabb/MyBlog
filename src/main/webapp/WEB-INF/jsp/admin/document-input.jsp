@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <!--设置移动端-->
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>发布博客</title>
+    <title>发布文档</title>
     <!--引入css-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="<%=path%>/resources/lib/editormd/css/editormd.min.css">
@@ -30,9 +30,9 @@
             <!--创建一个logo-->
             <h2 class="ui teal header item">Liujie's Lib后台管理</h2>
             <!--菜单栏-->
-            <a href="#" class="active m-item item m-mobile-hide" ><i class="home icon"></i>博客</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="<%=path%>/admin/documentsIndex/1" class="active m-item item m-mobile-hide"><i class="home icon"></i>文档</a>
+            <a href="<%=path%>/admin/types/1" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="<%=path%>/admin/tags/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <!--头像-->
             <div class="right m-item m-mobile-hide menu">
                 <div class="ui dropdown item">
@@ -63,7 +63,7 @@
     </div>
 
 </div>
-<!--博客内容-->
+<!--文档内容-->
 <div class="m-padded-tb-large m-container-small">
     <div class="ui container">
         <form class="ui form" action="#" method="post">
@@ -86,7 +86,7 @@
             <!--textarea-->
             <div class="field">
                 <div id="md-content" style="z-index: 1 !important;">
-                    <textarea placeholder="博客内容" name="content" style="display: none"></textarea>
+                    <textarea placeholder="文档内容" name="content" style="display: none"></textarea>
                 </div>
             </div>
             <!--两个下拉框的容器-->
@@ -176,7 +176,7 @@
                 </div>
             </div>
             <div class="three wide column">
-                <h4 class="ui inverted header">最新博客</h4>
+                <h4 class="ui inverted header">最新文档</h4>
                 <div class="ui inverted link list">
                     <a href="#" class="item">用户故事</a>
                     <a href="#" class="item">java教程大全</a>
@@ -194,7 +194,7 @@
             <div class="seven wide column">
                 <h4 class="ui inverted header">介绍</h4>
                 <p>
-                    这是我的博客，会分享关于编程 写作 思考等任何相关的内容，希望可以对你起到帮助
+                    这是我的系统，会分享关于编程 写作 思考等任何相关的内容，希望可以对你起到帮助
                 </p>
             </div>
 
@@ -233,7 +233,7 @@
                 identifier: 'title',
                 rules:[{
                     type:'empty',
-                    prompt:'标题：请输入博客标题'
+                    prompt:'标题：请输入文档标题'
                 }]
             }
         }

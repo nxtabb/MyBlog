@@ -30,9 +30,9 @@
             <!--创建一个logo-->
             <h2 class="ui teal header item">Liujie's Lib后台管理</h2>
             <!--菜单栏-->
-            <a href="#" class="m-item item m-mobile-hide" ><i class="home icon"></i>博客</a>
-            <a href="#" class="active m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="<%=path%>/admin/documentsIndex/1" class="m-item item m-mobile-hide" ><i class="home icon"></i>博客</a>
+            <a href="<%=path%>/admin/types/1" class="active m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
+            <a href="<%=path%>/admin/tags/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <!--头像-->
             <div class="right m-item m-mobile-hide menu">
                 <div class="ui dropdown item">

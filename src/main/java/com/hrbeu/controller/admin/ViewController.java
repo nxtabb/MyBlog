@@ -1,4 +1,4 @@
-package com.hrbeu.controller;
+package com.hrbeu.controller.admin;
 
 import com.hrbeu.service.adminService.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,7 @@ public class ViewController {
     public String login(){
         return "admin/login";
     }
+
     @RequestMapping(value = "/admin/register",method = RequestMethod.GET)
     public String register(){
         return "admin/register";
@@ -31,6 +32,14 @@ public class ViewController {
         return "admin/type-input";
     }
 
+    @GetMapping("/admin/tags/input")
+    public String tagsInput(){
+        return "admin/tag-input";
+    }
 
+    @RequestMapping(value = "/admin/blogs")
+    public String documents(){
+        return "document";
+    }
 
 }

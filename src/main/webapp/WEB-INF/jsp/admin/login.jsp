@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <!--设置移动端-->
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title >博客详情</title>
+    <title >登录</title>
     <!--引入css-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="<%=path%>/resources/css/typo.css" >

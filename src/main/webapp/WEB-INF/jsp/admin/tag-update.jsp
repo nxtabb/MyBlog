@@ -2,21 +2,22 @@
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2020/9/20
-  Time: 11:42
+  Time: 11:43
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
 <%String path = request.getContextPath();%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <!--设置移动端-->
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>分类管理</title>
+    <title>修改标签</title>
     <!--引入css-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="<%=path%>/resources/lib/editormd/css/editormd.min.css">
     <link rel="stylesheet" href="<%=path%>/resources/css/me.css">
+
 </head>
 
 <body>
@@ -30,8 +31,8 @@
             <h2 class="ui teal header item">Liujie's Lib后台管理</h2>
             <!--菜单栏-->
             <a href="<%=path%>/admin/documentsIndex/1" class="m-item item m-mobile-hide" ><i class="home icon"></i>博客</a>
-            <a href="<%=path%>/admin/types/1" class="active m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
-            <a href="<%=path%>/admin/tags/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="<%=path%>/admin/types/1" class=" m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
+            <a href="<%=path%>/admin/tags/1" class="active m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <!--头像-->
             <div class="right m-item m-mobile-hide menu">
                 <div class="ui dropdown item">
@@ -50,59 +51,49 @@
     <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
         <i class="sidebar icon"></i>
     </a>
+
 </nav>
+<!--标题-->
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="<%=path%>/admin/types/input" class="item">发布</a>
-            <a href="<%=path%>/admin/types/1" class="teal item active">列表</a>
+            <a href="<%=path%>/admin/tags/input" class="item active">发布</a>
+            <a href="<%=path%>/admin/tags/1" class="teal item ">列表</a>
         </div>
     </div>
+
 </div>
-<!--中间内容容器-->
+<!--博客内容-->
 <div class="m-padded-tb-large m-container-small">
     <div class="ui container">
-        <!--显示信息的表格-->
-        <div class="ui success message">
-            <i class="close icon"></i>
-            <div class="header">提示：</div>
-            <p>现在可以对分类进行操作</p>
-        </div>
-        <table class="ui celled table">
-            <thead>
-            <tr>
-                <th></th>
-                <th>分类名称</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="type" items="${typeList}">
-                <tr>
-                    <td>${type.typeId}</td>
-                    <td>${type.typeName}</td>
-                    <td class="center-pill">
-                        <a href="<%=path%>/admin/types/updateType/${type.typeId}" class="ui mini teal button">编辑</a>
-                        <a href="<%=path%>/admin/types/deleteById/${type.typeId}" class="ui mini red button">删除</a>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th colspan="6">
-                    <div class="ui mini floated pagination menu">
-                        <a class="icon item" id="prePage">上一页</a>
-                        <a class="icon item" id="nextPage">下一页</a>
-                    </div>
+        <form class="ui form" action="<%=path%>/admin/tags/updateTag/${tagId}" method="post">
+            <div class="field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">名称</label>
+                    <input type="text" name="name" id="tag_input" value="${tag.tagName}" placeholder="分类名称">
 
-                    <a href="<%=path%>/admin/types/input" class="ui mini right floated basic button">新增</a>
-                </th>
-            </tr>
-            </tfoot>
-        </table>
+                </div>
+                <span id="err_tag"></span>
+            </div>
+            <!--checkbox的容器-->
+
+            <div class="ui error message"></div>
+            <!--三个按钮-->
+            <div class="ui right aligned container">
+                <button class="ui button" type="button" onclick="window.history.go(-1)">返回</button>
+                <button class="ui teal button">提交</button>
+            </div>
+        </form>
     </div>
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <!--底部容器-->
 <footer class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
@@ -149,23 +140,44 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
 <!--引入semantic的js库-->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="<%=path%>/resources/lib/editormd/editormd.min.js"></script>
 <script>
+    var tag_flag = false;
     $(".menu.toggle").click(function (){
         $(".m-item").toggleClass('m-mobile-hide');
     });
     $('.ui.dropdown').dropdown({
         on:'hover'
     });
-    $("#nextPage").click(function () {
-        window.location.href="<%=path%>/admin/types/"+${nextPage};
+    $('.ui.form').form({
+        fields:{
+            title:{
+                identifier: 'name',
+                rules:[{
+                    type:'empty',
+                    prompt:'请输入分类内容'
+                }]
+            }
+        }
     })
-    $("#prePage").click(function () {
-        window.location.href="<%=path%>/admin/types/"+${prePage};
-    })
-    $(".message.close").on('click',function () {
-        $(this).closest('.message').transition('fade');
+    $("#tag_input").blur(function () {
+        var tag = $("#tag_input").val();
+        $.ajax({
+            url:'<%=path%>/admin/tags/checktag/'+tag,
+            type:'GET',
+            datatype:'JSON',
+            success:function(data) {
+                if(data.success){
+                    tag_flag = true;
+                }else {
+                    alert("此标签已存在");
+                    tag_flag = false;
+                }
+            }
 
-    });
+        })
+
+    })
 
 </script>
 </body>

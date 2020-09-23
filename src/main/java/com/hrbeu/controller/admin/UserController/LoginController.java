@@ -20,6 +20,7 @@ public class LoginController {
     Logger logger = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     UserService userService;
+    //登录
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ModelAndView login(@Param("username")String username,@Param("password")String password,HttpServletRequest request){
         logger.info("====start====");
@@ -39,25 +40,14 @@ public class LoginController {
             HttpSession session = request.getSession();
             session.setAttribute("user",user);
         }
-        model.setViewName("admin/index");
+        model.setViewName("redirect:/admin/index");
         return model;
     }
-
+    //登出
     @RequestMapping(value = "/logout",method = RequestMethod.GET)
     public String logout(HttpServletRequest request){
         HttpSession session = request.getSession();
         session.removeAttribute("user");
         return "redirect:/admin";
     }
-
-
-    @RequestMapping(value = "/blogs",method = RequestMethod.GET)
-    public String blogs(){
-        return "admin/blogs";
-    }
-
-
-
-
-
 }

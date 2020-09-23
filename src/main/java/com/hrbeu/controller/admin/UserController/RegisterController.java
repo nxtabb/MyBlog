@@ -20,7 +20,7 @@ import java.util.Map;
 public class RegisterController {
     @Autowired
     private UserService userService;
-
+    //检查用户名
     @RequestMapping(value = "/checkusername",method = RequestMethod.GET)
     @ResponseBody
     public Map<String,Object> checkUsername(@Param("username")String username){
@@ -33,7 +33,7 @@ public class RegisterController {
         }
         return modelMap;
     }
-
+    //注册
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public String register(@Param("username")String username, @Param("password")String password, @Param("email")String email, @Param("nickname")String nickname, ModelAndView model, HttpServletRequest request){
         String password_input = MD5Util.md5(password);

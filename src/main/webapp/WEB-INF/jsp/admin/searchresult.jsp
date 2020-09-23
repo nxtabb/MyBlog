@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2020/9/20
@@ -6,13 +6,15 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%String path = request.getContextPath();%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <!--设置移动端-->
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>博客管理</title>
+    <title>文档管理</title>
     <!--引入css-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="<%=path%>/resources/css/me.css">
@@ -28,9 +30,9 @@
             <!--创建一个logo-->
             <h2 class="ui teal header item">Liujie's Lib后台管理</h2>
             <!--菜单栏-->
-            <a href="#" class="active m-item item m-mobile-hide" ><i class="home icon"></i>博客</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="<%=path%>/admin/documentsIndex/1" class="active m-item item m-mobile-hide"><i class="home icon"></i>文档</a>
+            <a href="<%=path%>/admin/types/1" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
+            <a href="<%=path%>/admin/tags/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <!--头像-->
             <div class="right m-item m-mobile-hide menu">
                 <div class="ui dropdown item">
@@ -65,44 +67,8 @@
 <!--中间内容容器-->
 <div class="m-padded-tb-large m-container-small">
     <div class="ui container">
-        <!--搜索的form-->
-        <form action="#" method="post" class="ui form segment">
-            <div class="inline fields">
-                <!--标题输入框-->
-                <div class="field">
-                    <input type="text" name="title" placeholder="标题">
-                </div>
-                <!--类型下拉框-->
-                <div class="field">
-                    <div class="ui selection dropdown">
-                        <input type="hidden" name="type">
-                        <i class="dropdown icon"></i>
-                        <div class="default text">分类</div>
-                        <div class="menu">
-                            <div class="item" data-value="1">错误日志</div>
-                            <div class="item" data-value="1">开发者手册</div>
-                        </div>
-
-                    </div>
-                </div>
-                <!--是否推荐的checkbox-->
-                <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" name="recommend" id="recommend">
-                        <label for="recommend">推荐</label>
-                    </div>
-                </div>
-                <!--按钮-->
-                <div class="field">
-                    <button class="ui mini teal basic button">
-                        <i class="search icon"></i>搜索
-                    </button>
-                </div>
-
-            </div>
-        </form>
         <!--显示信息的表格-->
-        <table class="ui table">
+        <table class="ui compact teal table">
             <thead>
             <tr>
                 <th></th>
@@ -114,30 +80,23 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>java</td>
-                <td>认知升级</td>
-                <td>是</td>
-                <td>2020-09-15 09:00</td>
-                <td>
-                    <a href="#" class="ui mini teal button">编辑</a>
-                    <a href="#" class="ui mini red button">删除</a>
-                </td>
-            </tr>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th colspan="6">
-                    <div class="ui mini floated pagination menu">
-                        <a class="icon item">上一页</a>
-                        <a class="icon item">下一页</a>
-                    </div>
 
-                    <a href="#" class="ui mini right floated basic button">新增</a>
-                </th>
-            </tr>
-            </tfoot>
+            <c:forEach var="document" items="${documentList}">
+
+                <tr>
+                    <td>${document.documentId}</td>
+                    <td>${document.title}</td>
+                    <td>${document.type.typeName}</td>
+                    <td><c:if test="${document.recommend==1}">是</c:if>
+                        <c:if test="${document.recommend==0}">否</c:if></td>
+                    <td><fmt:formatDate value="${document.lastEditTime}" timeStyle="yyyy-MM-dd"/>  </td>
+                    <td>
+                        <a href="#" class="ui mini teal button">编辑</a>
+                        <a href="<%=path%>/admin/documents/deleteById/${document.documentId}" class="ui mini red button">删除</a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
         </table>
     </div>
 </div>
@@ -155,7 +114,7 @@
                 </div>
             </div>
             <div class="three wide column">
-                <h4 class="ui inverted header">最新博客</h4>
+                <h4 class="ui inverted header">最新文档</h4>
                 <div class="ui inverted link list">
                     <a href="#" class="item">用户故事</a>
                     <a href="#" class="item">java教程大全</a>
@@ -173,7 +132,7 @@
             <div class="seven wide column">
                 <h4 class="ui inverted header">介绍</h4>
                 <p>
-                    这是我的博客，会分享关于编程 写作 思考等任何相关的内容，希望可以对你起到帮助
+                    这是我的系统，会分享关于编程 写作 思考等任何相关的内容，希望可以对你起到帮助
                 </p>
             </div>
 
@@ -188,12 +147,25 @@
 <!--引入semantic的js库-->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script>
+
     $(".menu.toggle").click(function (){
         $(".m-item").toggleClass('m-mobile-hide');
     });
     $('.ui.dropdown').dropdown({
         on:'hover'
     });
+    $("#nextPage").click(function () {
+        window.location.href="<%=path%>/admin/documentsIndex/"+${nextPage};
+    })
+    $("#prePage").click(function () {
+        window.location.href="<%=path%>/admin/documentsIndex/"+${prePage};
+    })
+
+    $("#search-btn").click(function (){
+        $("#search_form").submit();
+
+    })
+
 
 </script>
 </body>

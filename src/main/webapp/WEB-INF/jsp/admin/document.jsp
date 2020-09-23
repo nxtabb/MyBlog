@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2020/9/20
@@ -7,13 +7,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%String path = request.getContextPath();%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <!--设置移动端-->
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>分类管理</title>
+    <title>文档管理</title>
     <!--引入css-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="<%=path%>/resources/css/me.css">
@@ -29,8 +30,8 @@
             <!--创建一个logo-->
             <h2 class="ui teal header item">Liujie's Lib后台管理</h2>
             <!--菜单栏-->
-            <a href="<%=path%>/admin/documentsIndex/1" class="m-item item m-mobile-hide" ><i class="home icon"></i>博客</a>
-            <a href="<%=path%>/admin/types/1" class="active m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
+            <a href="<%=path%>/admin/documentsIndex/1" class="active m-item item m-mobile-hide"><i class="home icon"></i>文档</a>
+            <a href="<%=path%>/admin/types/1" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
             <a href="<%=path%>/admin/tags/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <!--头像-->
             <div class="right m-item m-mobile-hide menu">
@@ -50,43 +51,85 @@
     <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
         <i class="sidebar icon"></i>
     </a>
+
 </nav>
+
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="<%=path%>/admin/types/input" class="item">发布</a>
-            <a href="<%=path%>/admin/types/1" class="teal item active">列表</a>
+            <a href="<%=path%>/admin/documents/adddocument" class="item">发布</a>
+            <a href="<%=path%>/admin/documentsIndex/1" class="teal item active">列表</a>
         </div>
+
     </div>
+
 </div>
 <!--中间内容容器-->
 <div class="m-padded-tb-large m-container-small">
     <div class="ui container">
+        <!--搜索的form-->
+        <form action="<%=path%>/admin/documents/search" method="post" class="ui  secondary form segment" id="search_form">
+            <div class="inline fields">
+                <!--标题输入框-->
+                <div class="field">
+                    <input type="text" name="title" placeholder="标题" id="title_input">
+                </div>
+                <!--类型下拉框-->
+                <div class="field">
+
+                    <select  name="type">
+                        <c:forEach items="${documentList}" var="document">
+                            <option value="${document.type.typeId}">${document.type.typeName}</option>
+                        </c:forEach>
+                    </select>
+
+                </div>
+                <!--是否推荐的checkbox-->
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="recommend" id="recommend">
+                        <label for="recommend">推荐</label>
+                    </div>
+                </div>
+                <!--按钮-->
+                <div class="field">
+                    <button class="ui mini teal basic button" id="search-btn">
+                        <i class="search icon" ></i>搜索
+                    </button>
+                </div>
+
+            </div>
+        </form>
         <!--显示信息的表格-->
-        <div class="ui success message">
-            <i class="close icon"></i>
-            <div class="header">提示：</div>
-            <p>现在可以对分类进行操作</p>
-        </div>
-        <table class="ui celled table">
+        <table class="ui compact teal table">
             <thead>
             <tr>
                 <th></th>
-                <th>分类名称</th>
+                <th>标题</th>
+                <th>类型</th>
+                <th>推荐</th>
+                <th>更新时间</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="type" items="${typeList}">
+
+            <c:forEach var="document" items="${documentList}">
+
                 <tr>
-                    <td>${type.typeId}</td>
-                    <td>${type.typeName}</td>
-                    <td class="center-pill">
-                        <a href="<%=path%>/admin/types/updateType/${type.typeId}" class="ui mini teal button">编辑</a>
-                        <a href="<%=path%>/admin/types/deleteById/${type.typeId}" class="ui mini red button">删除</a>
+                    <td>${document.documentId}</td>
+                    <td>${document.title}</td>
+                    <td>${document.type.typeName}</td>
+                    <td><c:if test="${document.recommend==1}">是</c:if>
+                        <c:if test="${document.recommend==0}">否</c:if></td>
+                    <td><fmt:formatDate value="${document.lastEditTime}" timeStyle="yyyy-MM-dd"/>  </td>
+                    <td>
+                        <a href="#" class="ui mini teal button">编辑</a>
+                        <a href="<%=path%>/admin/documents/deleteById/${document.documentId}" class="ui mini red button">删除</a>
                     </td>
                 </tr>
             </c:forEach>
+
             </tbody>
             <tfoot>
             <tr>
@@ -96,7 +139,7 @@
                         <a class="icon item" id="nextPage">下一页</a>
                     </div>
 
-                    <a href="<%=path%>/admin/types/input" class="ui mini right floated basic button">新增</a>
+                    <a href="<%=path%>/admin/documents/adddocument" class="ui mini right floated basic button">新增</a>
                 </th>
             </tr>
             </tfoot>
@@ -117,7 +160,7 @@
                 </div>
             </div>
             <div class="three wide column">
-                <h4 class="ui inverted header">最新博客</h4>
+                <h4 class="ui inverted header">最新文档</h4>
                 <div class="ui inverted link list">
                     <a href="#" class="item">用户故事</a>
                     <a href="#" class="item">java教程大全</a>
@@ -135,7 +178,7 @@
             <div class="seven wide column">
                 <h4 class="ui inverted header">介绍</h4>
                 <p>
-                    这是我的博客，会分享关于编程 写作 思考等任何相关的内容，希望可以对你起到帮助
+                    这是我的系统，会分享关于编程 写作 思考等任何相关的内容，希望可以对你起到帮助
                 </p>
             </div>
 
@@ -150,6 +193,7 @@
 <!--引入semantic的js库-->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script>
+
     $(".menu.toggle").click(function (){
         $(".m-item").toggleClass('m-mobile-hide');
     });
@@ -157,15 +201,16 @@
         on:'hover'
     });
     $("#nextPage").click(function () {
-        window.location.href="<%=path%>/admin/types/"+${nextPage};
+        window.location.href="<%=path%>/admin/documentsIndex/"+${nextPage};
     })
     $("#prePage").click(function () {
-        window.location.href="<%=path%>/admin/types/"+${prePage};
+        window.location.href="<%=path%>/admin/documentsIndex/"+${prePage};
     })
-    $(".message.close").on('click',function () {
-        $(this).closest('.message').transition('fade');
 
-    });
+    $("#search-btn").click(function (){
+        $("#search_form").submit();
+
+    })
 
 </script>
 </body>
