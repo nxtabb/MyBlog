@@ -31,6 +31,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public List<Document> getDocumentList(Document document) {
+
         return documentDao.getList(document);
     }
 

@@ -52,6 +52,10 @@ public class TagController {
             prePage=1;
             nextPage =1;
         }
+        else {
+            prePage = currentPage-1;
+            nextPage = currentPage+1;
+        }
         List<Tag> tagList = tagService.queryTagList(pageIndex,pageSize);
         modelAndView.addObject("nextPage",nextPage);
         modelAndView.addObject("prePage",prePage);

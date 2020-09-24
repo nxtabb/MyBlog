@@ -68,7 +68,7 @@
 <div class="m-padded-tb-large m-container-small">
     <div class="ui container">
         <!--搜索的form-->
-        <form action="<%=path%>/admin/documents/search" method="post" class="ui  secondary form segment" id="search_form">
+        <form action="<%=path%>/admin/documents/search/1" method="post" class="ui  secondary form segment" id="search_form">
             <div class="inline fields">
                 <!--标题输入框-->
                 <div class="field">
@@ -78,8 +78,8 @@
                 <div class="field">
 
                     <select  name="type">
-                        <c:forEach items="${documentList}" var="document">
-                            <option value="${document.type.typeId}">${document.type.typeName}</option>
+                        <c:forEach items="${typeList}" var="type">
+                            <option value="${type.typeId}">${type.typeName}</option>
                         </c:forEach>
                     </select>
 

@@ -48,4 +48,9 @@ public class TypeServiceImpl implements TypeService {
     public int checkType(String typeName) {
         return typeDao.checkType(typeName);
     }
+
+    @Override
+    public List<Type> queryAllType() {
+        return typeDao.queryAllType();
+    }
 }

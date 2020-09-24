@@ -25,4 +25,7 @@
     <select id="checkType" parameterType="java.lang.String" resultType="int">
         select count(*) from tb_type where type_name = #{typeName}
     </select>
+    <select id="queryAllType" resultType="com.hrbeu.pojo.Type">
+        select * from tb_type
+    </select>
 </mapper>

@@ -13,4 +13,5 @@ public interface TypeService {
     void deleteType(Long typeId);
     int typeCount();
     int checkType(String typeName);
+    List<Type> queryAllType();
 }

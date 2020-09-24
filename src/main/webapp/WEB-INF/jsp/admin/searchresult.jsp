@@ -97,6 +97,17 @@
                 </tr>
             </c:forEach>
             </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="6">
+                    <div class="ui mini floated pagination menu">
+                        <a class="icon item" id="prePage">上一页</a>
+                        <a class="icon item" id="nextPage">下一页</a>
+                    </div>
+                    <a href="<%=path%>/admin/documents/adddocument" class="ui mini right floated basic button">新增</a>
+                </th>
+            </tr>
+            </tfoot>
         </table>
     </div>
 </div>
@@ -155,10 +166,10 @@
         on:'hover'
     });
     $("#nextPage").click(function () {
-        window.location.href="<%=path%>/admin/documentsIndex/"+${nextPage};
+        window.location.href="<%=path%>/admin/documents/search/"+${nextPage};
     })
     $("#prePage").click(function () {
-        window.location.href="<%=path%>/admin/documentsIndex/"+${prePage};
+        window.location.href="<%=path%>/admin/documents/search/"+${prePage};
     })
 
     $("#search-btn").click(function (){
