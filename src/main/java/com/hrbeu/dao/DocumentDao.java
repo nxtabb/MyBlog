@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface DocumentDao {
-    int saveDocument(Document document);
+    int saveDocument(@Param("document")Document document);
     Document queryDocument(Long documentId);
     List<Document> getDocumentList(@Param("documentIndex") int documentIndex,@Param("pageSize") int pageSize,@Param("document") Document document);
     List<Document> getList(@Param("document") Document document);

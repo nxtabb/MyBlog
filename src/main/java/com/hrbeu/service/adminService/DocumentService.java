@@ -6,7 +6,7 @@ import com.hrbeu.pojo.Type;
 import java.util.List;
 
 public interface DocumentService {
-    int saveDocument(Document document);
+    void saveDocument(Document document);
     Document queryDocument(Long documentId);
     List<Document> getDocumentList(Document document);
     int updateDocument(Long documentId, Document document);

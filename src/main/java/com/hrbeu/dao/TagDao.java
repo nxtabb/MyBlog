@@ -13,4 +13,5 @@ public interface TagDao {
     void deleteTag(Long tagId);
     int tagCount();
     int checkTag(String tagName);
+    List<Tag> getAllTags();
 }

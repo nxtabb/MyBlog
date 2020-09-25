@@ -80,6 +80,24 @@ public class Document {
         this.user = user;
     }
 
+    public Document(String title, String content, String firstPicture, String flag, Integer viewCount, Integer appreciate, Integer shareInfo, Integer commentAble, Integer published, Integer recommend, Date createTime, Date lastEditTime, Type type, List<Tag> tagList, User user) {
+        this.title = title;
+        this.content = content;
+        this.firstPicture = firstPicture;
+        this.flag = flag;
+        this.viewCount = viewCount;
+        this.appreciate = appreciate;
+        this.shareInfo = shareInfo;
+        this.commentAble = commentAble;
+        this.published = published;
+        this.recommend = recommend;
+        this.createTime = createTime;
+        this.lastEditTime = lastEditTime;
+        this.type = type;
+        this.tagList = tagList;
+        this.user = user;
+    }
+
     public Long getDocumentId() {
         return documentId;
     }

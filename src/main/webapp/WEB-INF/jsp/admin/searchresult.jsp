@@ -57,8 +57,8 @@
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right menu">
-            <a href="#" class="item">发布</a>
-            <a href="#" class="teal item active">列表</a>
+            <a href="<%=path%>/admin/documents/adddocument" class="item">发布</a>
+            <a href="<%=path%>/admin/documents/search/1" class="teal item active">列表</a>
         </div>
 
     </div>
@@ -67,6 +67,40 @@
 <!--中间内容容器-->
 <div class="m-padded-tb-large m-container-small">
     <div class="ui container">
+        <!--搜索的form-->
+        <form action="<%=path%>/admin/documents/search/1" method="post" class="ui  secondary form segment" id="search_form">
+            <div class="inline fields">
+                <!--标题输入框-->
+                <div class="field">
+                    <input type="text" name="title" placeholder="标题" id="title_input">
+                </div>
+                <!--类型下拉框-->
+                <div class="field">
+
+                    <select  name="type">
+                        <c:forEach items="${typeList}" var="type">
+                            <option value="${type.typeId}">${type.typeName}</option>
+                        </c:forEach>
+                    </select>
+
+                </div>
+                <!--是否推荐的checkbox-->
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" name="recommend" id="recommend">
+                        <label for="recommend">推荐</label>
+                    </div>
+                </div>
+                <!--按钮-->
+                <div class="field">
+                    <button class="ui mini teal basic button" id="search-btn">
+                        <i class="search icon" ></i>搜索
+                    </button>
+                </div>
+
+            </div>
+        </form>
+        <h3>搜索结果：共${maxCount}个结果,当前是第${currentPage}页，共${maxPage}页</h3>
         <!--显示信息的表格-->
         <table class="ui compact teal table">
             <thead>

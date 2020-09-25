@@ -1,8 +1,11 @@
 package com.hrbeu.controller.admin.DocumentController;
 
 import com.hrbeu.pojo.Document;
+import com.hrbeu.pojo.Tag;
 import com.hrbeu.pojo.Type;
+import com.hrbeu.pojo.User;
 import com.hrbeu.service.adminService.DocumentService;
+import com.hrbeu.service.adminService.TagService;
 import com.hrbeu.service.adminService.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,8 @@ import javax.print.Doc;
 import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -22,6 +27,8 @@ public class DocumentController {
     private DocumentService documentService;
     @Autowired
     private TypeService typeService;
+    @Autowired
+    private TagService tagService;
 
     //进入文件列表+页码
     @GetMapping("/documentsIndex/{pageIndex}")
@@ -149,6 +156,9 @@ public class DocumentController {
         model.addAttribute("prePage",prePage);
         model.addAttribute("nextPage",nextPage);
         model.addAttribute("document",document);
+        model.addAttribute("maxCount",maxCount);
+        model.addAttribute("currentPage",currentPage);
+        model.addAttribute("maxPage",maxPage);
         request.getSession().setAttribute("document",document);
         model.addAttribute("documentList",documentList);
         return "admin/searchresult";
@@ -156,9 +166,62 @@ public class DocumentController {
     }
     //进入新增文档的页面
     @GetMapping("/documents/adddocument")
-    public String addDocument(){
+    public String addDocument(Model model){
+        List<Type> typeList = typeService.queryAllType();
+        List<Tag> tagList = tagService.getAllTags();
+        model.addAttribute("typeList",typeList);
+        model.addAttribute("tagList",tagList);
         return "admin/document-input";
     }
+
+
+    @PostMapping("/documents/changedocument")
+    public String changeDocument(HttpServletRequest request){
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+        String typeId = request.getParameter("typeId");
+        String firstPicture = request.getParameter("firstPicture");
+        String flag = request.getParameter("flag");
+
+        Integer appreciate = 0;
+        if (request.getParameter("appreciate")!=null&&request.getParameter("appreciate").equals("on")){
+            appreciate =1;
+        }
+        Integer shareInfo = 0;
+        if (request.getParameter("shareInfo")!=null&&request.getParameter("shareInfo").equals("on")){
+            shareInfo =1;
+        }
+        Integer commentAble = 0;
+        if (request.getParameter("commentAble")!=null&&request.getParameter("commentAble").equals("on")){
+            commentAble =1;
+        }
+        Integer recommend = 0;
+        if (request.getParameter("recommend")!=null&&request.getParameter("recommend").equals("on")){
+            recommend =1;
+        }
+        Integer published = 0;
+        if (request.getParameter("published")!=null&&request.getParameter("saveorpublic").equals("1")){
+            published =1;
+        }
+        Type type = typeService.queryType(Long.parseLong(request.getParameter("typeId")));
+        User user = (User) request.getSession().getAttribute("user");
+        String[] strings = request.getParameterValues("tagIdList");
+        List<Tag> tagList = new ArrayList<>();
+        String[] tags_Str = strings[0].split(",");
+
+        for(String tag_Str:tags_Str){
+            Tag tag = new Tag();
+            tag.setTagId(Long.parseLong(tag_Str));
+            tag.setTagName(tagService.queryTag(Long.parseLong(tag_Str)).getTagName());
+            tagList.add(tag);
+        }
+        Document document = new Document(title,content,firstPicture,flag,0,appreciate,shareInfo,commentAble,published,recommend,new Date(),new Date(),type,tagList,user);
+        documentService.saveDocument(document);
+        return "admin/index";
+    }
+
+
+
 }
 
 

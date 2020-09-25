@@ -25,4 +25,7 @@
     <select id="checkTag" parameterType="java.lang.String" resultType="int">
         select count(*) from tb_tag where tag_name = #{tagName}
     </select>
+    <select id="getAllTags" resultType="com.hrbeu.pojo.Tag">
+        select * from tb_tag
+    </select>
 </mapper>

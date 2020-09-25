@@ -48,4 +48,9 @@ public class TagServiceImpl implements TagService {
     public int checkTag(String tagName) {
         return tagDao.checkTag(tagName);
     }
+
+    @Override
+    public List<Tag> getAllTags() {
+        return tagDao.getAllTags();
+    }
 }

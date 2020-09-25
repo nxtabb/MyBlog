@@ -31,7 +31,7 @@
         <where>
         doc.type_id = type.type_id
         <if test="document!=null and document.title!=null">
-            and doc.title = #{document.title}
+            and doc.title like '%${document.title}%'
         </if>
         <if test="document!=null and document.type!=null and document.type.typeId!=null">
             and doc.type_id = #{document.type.typeId}
@@ -70,7 +70,7 @@
             and doc.document_id = #{document.documentId}
         </if>
         <if test="document!=null and document.title!=null">
-            and doc.title = #{document.title}
+            and doc.title like '%${document.title}%'
         </if>
         <if test="document!=null and document.type!=null and document.type.typeId!=null">
             and doc.type_id = #{document.type.typeId}
@@ -83,6 +83,29 @@
 
     <delete id="deleteDocument" parameterType="long">
         delete from tb_document where document_id = #{value }
-        </delete>
+    </delete>
+
+    <insert id="saveDocument" useGeneratedKeys="true" parameterType="com.hrbeu.pojo.Document" keyProperty="document.documentId">
+        insert into tb_document
+        (title,content,first_picture,flag,view_count,appreciate,comment_able,share_info,recommend,create_time,last_edit_time,user_id,type_id)
+        values
+        (#{document.title},
+        #{document.content},
+        #{document.firstPicture},
+        #{document.flag},
+        #{document.viewCount},
+        #{document.appreciate},
+        #{document.commentAble},
+        #{document.shareInfo},
+        #{document.recommend},
+        #{document.createTime},
+        #{document.lastEditTime},
+        #{document.user.userId},
+        #{document.type.typeId})
+        <selectKey resultType="long" keyProperty="document.documentId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
 
 </mapper>
