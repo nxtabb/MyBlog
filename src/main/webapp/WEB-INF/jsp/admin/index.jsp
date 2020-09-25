@@ -31,7 +31,7 @@
         <!--创建一个menu-->
         <div class="ui inverted secondary stackable menu">
             <!--创建一个logo-->
-            <h2 class="ui teal header item">Liujie's Lib后台管理</h2>
+            <h2 class="ui teal header item">Liujie's Lab后台管理</h2>
             <!--菜单栏-->
             <a href="<%=path%>/admin/documentsIndex/1" class="m-item item m-mobile-hide"><i class="home icon"></i>文档</a>
             <a href="<%=path%>/admin/types/1" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>

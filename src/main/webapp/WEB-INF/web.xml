@@ -2,9 +2,17 @@
 <!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
   <filter>
+    <filter-name>characterFilter</filter-name>
+    <filter-class>com.hrbeu.filter.CharacterEncodingFilter</filter-class>
+  </filter>
+  <filter>
     <filter-name>LoginFilter</filter-name>
     <filter-class>com.hrbeu.filter.LoginFilter</filter-class>
   </filter>
+  <filter-mapping>
+    <filter-name>characterFilter</filter-name>
+    <url-pattern>*</url-pattern>
+  </filter-mapping>
   <filter-mapping>
     <filter-name>LoginFilter</filter-name>
     <url-pattern>/admin/blogs</url-pattern>
