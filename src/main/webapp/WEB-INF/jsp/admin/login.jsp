@@ -1,4 +1,5 @@
-<%@ page import="org.springframework.web.servlet.ModelAndView" %><%--
+<%@ page import="org.springframework.web.servlet.ModelAndView" %>
+<%@ page import="com.hrbeu.pojo.User" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2020/9/20
@@ -8,6 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%String path = request.getContextPath();%>
+<%User user = (User)session.getAttribute("user");%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,7 +39,7 @@
                 </h2>
                 <form class="ui large form" method="post" id="login-form" action="<%=path%>/admin/login">
                     <div class="ui stacked segment">
-                        <div class="field">
+                        <div class="required field">
                             <div class="ui left icon input">
                                 <i class="user icon"></i>
                                 <input type="text" name="username" id="username-input" placeholder="用户名">
@@ -66,32 +68,24 @@
 <!--引入semantic的js库-->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script>
-    var flag_user = false;
-    var flag_pwd = false;
-    var username_input = $("#username-input");
-    var password_input = $("#password-input");
-    username_input.blur(function () {
-        if(username_input.val()==null){
-            flag_user = false;
-        }else {
-            flag_user = true;
+    $('.ui.form').form({
+        fields:{
+            username:{
+                identifier: 'username',
+                rules:[{
+                    type:'empty',
+                    prompt:'请输入用户名'
+                }]
+            },
+            password:{
+                identifier: 'password',
+                rules:[{
+                    type:'empty',
+                    prompt:'请输入密码'
+                }]
+            }
         }
-    });
-    password_input.blur(function () {
-        if(password_input.val()==null){
-            flag_pwd = false;
-        }else {
-            flag_pwd = true;
-        }
-    });
-    $("#login").click(function () {
-        if(flag_user&&flag_pwd){
-            $("#login-form").submit();
-        }
-        else {
-            alert("请输入用户名和密码");
-        }
-    });
+    })
 </script>
 </body>
 </html>

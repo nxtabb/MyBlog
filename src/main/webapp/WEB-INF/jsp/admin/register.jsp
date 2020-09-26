@@ -1,4 +1,5 @@
-<%@ page import="org.springframework.web.servlet.ModelAndView" %><%--
+<%@ page import="org.springframework.web.servlet.ModelAndView" %>
+<%@ page import="com.hrbeu.pojo.User" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2020/9/20
@@ -8,6 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%String path = request.getContextPath();%>
+<%User user = (User)session.getAttribute("user");%>
 <!DOCTYPE html>
 <html lang="en">
 <head>

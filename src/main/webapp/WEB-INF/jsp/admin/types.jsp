@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.hrbeu.pojo.User" %><%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2020/9/20
@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%String path = request.getContextPath();%>
+<%User user = (User)session.getAttribute("user");%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,7 +38,7 @@
                 <div class="ui dropdown item">
                     <div class="text">
                         <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" >
-                        宁熙桐
+                        <%=user.getNickname()%>
                     </div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
