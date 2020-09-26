@@ -68,6 +68,7 @@
 <div class="m-padded-tb-large m-container-small">
     <div class="ui container">
         <!--搜索的form-->
+        <h2>当前位置：首页</h2>
         <form action="<%=path%>/admin/documents/search/1" method="post" class="ui  secondary form segment" id="search_form">
             <div class="inline fields">
                 <!--标题输入框-->
@@ -100,6 +101,7 @@
 
             </div>
         </form>
+
         <!--显示信息的表格-->
         <table class="ui compact teal table">
             <thead>
@@ -124,7 +126,7 @@
                         <c:if test="${document.recommend==0}">否</c:if></td>
                     <td><fmt:formatDate value="${document.lastEditTime}" timeStyle="yyyy-MM-dd"/>  </td>
                     <td>
-                        <a href="#" class="ui mini teal button">编辑</a>
+                        <a href="<%=path%>/admin/documents/updatedocument/${document.documentId}" class="ui mini teal button">编辑</a>
                         <a href="<%=path%>/admin/documents/deleteById/${document.documentId}" class="ui mini red button">删除</a>
                     </td>
                 </tr>

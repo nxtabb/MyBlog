@@ -23,7 +23,6 @@ public class DocumentServiceImpl implements DocumentService {
     public void saveDocument(Document document) {
         documentDao.saveDocument(document);
         document.setDocumentId(document.getDocumentId());
-        System.out.println(document.getDocumentId());
         List<Tag> tagList = document.getTagList();
         documentTagDao.saveDocumentsAndTags(document,tagList);
 
@@ -41,6 +40,11 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    public Document queryDetailedDocument(Long documentId) {
+        return documentDao.queryDetailedDocument(documentId);
+    }
+
+    @Override
     public List<Document> getDocumentList(Document document) {
 
         return documentDao.getList(document);
@@ -48,8 +52,12 @@ public class DocumentServiceImpl implements DocumentService {
 
 
     @Override
-    public int updateDocument(Long documentId, Document document) {
-        return documentDao.updateDocument(documentId,document);
+    public void updateDocument(Long documentId, Document document) {
+        List<Tag> tagList = document.getTagList();
+        documentDao.updateDocument(documentId,document);
+        document = documentDao.queryDetailedDocument(documentId);
+        documentTagDao.deleteById(documentId);
+        documentTagDao.saveDocumentsAndTags(document,tagList);
     }
 
     @Override

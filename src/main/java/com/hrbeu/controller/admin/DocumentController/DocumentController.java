@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.print.Doc;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -91,6 +93,7 @@ public class DocumentController {
     public String searchDocuments(@PathVariable("pageIndex")int pageIndex, Model model, HttpServletRequest request){
         //判断request是否传值了
         //如果传值 就先清除session里的document//如果没传值
+        List<Type> typeList = typeService.queryAllType();
         Document document = null;
         Type type = new Type();
         String title = null;
@@ -153,6 +156,7 @@ public class DocumentController {
             prePage=1;
             nextPage =1;
         }
+        model.addAttribute("typeList",typeList);
         model.addAttribute("prePage",prePage);
         model.addAttribute("nextPage",nextPage);
         model.addAttribute("document",document);
@@ -175,14 +179,18 @@ public class DocumentController {
     }
 
 
-    @PostMapping("/documents/changedocument")
+    @PostMapping("/documents/adddocument")
     public String changeDocument(HttpServletRequest request){
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         String typeId = request.getParameter("typeId");
         String firstPicture = request.getParameter("firstPicture");
         String flag = request.getParameter("flag");
-
+        String saveorpublic = request.getParameter("saveorpublic");
+        Integer publish=0;
+        if(saveorpublic.equals("1")){
+            publish = 1;
+        }
         Integer appreciate = 0;
         if (request.getParameter("appreciate")!=null&&request.getParameter("appreciate").equals("on")){
             appreciate =1;
@@ -200,7 +208,7 @@ public class DocumentController {
             recommend =1;
         }
         Integer published = 0;
-        if (request.getParameter("published")!=null&&request.getParameter("saveorpublic").equals("1")){
+        if (request.getParameter("saveorpublic")!=null&&request.getParameter("saveorpublic").equals("1")){
             published =1;
         }
         Type type = typeService.queryType(Long.parseLong(request.getParameter("typeId")));
@@ -220,6 +228,81 @@ public class DocumentController {
         return "admin/index";
     }
 
+
+    @GetMapping("/documents/updatedocument/{documentId}")
+    @ResponseBody
+    public ModelAndView updatedDocument(@PathVariable("documentId") Long documentId, ModelAndView model, HttpServletRequest request){
+        Document document = documentService.queryDetailedDocument(documentId);
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        document.setUser(user);
+        List<Long> taglist_docList = new ArrayList<>();
+        for(Tag tag:document.getTagList()){
+            taglist_docList.add(tag.getTagId());
+        }
+        List<Type> typeList = typeService.queryAllType();
+        List<Tag> tagList = tagService.getAllTags();
+        model.addObject("tagList",tagList);
+        model.addObject("typeList",typeList);
+        model.addObject("document",document);
+        StringBuffer sb = new StringBuffer();
+        for(int i=0;i<taglist_docList.size();i++){
+            sb.append(taglist_docList.get(i));
+            sb.append(",");
+        }
+        String taglist = sb.toString().substring(0,sb.toString().lastIndexOf(","));
+        model.addObject("taglist_doc",taglist);
+        model.setViewName("admin/document-update");
+        return model;
+    }
+
+    @PostMapping("/documents/upadtedocument/{documentId}")
+    public String updateDocument(@PathVariable("documentId") Long documentId,HttpServletRequest request){
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+        String typeId = request.getParameter("typeId");
+        String firstPicture = request.getParameter("firstPicture");
+        String flag = request.getParameter("flag");
+        String saveorpublic = request.getParameter("saveorpublic");
+        Integer publish=0;
+        if(saveorpublic.equals("1")){
+            publish = 1;
+        }
+        Integer appreciate = 0;
+        if (request.getParameter("appreciate")!=null&&request.getParameter("appreciate").equals("on")){
+            appreciate =1;
+        }
+        Integer shareInfo = 0;
+        if (request.getParameter("shareInfo")!=null&&request.getParameter("shareInfo").equals("on")){
+            shareInfo =1;
+        }
+        Integer commentAble = 0;
+        if (request.getParameter("commentAble")!=null&&request.getParameter("commentAble").equals("on")){
+            commentAble =1;
+        }
+        Integer recommend = 0;
+        if (request.getParameter("recommend")!=null&&request.getParameter("recommend").equals("on")){
+            recommend =1;
+        }
+        Integer published = 0;
+        if (request.getParameter("saveorpublic")!=null&&request.getParameter("saveorpublic").equals("1")){
+            published =1;
+        }
+        Type type = typeService.queryType(Long.parseLong(request.getParameter("typeId")));
+        User user = (User) request.getSession().getAttribute("user");
+        String[] strings = request.getParameterValues("tagIdList");
+        List<Tag> tagList = new ArrayList<>();
+        String[] tags_Str = strings[0].split(",");
+        for(String tag_Str:tags_Str){
+            Tag tag = new Tag();
+            tag.setTagId(Long.parseLong(tag_Str));
+            tag.setTagName(tagService.queryTag(Long.parseLong(tag_Str)).getTagName());
+            tagList.add(tag);
+        }
+        Document document = new Document(title,content,firstPicture,flag,0,appreciate,shareInfo,commentAble,published,recommend,new Date(),type,tagList,user);
+        documentService.updateDocument(documentId,document);
+        return "redirect:/admin/documentsIndex/1";
+    }
 
 
 }

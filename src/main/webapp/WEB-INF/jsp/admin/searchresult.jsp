@@ -125,7 +125,7 @@
                         <c:if test="${document.recommend==0}">否</c:if></td>
                     <td><fmt:formatDate value="${document.lastEditTime}" timeStyle="yyyy-MM-dd"/>  </td>
                     <td>
-                        <a href="#" class="ui mini teal button">编辑</a>
+                        <a href="<%=path%>/admin/documents/updatedocument/${document.documentId}" class="ui mini teal button">编辑</a>
                         <a href="<%=path%>/admin/documents/deleteById/${document.documentId}" class="ui mini red button">删除</a>
                     </td>
                 </tr>

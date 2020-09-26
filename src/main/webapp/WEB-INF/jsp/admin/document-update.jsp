@@ -67,12 +67,12 @@
 <!--文档内容-->
 <div class="m-padded-tb-large m-container">
     <div class="ui container">
-        <form class="ui form" action="<%=path%>/admin/documents/adddocument" method="post" id="document_form">
+        <form class="ui form" action="<%=path%>/admin/documents/upadtedocument/${document.documentId}" method="post" id="document_form">
             <!--输入标题-->
             <div class="required field">
                 <div class="ui left labeled input">
                     <div class="ui selection compact teal basic dropdown label">
-                        <input type="hidden" value="1" name="flag">
+                        <input type="hidden" value="<c:if test='${document.flag==1}'>1</c:if><c:if test='${document.flag==2}'>2</c:if><c:if test='${document.flag==3}'>3</c:if>" name="flag">
                         <i class="dropdown icon"></i>
                         <div class="text">原创</div>
                         <div class="menu">
@@ -81,13 +81,13 @@
                             <div class="item" data-value="3">翻译</div>
                         </div>
                     </div>
-                    <input type="text" name="title" placeholder="标题">
+                    <input type="text" name="title" value="${document.title}" placeholder="标题">
                 </div>
             </div>
             <!--textarea-->
             <div class="required field">
                 <div id="md-content" style="z-index: 1 !important;">
-                    <textarea placeholder="文档内容" name="content" style="display: none"></textarea>
+                    <textarea name="content" style="display: none">${document.content}</textarea>
                 </div>
             </div>
             <!--两个下拉框的容器-->
@@ -97,7 +97,7 @@
                     <div class="ui left labeled action input">
                         <label class="ui compact teal basic label">分类</label>
                         <div class="ui fluid selection dropdown">
-                            <input type="hidden" name="typeId">
+                            <input type="hidden" name="typeId" value="${document.type.typeId}">
                             <i class="dropdown icon"></i>
                             <div class="default text">分类</div>
                             <div class="menu">
@@ -113,11 +113,11 @@
                     <div class="ui left labeled action input">
                         <label class="ui compact teal basic label">标签</label>
                         <div class="ui fluid multiple search selection dropdown">
-                            <input type="hidden" name="tagIdList">
+                            <input type="hidden" name="tagIdList" value="${taglist_doc}">
                             <i class="dropdown icon"></i>
                             <div class="default text">标签</div>
                             <div class="menu">
-                                <c:forEach items="${tagList}" var="tag">
+                                    <c:forEach items="${tagList}" var="tag">
                                     <div class="item" data-value="${tag.tagId}">${tag.tagName}</div>
                                 </c:forEach>
                             </div>
@@ -129,30 +129,30 @@
             <div class="required field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">首图</label>
-                    <input type="text" name="firstPicture" placeholder="首图引用地址">
+                    <input type="text" name="firstPicture" value="${document.firstPicture}">
                 </div>
             </div>
-            <input type="hidden" name="saveorpublic" id="saveorpublic">
+            <input type="hidden" name="saveorpublic" id="saveorpublic" value="${document.published}">
             <!--checkbox的容器-->
             <div class="inline fields">
                 <!--是否被推荐-->
                 <div class="field">
-                    <input type="checkbox" name="recommend" class="hidden" id="recommend" checked>
+                    <input type="checkbox" name="recommend" class="hidden" id="recommend" <c:if test="${document.recommend==1}">checked</c:if>>
                     <label for="recommend">推荐</label>
                 </div>
                 <!--是否被转载-->
                 <div class="field">
-                    <input type="checkbox" name="shareInfo" class="hidden" id="shareInfo">
+                    <input type="checkbox" name="shareInfo" class="hidden" id="shareInfo" <c:if test="${document.shareInfo==1}">checked</c:if>>
                     <label for="shareInfo">转载</label>
                 </div>
                 <!--是否被赞赏-->
                 <div class="field">
-                    <input type="checkbox" name="appreciate" class="hidden" id="appreciate">
+                    <input type="checkbox" name="appreciate" class="hidden" id="appreciate" <c:if test="${document.appreciate==1}">checked</c:if>>
                     <label for="appreciate">赞赏</label>
                 </div>
                 <!--是否可以留言-->
                 <div class="field">
-                    <input type="checkbox" name="commentAble" class="hidden" id="commentAble">
+                    <input type="checkbox" name="commentAble" class="hidden" id="commentAble" <c:if test="${document.commentAble==1}">checked</c:if>>
                     <label for="commentAble">评论</label>
                 </div>
             </div>
@@ -160,8 +160,8 @@
             <!--三个按钮-->
             <div class="ui right aligned container">
                 <button class="ui button" type="button" onclick="window.history.go(-1)">返回</button>
-                <button class="ui secondary button" id="btn_save">保存</button>
-                <button class="ui teal button" id="btn_public">发布</button>
+                <button class="ui secondary button" id="btn_save">仅保存</button>
+                <button class="ui teal button" id="btn_public">继续发布</button>
             </div>
         </form>
     </div>

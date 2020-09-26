@@ -11,7 +11,7 @@ public interface DocumentDao {
     List<Document> getDocumentList(@Param("documentIndex") int documentIndex,@Param("pageSize") int pageSize,@Param("document") Document document);
     List<Document> getList(@Param("document") Document document);
     int updateDocument(@Param("documentId") Long documentId,@Param("document") Document document);
-    void deleteDocument(Long documentId);
+    int deleteDocument(Long documentId);
     int documentCount(@Param("document") Document document);
-
+    Document queryDetailedDocument(Long documentId);
 }

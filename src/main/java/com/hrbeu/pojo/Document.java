@@ -37,29 +37,10 @@ public class Document {
     //所属用户
     private User user;
 
-    public Document(){}
 
-    @Override
-    public String toString() {
-        return "Document{" +
-                "documentId=" + documentId +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", firstPicture='" + firstPicture + '\'' +
-                ", flag='" + flag + '\'' +
-                ", viewCount=" + viewCount +
-                ", appreciate=" + appreciate +
-                ", shareInfo=" + shareInfo +
-                ", commentAble=" + commentAble +
-                ", published=" + published +
-                ", recommend=" + recommend +
-                ", createTime=" + createTime +
-                ", lastEditTime=" + lastEditTime +
-                ", type=" + type +
-                ", tagList=" + tagList +
-                ", user=" + user +
-                '}';
-    }
+
+
+    public Document(){}
 
     public Document(Long documentId, String title, String content, String firstPicture, String flag, Integer viewCount, Integer appreciate, Integer shareInfo, Integer commentAble, Integer published, Integer recommend, Date createTime, Date lastEditTime, Type type, List<Tag> tagList, User user) {
         this.documentId = documentId;
@@ -92,6 +73,23 @@ public class Document {
         this.published = published;
         this.recommend = recommend;
         this.createTime = createTime;
+        this.lastEditTime = lastEditTime;
+        this.type = type;
+        this.tagList = tagList;
+        this.user = user;
+    }
+
+    public Document(String title, String content, String firstPicture, String flag, Integer viewCount, Integer appreciate, Integer shareInfo, Integer commentAble, Integer published, Integer recommend, Date lastEditTime, Type type, List<Tag> tagList, User user) {
+        this.title = title;
+        this.content = content;
+        this.firstPicture = firstPicture;
+        this.flag = flag;
+        this.viewCount = viewCount;
+        this.appreciate = appreciate;
+        this.shareInfo = shareInfo;
+        this.commentAble = commentAble;
+        this.published = published;
+        this.recommend = recommend;
         this.lastEditTime = lastEditTime;
         this.type = type;
         this.tagList = tagList;

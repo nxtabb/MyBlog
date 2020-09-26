@@ -87,7 +87,7 @@
 
     <insert id="saveDocument" useGeneratedKeys="true" parameterType="com.hrbeu.pojo.Document" keyProperty="document.documentId">
         insert into tb_document
-        (title,content,first_picture,flag,view_count,appreciate,comment_able,share_info,recommend,create_time,last_edit_time,user_id,type_id)
+        (title,content,first_picture,flag,view_count,appreciate,comment_able,share_info,recommend,create_time,last_edit_time,published,user_id,type_id)
         values
         (#{document.title},
         #{document.content},
@@ -100,12 +100,84 @@
         #{document.recommend},
         #{document.createTime},
         #{document.lastEditTime},
+        #{document.published},
         #{document.user.userId},
         #{document.type.typeId})
         <selectKey resultType="long" keyProperty="document.documentId" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
+    <resultMap id="detailDocument" type="com.hrbeu.pojo.Document">
+        <id property="documentId" column="document_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="firstPicture" column="first_picture"/>
+        <result property="flag" column="flag"/>
+        <result property="appreciate" column="appreciate"/>
+        <result property="commentAble" column="comment_able"/>
+        <result property="shareInfo" column="share_info"/>
+        <result property="recommend" column="recommend"/>
+        <result property="lastEditTime" column="last_edit_time"/>
+        <result property="published" column="published"/>
+        <association property="type" javaType="com.hrbeu.pojo.Type">
+            <id property="typeId" column="type_id"/>
+            <result property="typeName" column="type_name"/>
+        </association>
+        <collection property="tagList" ofType="com.hrbeu.pojo.Tag" column="document_id">
+            <id property="tagId" column="tag_id" javaType="long"/>
+            <id property="tagName" column="tag_name" javaType="String"/>
+        </collection>
+    </resultMap>
+    <select id="queryDetailedDocument" parameterType="long" resultMap="detailDocument">
+        select
+        doc.*,doc_tag.*
+        from tb_document doc,tb_document_tag doc_tag
+        where
+        doc.document_id = doc_tag.document_id
+        and
+        doc.document_id = #{value}
+    </select>
+
+    <update id="updateDocument">
+        update tb_document set
+        <if test="#{document.title}!=null">
+            title =#{document.title},
+        </if>
+        <if test="#{document.content}!=null">
+            content =#{document.content},
+        </if>
+        <if test="#{document.firstPicture}!=null">
+            first_picture=#{document.firstPicture},
+        </if>
+        <if test="#{document.flag}!=null">
+            flag = #{document.flag},
+        </if>
+        <if test="#{document.appreciate}!=null">
+            appreciate=#{document.appreciate},
+        </if>
+        <if test="#{document.commentAble}!=null">
+            comment_able=#{document.commentAble},
+        </if>
+        <if test="#{document.shareInfo}!=null">
+            share_info = #{document.shareInfo},
+        </if>
+        <if test="#{document.recommend}!=null">
+            recommend = #{document.recommend},
+        </if>
+        <if test="#{document.lastEditTime}!=null">
+            last_edit_time = #{document.lastEditTime},
+        </if>
+        <if test="#{document.type}!=null and #{document.type.typeId}!=null">
+            type_id = #{document.type.typeId},
+        </if>
+        <if test="#{document.user}!=null and #{document.user.userId}!=null">
+            user_id = #{document.user.userId},
+        </if>
+        <if test="#{document.published}!=null">
+            published = #{document.published}
+        </if>
+        where document_id = #{documentId}
+    </update>
 
 
 </mapper>
