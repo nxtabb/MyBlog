@@ -58,6 +58,7 @@
 <!--标题-->
 <div class="ui attached pointing menu">
     <div class="ui container">
+
         <div class="right menu">
             <a href="<%=path%>/admin/documents/adddocument" class="teal item active">发布</a>
             <a href="<%=path%>/admin/documentsIndex/1" class="item">列表</a>
@@ -68,7 +69,12 @@
 <!--文档内容-->
 <div class="m-padded-tb-large m-container">
     <div class="ui container">
-        <form class="ui form" action="<%=path%>/admin/documents/adddocument" method="post" id="document_form">
+        <div class="ui success message">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p>因为只允许存在一个附属文件，因此建议上传一个压缩文件，里面存放所有代码、配置等</p>
+        </div>
+        <form class="ui form" action="<%=path%>/admin/documents/adddocument" method="post" id="document_form"  enctype="multipart/form-data">
             <!--输入标题-->
             <div class="required field">
                 <div class="ui left labeled input">
@@ -156,7 +162,10 @@
                     <input type="checkbox" name="commentAble" class="hidden" id="commentAble">
                     <label for="commentAble">评论</label>
                 </div>
+                <h6>附属文件上传</h6>
+                <input type="file"  name="codefile">
             </div>
+
             <div class="ui error message"></div>
             <!--三个按钮-->
             <div class="ui right aligned container">
@@ -275,6 +284,10 @@
         $("#saveorpublic").val("1");
         $("#document_form").submit();
     })
+    $(".message.close").on('click',function () {
+        $(this).closest('.message').transition('fade');
+
+    });
 
 </script>
 </body>

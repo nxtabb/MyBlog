@@ -62,6 +62,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public void deleteDocument(Long documentId) {
+        documentTagDao.deleteById(documentId);
         documentDao.deleteDocument(documentId);
     }
     @Override

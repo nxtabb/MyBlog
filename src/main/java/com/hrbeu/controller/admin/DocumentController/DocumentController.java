@@ -7,15 +7,22 @@ import com.hrbeu.pojo.User;
 import com.hrbeu.service.adminService.DocumentService;
 import com.hrbeu.service.adminService.TagService;
 import com.hrbeu.service.adminService.TypeService;
+import com.hrbeu.utils.FileUploadUtil;
+import com.hrbeu.utils.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.print.Doc;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -180,7 +187,7 @@ public class DocumentController {
 
 
     @PostMapping("/documents/adddocument")
-    public String changeDocument(HttpServletRequest request){
+    public String changeDocument(HttpServletRequest request) throws IOException {
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         String typeId = request.getParameter("typeId");
@@ -225,6 +232,7 @@ public class DocumentController {
         }
         Document document = new Document(title,content,firstPicture,flag,0,appreciate,shareInfo,commentAble,published,recommend,new Date(),new Date(),type,tagList,user);
         documentService.saveDocument(document);
+        FileUploadUtil.fileUpload(request);
         return "admin/index";
     }
 
