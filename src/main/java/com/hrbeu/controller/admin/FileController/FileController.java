@@ -44,6 +44,7 @@ public class FileController {
             fileName = URLEncoder.encode(fileName,"UTF-8");
             response.addHeader("Content-Disposition","attachment;filename=" + fileName);
             response.setContentType("multipart/form-data");
+            response.setContentLength((int)file_download.length());
             FileInputStream inputStream = new FileInputStream(filePath);
             OutputStream outputStream = response.getOutputStream();
             byte[] buffer = new byte[1024];
