@@ -1,6 +1,6 @@
 package com.hrbeu.service.adminService.Impl;
 
-import com.hrbeu.dao.UserDao;
+import com.hrbeu.dao.adminDao.UserDao;
 import com.hrbeu.pojo.User;
 import com.hrbeu.service.adminService.UserService;
 import com.hrbeu.utils.MD5Util;

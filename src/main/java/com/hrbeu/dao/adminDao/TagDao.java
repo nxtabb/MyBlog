@@ -1,4 +1,4 @@
-package com.hrbeu.dao;
+package com.hrbeu.dao.adminDao;
 
 import com.hrbeu.pojo.Tag;
 import org.apache.ibatis.annotations.Param;

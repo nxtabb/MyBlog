@@ -1,4 +1,4 @@
-package com.hrbeu.dao;
+package com.hrbeu.dao.adminDao;
 
 import com.hrbeu.pojo.Document;
 import com.hrbeu.pojo.Tag;

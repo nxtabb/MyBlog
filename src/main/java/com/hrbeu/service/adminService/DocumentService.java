@@ -9,7 +9,7 @@ public interface DocumentService {
     void saveDocument(Document document);
     Document queryDocument(Long documentId);
     List<Document> getDocumentList(Document document);
-    void updateDocument(Long documentId, Document document);
+    void updateDocument(Document document);
     void deleteDocument(Long documentId);
     int documentCount(Document document);
     List<Document> getDocumentList(int pageIndex, int pageSize, Document document);

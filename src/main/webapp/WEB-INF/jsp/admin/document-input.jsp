@@ -139,6 +139,9 @@
                     <input type="text" name="firstPicture" placeholder="首图引用地址">
                 </div>
             </div>
+            <div class="required field">
+                <textarea placeholder="文档描述" name="description"></textarea>
+            </div>
             <input type="hidden" name="saveorpublic" id="saveorpublic">
             <!--checkbox的容器-->
             <div class="inline fields">
@@ -271,7 +274,20 @@
                     prompt:'标题：请输入文档首图地址'
                 }]
             },
-
+            tagIdList:{
+                identifier: 'tagIdList',
+                rules:[{
+                    type:'empty',
+                    prompt:'标题：请输入文档标签'
+                }]
+            },
+            description:{
+                identifier: 'description',
+                rules:[{
+                    type:'empty',
+                    prompt:'标题：请输入文档描述'
+                }]
+            }
         }
     })
 

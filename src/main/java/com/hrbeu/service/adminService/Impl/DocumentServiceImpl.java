@@ -1,7 +1,7 @@
 package com.hrbeu.service.adminService.Impl;
 
-import com.hrbeu.dao.DocumentDao;
-import com.hrbeu.dao.DocumentTagDao;
+import com.hrbeu.dao.adminDao.DocumentDao;
+import com.hrbeu.dao.adminDao.DocumentTagDao;
 import com.hrbeu.pojo.Document;
 import com.hrbeu.pojo.Tag;
 import com.hrbeu.service.adminService.DocumentService;
@@ -52,10 +52,12 @@ public class DocumentServiceImpl implements DocumentService {
 
 
     @Override
-    public void updateDocument(Long documentId, Document document) {
+    public void updateDocument(Document document) {
         List<Tag> tagList = document.getTagList();
-        documentDao.updateDocument(documentId,document);
-        document = documentDao.queryDetailedDocument(documentId);
+        documentDao.updateDocument(document.getDocumentId(),document);
+        Long documentId = document.getDocumentId();
+        document = documentDao.queryDetailedDocument(document.getDocumentId());
+        document.setDocumentId(documentId);
         documentTagDao.deleteById(documentId);
         documentTagDao.saveDocumentsAndTags(document,tagList);
     }

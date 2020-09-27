@@ -1,8 +1,7 @@
 package com.hrbeu.service.adminService.Impl;
 
-import com.hrbeu.dao.TagDao;
+import com.hrbeu.dao.adminDao.TagDao;
 import com.hrbeu.pojo.Tag;
-import com.hrbeu.pojo.Type;
 import com.hrbeu.service.adminService.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

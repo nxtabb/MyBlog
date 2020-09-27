@@ -32,7 +32,7 @@ public class FileController {
     }
 
     @GetMapping("/files/downloadFile/{fileId}")
-    public void download(@PathVariable("fileId")Long fileId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void download(@PathVariable("fileId")Long fileId, HttpServletResponse response) throws IOException {
         File file = fileService.queryFile(fileId);
         String filePath = PathUtil.getBasePath()+file.getFilePath()+ java.io.File.separator+file.getFileName();
         java.io.File file_download = new java.io.File(filePath);

@@ -1,6 +1,6 @@
 package com.hrbeu.service.adminService.Impl;
 
-import com.hrbeu.dao.FileDao;
+import com.hrbeu.dao.adminDao.FileDao;
 import com.hrbeu.pojo.File;
 import com.hrbeu.pojo.User;
 import com.hrbeu.service.adminService.FileService;

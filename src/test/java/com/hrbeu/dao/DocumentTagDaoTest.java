@@ -1,6 +1,7 @@
 package com.hrbeu.dao;
 
 import com.hrbeu.BaseTest;
+import com.hrbeu.dao.adminDao.DocumentTagDao;
 import com.hrbeu.pojo.Document;
 import com.hrbeu.pojo.Tag;
 import org.junit.Test;

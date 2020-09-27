@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.hrbeu.dao.DocumentTagDao">
+<mapper namespace="com.hrbeu.dao.adminDao.DocumentTagDao">
     <insert id="saveDocumentsAndTags">
         insert into tb_document_tag(document_id,tag_id) values
         <foreach collection="tagList" item="tag" separator=",">

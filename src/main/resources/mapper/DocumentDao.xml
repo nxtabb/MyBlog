@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hrbeu.dao.DocumentDao">
+<mapper namespace="com.hrbeu.dao.adminDao.DocumentDao">
     <resultMap id="document_index" type="com.hrbeu.pojo.Document">
         <id column="document_id" property="documentId"/>
         <result column="title" property="title"/>
@@ -87,7 +87,7 @@
 
     <insert id="saveDocument" useGeneratedKeys="true" parameterType="com.hrbeu.pojo.Document" keyProperty="document.documentId">
         insert into tb_document
-        (title,content,first_picture,flag,view_count,appreciate,comment_able,share_info,recommend,create_time,last_edit_time,published,user_id,type_id)
+        (title,content,first_picture,flag,view_count,appreciate,comment_able,share_info,recommend,create_time,last_edit_time,published,user_id,type_id,description)
         values
         (#{document.title},
         #{document.content},
@@ -102,7 +102,8 @@
         #{document.lastEditTime},
         #{document.published},
         #{document.user.userId},
-        #{document.type.typeId})
+        #{document.type.typeId},
+        #{document.description})
         <selectKey resultType="long" keyProperty="document.documentId" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -119,6 +120,7 @@
         <result property="recommend" column="recommend"/>
         <result property="lastEditTime" column="last_edit_time"/>
         <result property="published" column="published"/>
+        <result property="description" column="description"/>
         <association property="type" javaType="com.hrbeu.pojo.Type">
             <id property="typeId" column="type_id"/>
             <result property="typeName" column="type_name"/>
@@ -130,10 +132,26 @@
     </resultMap>
     <select id="queryDetailedDocument" parameterType="long" resultMap="detailDocument">
         select
-        doc.*,doc_tag.*
-        from tb_document doc,tb_document_tag doc_tag
+        doc.title,
+        doc.content,
+        doc.first_picture,
+        doc.flag,
+        doc.appreciate,
+        doc.comment_able,
+        doc.share_info,
+        doc.recommend,
+        doc.last_edit_time,
+        doc.published,
+        doc.description,
+        doc_type.type_id,
+        doc_type.type_name,
+        doc_tag.document_id,
+        doc_tag.tag_id
+        from tb_document doc,tb_document_tag doc_tag,tb_type doc_type
         where
         doc.document_id = doc_tag.document_id
+        and
+        doc.type_id = doc_type.type_id
         and
         doc.document_id = #{value}
     </select>
@@ -174,7 +192,10 @@
             user_id = #{document.user.userId},
         </if>
         <if test="#{document.published}!=null">
-            published = #{document.published}
+            published = #{document.published},
+        </if>
+        <if test="#{document.description}!=null">
+            description= #{document.description}
         </if>
         where document_id = #{documentId}
     </update>

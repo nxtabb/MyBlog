@@ -150,7 +150,7 @@
                     </div>
                 </div>
                 <!--选择标签的下拉框-->
-                <div class="field">
+                <div class="required field">
                     <div class="ui left labeled action input">
                         <label class="ui compact teal basic label">标签</label>
                         <div class="ui fluid multiple search selection dropdown">
@@ -172,6 +172,9 @@
                     <label class="ui teal basic label">首图</label>
                     <input type="text" name="firstPicture" value="${document.firstPicture}">
                 </div>
+            </div>
+            <div class="required field">
+                <textarea placeholder="文档描述" name="description">${document.description}</textarea>
             </div>
             <input type="hidden" name="saveorpublic" id="saveorpublic" value="${document.published}">
             <!--checkbox的容器-->
@@ -200,6 +203,9 @@
                 <input type="file"  name="codefile">
             </div>
             <div class="ui error message"></div>
+
+
+
             <!--三个按钮-->
             <div class="ui right aligned container">
                 <button class="ui button" type="button" onclick="window.history.go(-1)">返回</button>
@@ -207,8 +213,15 @@
                 <button class="ui teal button" id="btn_public">完成修改并发布</button>
             </div>
         </form>
+
+    </div>
+    <div class="popup_con">
+        <div class="popup">
+            <p>正在上传请稍候。。</p>
+        </div>
     </div>
 </div>
+
 <!--底部容器-->
 <footer class="ui inverted vertical segment m-padded-tb-massive">
     <div class="ui center aligned container">
@@ -304,20 +317,48 @@
                     prompt:'标题：请输入文档首图地址'
                 }]
             },
-
+            tagIdList:{
+                identifier: 'tagIdList',
+                rules:[{
+                    type:'empty',
+                    prompt:'标题：请输入文档标签'
+                }]
+            },
+            description:{
+                identifier: 'description',
+                rules:[{
+                    type:'empty',
+                    prompt:'标题：请输入文档描述'
+                }]
+            }
         }
     })
 
     $("#btn_save").click(function () {
         $("#saveorpublic").val("0");
         $("#document_form").submit();
+        localStorage.setItem('order_finish',60);
+        $('.popup_con').fadeIn('fast', function() {
+            setTimeout(function(){
+                $('.popup_con').fadeOut('fast',function(){
+                });
+            },3000)
+        });
     })
 
     $("#btn_public").click(function () {
         $("#saveorpublic").val("1");
         $("#document_form").submit();
+        localStorage.setItem('order_finish',60);
+        $('.popup_con').fadeIn('fast', function() {
+            setTimeout(function(){
+                $('.popup_con').fadeOut('fast',function(){
+                });
+            },3000)
+        });
     })
 
 </script>
+
 </body>
 </html>

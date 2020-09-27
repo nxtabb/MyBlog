@@ -36,13 +36,15 @@ public class Document {
     private List<Tag> tagList;
     //所属用户
     private User user;
+    //描述
+    private String description;
 
 
 
 
     public Document(){}
 
-    public Document(Long documentId, String title, String content, String firstPicture, String flag, Integer viewCount, Integer appreciate, Integer shareInfo, Integer commentAble, Integer published, Integer recommend, Date createTime, Date lastEditTime, Type type, List<Tag> tagList, User user) {
+    public Document(Long documentId, String title, String content, String firstPicture, String flag, Integer viewCount, Integer appreciate, Integer shareInfo, Integer commentAble, Integer published, Integer recommend, Date createTime, Date lastEditTime, Type type, List<Tag> tagList, User user,String description) {
         this.documentId = documentId;
         this.title = title;
         this.content = content;
@@ -59,9 +61,10 @@ public class Document {
         this.type = type;
         this.tagList = tagList;
         this.user = user;
+        this.description = description;
     }
 
-    public Document(String title, String content, String firstPicture, String flag, Integer viewCount, Integer appreciate, Integer shareInfo, Integer commentAble, Integer published, Integer recommend, Date createTime, Date lastEditTime, Type type, List<Tag> tagList, User user) {
+    public Document(String title, String content, String firstPicture, String flag, Integer viewCount, Integer appreciate, Integer shareInfo, Integer commentAble, Integer published, Integer recommend, Date createTime, Date lastEditTime, Type type, List<Tag> tagList, User user,String description) {
         this.title = title;
         this.content = content;
         this.firstPicture = firstPicture;
@@ -77,9 +80,10 @@ public class Document {
         this.type = type;
         this.tagList = tagList;
         this.user = user;
+        this.description = description;
     }
 
-    public Document(String title, String content, String firstPicture, String flag, Integer viewCount, Integer appreciate, Integer shareInfo, Integer commentAble, Integer published, Integer recommend, Date lastEditTime, Type type, List<Tag> tagList, User user) {
+    public Document(String title, String content, String firstPicture, String flag, Integer viewCount, Integer appreciate, Integer shareInfo, Integer commentAble, Integer published, Integer recommend, Date lastEditTime, Type type, List<Tag> tagList, User user,String description) {
         this.title = title;
         this.content = content;
         this.firstPicture = firstPicture;
@@ -94,6 +98,15 @@ public class Document {
         this.type = type;
         this.tagList = tagList;
         this.user = user;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Long getDocumentId() {

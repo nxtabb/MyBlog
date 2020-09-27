@@ -15,10 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.print.Doc;
@@ -97,10 +93,7 @@ public class DocumentController {
     public String deleteById(@PathVariable("documentId")Long documentId,HttpServletRequest request){
         User user =(User) request.getSession().getAttribute("user");
         fileService.deleteFile(documentId,user);
-
-
         documentService.deleteDocument(documentId);
-
         return "redirect:/admin/documentsIndex/1";
     }
 
@@ -202,6 +195,7 @@ public class DocumentController {
         String typeId = request.getParameter("typeId");
         String firstPicture = request.getParameter("firstPicture");
         String flag = request.getParameter("flag");
+        String description = request.getParameter("description");
         String saveorpublic = request.getParameter("saveorpublic");
         Integer publish=0;
         if(saveorpublic.equals("1")){
@@ -239,7 +233,7 @@ public class DocumentController {
             tag.setTagName(tagService.queryTag(Long.parseLong(tag_Str)).getTagName());
             tagList.add(tag);
         }
-        Document document = new Document(title,content,firstPicture,flag,0,appreciate,shareInfo,commentAble,published,recommend,new Date(),new Date(),type,tagList,user);
+        Document document = new Document(title,content,firstPicture,flag,0,appreciate,shareInfo,commentAble,published,recommend,new Date(),new Date(),type,tagList,user,description);
         documentService.saveDocument(document);
         String documentTitle = document.getTitle();
         String nowTimeStr = format.format(new Date());
@@ -299,6 +293,7 @@ public class DocumentController {
         String firstPicture = request.getParameter("firstPicture");
         String flag = request.getParameter("flag");
         String saveorpublic = request.getParameter("saveorpublic");
+        String description = request.getParameter("description");
         Integer publish=0;
         if(saveorpublic.equals("1")){
             publish = 1;
@@ -334,37 +329,37 @@ public class DocumentController {
             tag.setTagName(tagService.queryTag(Long.parseLong(tag_Str)).getTagName());
             tagList.add(tag);
         }
-        Document document = new Document(title,content,firstPicture,flag,0,appreciate,shareInfo,commentAble,published,recommend,new Date(),type,tagList,user);
-        documentService.updateDocument(documentId,document);
+        Document document = new Document(title,content,firstPicture,flag,0,appreciate,shareInfo,commentAble,published,recommend,new Date(),type,tagList,user,description);
+        document.setDocumentId(documentId);
+        documentService.updateDocument(document);
         //更新文件
         String documentTitle = document.getTitle();
         String nowTimeStr = format.format(new Date());
         //添加新文件
         Map<String,String>fileInfo = FileUploadUtil.fileUpload(request,documentTitle,nowTimeStr);
-        //删除旧文件
-        File file = fileService.getFileInfo(documentId,user.getUserId());
-        if(file!=null){
-            java.io.File file1 = new java.io.File(PathUtil.getBasePath()+file.getFilePath()+ java.io.File.separator+file.getFileName());
-            if(file1.exists()){
-                PathUtil.delFileOrPath(PathUtil.getBasePath()+file.getFilePath()+ java.io.File.separator+file.getFileName());
+        if(fileInfo!=null){
+            //删除旧文件
+            File file = fileService.getFileInfo(documentId,user.getUserId());
+            if(file!=null){
+                java.io.File file1 = new java.io.File(PathUtil.getBasePath()+file.getFilePath()+ java.io.File.separator+file.getFileName());
+                if(file1.exists()){
+                    PathUtil.delFileOrPath(PathUtil.getBasePath()+file.getFilePath()+ java.io.File.separator+file.getFileName());
+                }
+                //对文件的数据表进行修改
+                Long fileId = file.getFileId();
+                String fileName = fileInfo.get("fileName");
+                String filePath = fileInfo.get("filePath");
+                String fileOriginName = fileInfo.get("fileOriginName");
+                fileService.updateFile(fileId,fileName,filePath,user.getUserId(),documentId,fileOriginName,file.getCreateTime(),new Date());
+            }else {
+                String fileName = fileInfo.get("fileName");
+                String filePath = fileInfo.get("filePath");
+                String fileOriginName = fileInfo.get("fileOriginName");
+                fileService.addFile(fileName,filePath,user.getUserId(),documentId,fileOriginName,new Date(),new Date());
             }
-            //对文件的数据表进行修改
-            Long fileId = file.getFileId();
-            String fileName = fileInfo.get("fileName");
-            String filePath = fileInfo.get("filePath");
-            String fileOriginName = fileInfo.get("fileOriginName");
-            fileService.updateFile(fileId,fileName,filePath,user.getUserId(),documentId,fileOriginName,file.getCreateTime(),new Date());
-        }else {
-            String fileName = fileInfo.get("fileName");
-            String filePath = fileInfo.get("filePath");
-            String fileOriginName = fileInfo.get("fileOriginName");
-            fileService.addFile(fileName,filePath,user.getUserId(),documentId,fileOriginName,new Date(),new Date());
         }
-
         return "redirect:/admin/documentsIndex/1";
     }
-
-
 }
 
 

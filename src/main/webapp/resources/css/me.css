@@ -1,3 +1,13 @@
+.popup_con{display:none;!important;}
+.popup{width:300px;height:150px;border:1px solid #dddddd;border-top:2px solid #00bc6f;background-color:#f7f7f7;position:fixed!important;
+    left:50%!important;
+    margin-left:-150px!important;
+    top:50%!important;
+    margin-top:-75px!important;
+    z-index:1000!important;
+}
+.popup p{height:150px;line-height:150px;text-align:center;font-size:18px;!important;}
+
 body{
     background: url("../images/geometric-leaves.png");
 }
@@ -106,6 +116,11 @@ body{
 .m-mobile-show{
     display: none !important;
 }
+
+
+
+
+
 
 @media screen and (max-width:768px) {
     .m-mobile-hide{

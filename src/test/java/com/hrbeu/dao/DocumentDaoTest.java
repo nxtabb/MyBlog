@@ -1,8 +1,8 @@
 package com.hrbeu.dao;
 
 import com.hrbeu.BaseTest;
+import com.hrbeu.dao.adminDao.DocumentDao;
 import com.hrbeu.pojo.Document;
-import com.hrbeu.pojo.Type;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
