@@ -11,7 +11,7 @@ public class PathUtil {
             basePath = "F:/codes";
         }
         else {
-            basePath = "/home/LiujieLab/codes";
+            basePath = "/home/nxt/codes";
         }
         basePath = basePath.replace("/", File.separator);
         return basePath;
