@@ -1,10 +1,12 @@
 package com.hrbeu.controller.admin.DocumentController;
 
 import com.hrbeu.pojo.Document;
+import com.hrbeu.pojo.File;
 import com.hrbeu.pojo.Tag;
 import com.hrbeu.pojo.Type;
 import com.hrbeu.pojo.User;
 import com.hrbeu.service.adminService.DocumentService;
+import com.hrbeu.service.adminService.FileService;
 import com.hrbeu.service.adminService.TagService;
 import com.hrbeu.service.adminService.TypeService;
 import com.hrbeu.utils.FileUploadUtil;
@@ -23,21 +25,27 @@ import javax.print.Doc;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
 public class DocumentController {
+    //格式化时间
+    private static final SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
     @Autowired
     private DocumentService documentService;
     @Autowired
     private TypeService typeService;
     @Autowired
     private TagService tagService;
+    @Autowired
+    private FileService fileService;
 
     //进入文件列表+页码
     @GetMapping("/documentsIndex/{pageIndex}")
@@ -86,12 +94,13 @@ public class DocumentController {
 
     //删除指定的文档
     @GetMapping("/documents/deleteById/{documentId}")
-    public String deleteById(@PathVariable("documentId")Long documentId){
-        try {
-            documentService.deleteDocument(documentId);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    public String deleteById(@PathVariable("documentId")Long documentId,HttpServletRequest request){
+        User user =(User) request.getSession().getAttribute("user");
+        fileService.deleteFile(documentId,user);
+
+
+        documentService.deleteDocument(documentId);
+
         return "redirect:/admin/documentsIndex/1";
     }
 
@@ -232,8 +241,15 @@ public class DocumentController {
         }
         Document document = new Document(title,content,firstPicture,flag,0,appreciate,shareInfo,commentAble,published,recommend,new Date(),new Date(),type,tagList,user);
         documentService.saveDocument(document);
-        FileUploadUtil.fileUpload(request);
-        return "admin/index";
+        String documentTitle = document.getTitle();
+        String nowTimeStr = format.format(new Date());
+        Map<String,String>fileInfo = FileUploadUtil.fileUpload(request,documentTitle,nowTimeStr);
+        //对文件的数据表进行添加
+        String fileName = fileInfo.get("fileName");
+        String filePath = fileInfo.get("filePath");
+        String fileOriginName = fileInfo.get("fileOriginName");
+        fileService.addFile(fileName,filePath,user.getUserId(),document.getDocumentId(),fileOriginName,new Date(),new Date());
+        return "redirect:/admin/documentsIndex/1";
     }
 
 
@@ -259,13 +275,24 @@ public class DocumentController {
             sb.append(",");
         }
         String taglist = sb.toString().substring(0,sb.toString().lastIndexOf(","));
+        File file = null;
+        java.io.File fileOfFile =null;
+        Long fileLength = null;
+        //查询附属文件信息
+        file = fileService.getFileInfo(documentId,user.getUserId());
+        if(file!=null){
+            fileOfFile = new java.io.File(PathUtil.getBasePath()+file.getFilePath()+ java.io.File.separator +file.getFileName());
+            fileLength = fileOfFile.length()/1024/1024;
+        }
+        model.addObject("fileLength",fileLength);
+        model.addObject("file",file);
         model.addObject("taglist_doc",taglist);
         model.setViewName("admin/document-update");
         return model;
     }
 
-    @PostMapping("/documents/upadtedocument/{documentId}")
-    public String updateDocument(@PathVariable("documentId") Long documentId,HttpServletRequest request){
+    @PostMapping("/documents/updatedocument/{documentId}")
+    public String updateDocument(@PathVariable("documentId") Long documentId,HttpServletRequest request) throws IOException {
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         String typeId = request.getParameter("typeId");
@@ -309,6 +336,31 @@ public class DocumentController {
         }
         Document document = new Document(title,content,firstPicture,flag,0,appreciate,shareInfo,commentAble,published,recommend,new Date(),type,tagList,user);
         documentService.updateDocument(documentId,document);
+        //更新文件
+        String documentTitle = document.getTitle();
+        String nowTimeStr = format.format(new Date());
+        //添加新文件
+        Map<String,String>fileInfo = FileUploadUtil.fileUpload(request,documentTitle,nowTimeStr);
+        //删除旧文件
+        File file = fileService.getFileInfo(documentId,user.getUserId());
+        if(file!=null){
+            java.io.File file1 = new java.io.File(PathUtil.getBasePath()+file.getFilePath()+ java.io.File.separator+file.getFileName());
+            if(file1.exists()){
+                PathUtil.delFileOrPath(PathUtil.getBasePath()+file.getFilePath()+ java.io.File.separator+file.getFileName());
+            }
+            //对文件的数据表进行修改
+            Long fileId = file.getFileId();
+            String fileName = fileInfo.get("fileName");
+            String filePath = fileInfo.get("filePath");
+            String fileOriginName = fileInfo.get("fileOriginName");
+            fileService.updateFile(fileId,fileName,filePath,user.getUserId(),documentId,fileOriginName,file.getCreateTime(),new Date());
+        }else {
+            String fileName = fileInfo.get("fileName");
+            String filePath = fileInfo.get("filePath");
+            String fileOriginName = fileInfo.get("fileOriginName");
+            fileService.addFile(fileName,filePath,user.getUserId(),documentId,fileOriginName,new Date(),new Date());
+        }
+
         return "redirect:/admin/documentsIndex/1";
     }
 

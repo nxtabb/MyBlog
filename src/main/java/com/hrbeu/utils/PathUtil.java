@@ -17,8 +17,8 @@ public class PathUtil {
         return basePath;
     }
 
-    public static String getUserPath(String username){
-        String userPath = "/"+username;
+    public static String getUserPath(String username,String documentTitle,String nowTimeStr){
+        String userPath = "/"+username+"/"+documentTitle+"/"+nowTimeStr;
         userPath = userPath.replace("/",File.separator);
         return userPath;
     }

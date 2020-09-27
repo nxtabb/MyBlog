@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%String path = request.getContextPath();%>
 <%User user = (User)session.getAttribute("user");%>
 <html lang="en">
@@ -65,10 +66,49 @@
     </div>
 
 </div>
+
+
+
+
 <!--文档内容-->
 <div class="m-padded-tb-large m-container">
     <div class="ui container">
-        <form class="ui form" action="<%=path%>/admin/documents/upadtedocument/${document.documentId}" method="post" id="document_form">
+        <div class="ui success message">
+            <i class="close icon"></i>
+            <div class="header">提示：</div>
+            <p>亲爱的用户，您可以先删除附属文件在上传新的附属文件，或直接上传新的附属文件，系统会自动替换原文件</p>
+        </div>
+
+
+        <!--显示信息的表格-->
+        <table class="ui compact teal table">
+            <thead>
+            <tr>
+                <th>附属文件名称</th>
+                <th>附属文件大小(MB)</th>
+                <th>文档上传时间</th>
+                <th>最后更新时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <c:if test="${file.fileId!=null}">
+                <tr>
+                    <td>${file.fileOriginName}</td>
+                    <td>${fileLength}</td>
+                    <td><fmt:formatDate value="${file.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
+                    <td><fmt:formatDate value="${file.lastEditTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
+                    <td>
+                        <a href="<%=path%>/admin/files/downloadFile/${file.fileId}" class="ui mini teal button">下载</a>
+                        <a href="<%=path%>/admin/files/onlydeleteFile/${document.documentId}/${file.fileId}" class="ui mini red button">删除</a>
+                    </td>
+                </tr>
+            </c:if>
+            </tbody>
+        </table>
+
+
+        <form class="ui form" action="<%=path%>/admin/documents/updatedocument/${document.documentId}" method="post" id="document_form" enctype="multipart/form-data">
             <!--输入标题-->
             <div class="required field">
                 <div class="ui left labeled input">
@@ -156,13 +196,15 @@
                     <input type="checkbox" name="commentAble" class="hidden" id="commentAble" <c:if test="${document.commentAble==1}">checked</c:if>>
                     <label for="commentAble">评论</label>
                 </div>
+                <h6>附属文件再次上传</h6>
+                <input type="file"  name="codefile">
             </div>
             <div class="ui error message"></div>
             <!--三个按钮-->
             <div class="ui right aligned container">
                 <button class="ui button" type="button" onclick="window.history.go(-1)">返回</button>
-                <button class="ui secondary button" id="btn_save">仅保存</button>
-                <button class="ui teal button" id="btn_public">继续发布</button>
+                <button class="ui secondary button" id="btn_save">仅保存不发布</button>
+                <button class="ui teal button" id="btn_public">完成修改并发布</button>
             </div>
         </form>
     </div>
