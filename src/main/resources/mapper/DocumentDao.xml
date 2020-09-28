@@ -201,4 +201,47 @@
     </update>
 
 
+    <resultMap id="mostDetailDocument" type="com.hrbeu.pojo.Document">
+        <id property="documentId" column="document_id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="firstPicture" column="first_picture"/>
+        <result property="flag" column="flag"/>
+        <result property="appreciate" column="appreciate"/>
+        <result property="commentAble" column="comment_able"/>
+        <result property="shareInfo" column="share_info"/>
+        <result property="recommend" column="recommend"/>
+        <result property="lastEditTime" column="last_edit_time"/>
+        <result property="published" column="published"/>
+        <result property="createTime" column="create_time"/>
+        <result property="viewCount" column="view_count"/>
+        <result property="description" column="description"/>
+        <association property="type" javaType="com.hrbeu.pojo.Type">
+            <id property="typeId" column="type_id"/>
+            <result property="typeName" column="type_name"/>
+        </association>
+        <association property="user" javaType="com.hrbeu.pojo.User">
+            <id column="user_id" property="userId"/>
+            <result column="nickname" property="nickname"/>
+            <result column="email" property="email"/>
+            <result column="image" property="image"/>
+        </association>
+        <collection property="tagList" ofType="com.hrbeu.pojo.Tag" column="document_id">
+            <id property="tagId" column="tag_id" javaType="long"/>
+            <id property="tagName" column="tag_name" javaType="String"/>
+        </collection>
+    </resultMap>
+    <select id="getMostDetailDocument" parameterType="long" resultMap="mostDetailDocument">
+        select * from tb_document doc,tb_user user,tb_type type,tb_document_tag tag,tb_tag tbtag where doc.type_id = type.type_id
+        and doc.document_id = tag.document_id and doc.user_id = user.user_id and doc.document_id = #{value } and tag.tag_id = tbtag.tag_id
+    </select>
+    <update id="createViewCount" parameterType="long">
+        update tb_document
+        set view_count = view_count+1
+        where document_id =#{value }
+    </update>
+
+
+
+
 </mapper>

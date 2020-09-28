@@ -45,6 +45,16 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    public Document getMostDetailDocument(Long documentId) {
+        return documentDao.getMostDetailDocument(documentId);
+    }
+
+    @Override
+    public void createViewCount(Long documentId) {
+        documentDao.createViewCount(documentId);
+    }
+
+    @Override
     public List<Document> getDocumentList(Document document) {
 
         return documentDao.getList(document);

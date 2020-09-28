@@ -95,7 +95,7 @@
             <c:if test="${file.fileId!=null}">
                 <tr>
                     <td>${file.fileOriginName}</td>
-                    <td>${fileLength}</td>
+                    <td><fmt:formatNumber value="${fileLength}" type="number" maxFractionDigits="2" /></td>
                     <td><fmt:formatDate value="${file.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
                     <td><fmt:formatDate value="${file.lastEditTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
                     <td>

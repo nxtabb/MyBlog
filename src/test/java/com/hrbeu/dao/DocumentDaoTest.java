@@ -25,4 +25,11 @@ public class DocumentDaoTest  extends BaseTest {
         System.out.println(documents);
         }
 
+    @Test
+    public void test03(){
+        Long documentId = 61L;
+        Document document = documentDao.getMostDetailDocument(documentId);
+        System.out.println(document.getFlag());
+    }
+
 }

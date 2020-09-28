@@ -37,10 +37,12 @@
             <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
             <!--右侧搜索框-->
             <div class="right item m-mobile-hide">
+                <form action="<%=path%>/search/1" method="post" target="_blank" name="search">
                 <div class="ui icon input">
-                    <input type="text" placeholder="Search....">
-                    <i class="search link icon"></i>
+                    <input type="text" placeholder="Search...." name="query">
+                    <i onclick="document.forms['search'].submit()" class="search link icon"></i>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -62,7 +64,7 @@
                             <h3 class="ui teal header">文章总览</h3>
                         </div>
                         <div class="right aligned column">
-                            共<h2 class="ui orange header m-inline-block m-text-thin"> 14 </h2>篇
+                            共<h2 class="ui orange header m-inline-block m-text-thin"> ${maxCount} </h2>篇
                         </div>
                     </div>
                 </div>
@@ -73,15 +75,16 @@
                         <div class="ui padded vertical segment m-padded-tb-large">
                             <div class="ui middle aligned mobile reversed stackable grid">
                                 <div class="ui eleven wide column">
-                                    <h3 class="ui header">${document.title}</h3>
-                                    <p class="m-text">${document.description.substring(0,125)}</p>
-                                    <div class="ui grid">
+                                    <a href="<%=path%>/document/${document.documentId}" class="ui header"><h3>${document.title}</h3></a>
+                                    <p class="m-text"><c:if test="${document.description.length()>75}">${document.description.substring(0,75)}</c:if>
+                                        <c:if test="${document.description.length()<=75}">${document.description}</c:if></p>
+                                    <div class="ui stackable grid">
                                         <div class="eleven wide column">
                                             <div class="ui horizontal mini link list">
                                                 <div class="item">
-                                                    <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui avatar image">
+                                                    <img src="${document.user.image.toString()}" class="ui avatar image">
                                                     <div class="content">
-                                                        <a href="#" class="header">宁熙桐</a>
+                                                        <a href="#" class="header">${document.user.nickname}</a>
                                                     </div>
                                                 </div>
                                                 <div class="item">
@@ -100,7 +103,7 @@
                                     </div>
                                 </div>
                                 <div class="ui five wide column">
-                                    <a src="#" target="_blank"><img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui rounded image"></a>
+                                    <a src="#" target="_blank"><img src="${document.firstPicture}" class="ui rounded image"></a>
                                 </div>
                             </div>
                         </div>
@@ -111,10 +114,10 @@
                 <div class="ui bottom attached segment">
                     <div class="ui middle aligned two column grid">
                         <div class="column">
-                            <a href="#" class="ui teal basic button">上一页</a>
+                            <a href="#" class="ui teal basic button" id="prePage">上一页</a>
                         </div>
                         <div class="right aligned column">
-                            <a href="#" class="ui teal basic button">下一页</a>
+                            <a href="#" class="ui teal basic button" id="nextPage">下一页</a>
                         </div>
                     </div>
                 </div>
@@ -138,29 +141,13 @@
                     </div>
                     <div class="ui teal segment">
                         <div class="ui fluid vertical menu">
-                            <a href="#" class="item">学习日志
-                                <div class="ui teal basic left pointing label">13</div>
-                            </a>
-                            <a href="#" class="item">学习日志
-                                <div class="ui teal basic left pointing label">13</div>
-                            </a>
-                            <a href="#" class="item">学习日志
-                                <div class="ui teal basic left pointing label">13</div>
-                            </a>
-                            <a href="#" class="item">学习日志
-                                <div class="ui teal basic left pointing label">13</div>
-                            </a>
-                            <a href="#" class="item">学习日志
-                                <div class="ui teal basic left pointing label">13</div>
-                            </a>
-                            <a href="#" class="item">学习日志
-                                <div class="ui teal basic left pointing label">13</div>
-                            </a>
+                            <c:forEach items="${typeCountList}" var="typeCount">
+                                <a href="#" class="item">${typeCount.typeName}
+                                    <div class="ui teal basic left pointing label">${typeCount.count}</div>
+                                </a>
+                            </c:forEach>
                         </div>
                     </div>
-
-
-
                 </div>
                 <!--右侧标签-->
                 <div class="ui segments">
@@ -177,38 +164,11 @@
                     </div>
                     <!--标签的具体内容-->
                     <div class="ui teal segment">
-                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">方法论
-                            <div class="detail">23</div>
+                        <c:forEach items="${tagCountList}" var="tag">
+                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">${tag.tagName}
+                            <div class="detail">${tag.count}</div>
                         </a>
-                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">方法论
-                            <div class="detail">23</div>
-                        </a>
-                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">方法论
-                            <div class="detail">23</div>
-                        </a>
-                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">方法论
-                            <div class="detail">23</div>
-                        </a>
-                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">方法论
-                            <div class="detail">23</div>
-                        </a>
-                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">方法论
-                            <div class="detail">23</div>
-                        </a>
-                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">方法论
-                            <div class="detail">23</div>
-                        </a>
-                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">方法论
-                            <div class="detail">23</div>
-                        </a>
-                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">方法论
-                            <div class="detail">23</div>
-                        </a>
-                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">方法论
-                            <div class="detail">23</div>
-                        </a>
-
-
+                        </c:forEach>
                     </div>
 
                 </div>
@@ -218,22 +178,12 @@
                     <div class="ui secondary segment">
                         <i class="bookmark icon"></i>最新推荐
                     </div>
-                    <!--最新推荐的具体内容-->
-                    <div class="ui segment">
-                        <a href="#" target="_blank" class="m-black m-text-thin" >用户故事</a>
-                    </div>
-                    <div class="ui segment">
-                        <a href="#" target="_blank" class="m-black m-text-thin" >用户故事</a>
-                    </div>
-                    <div class="ui segment">
-                        <a href="#" target="_blank" class="m-black m-text-thin" >用户故事</a>
-                    </div>
-                    <div class="ui segment">
-                        <a href="#" target="_blank" class="m-black m-text-thin" >用户故事</a>
-                    </div>
-                    <div class="ui segment">
-                        <a href="#" target="_blank" class="m-black m-text-thin" >用户故事</a>
-                    </div>
+                    <c:forEach items="${recommendDocumentList}" var="recommendDocument">
+                        <!--最新推荐的具体内容-->
+                        <div class="ui segment">
+                            <a href="#" target="_blank" class="m-black m-text-thin" >${recommendDocument.title}</a>
+                        </div>
+                    </c:forEach>
                 </div>
                 <!--二维码-->
                 <div class="ui horizontal divider header">
@@ -298,6 +248,13 @@
     $(".menu.toggle").click(function (){
         $(".m-item").toggleClass('m-mobile-hide');
     });
+
+    $("#nextPage").click(function () {
+        window.location.href='<%=path%>/'+${nextPage}
+    });
+    $("#prePage").click(function () {
+        window.location.href='<%=path%>/'+${prePage}
+    })
 </script>
 </body>
 </html>

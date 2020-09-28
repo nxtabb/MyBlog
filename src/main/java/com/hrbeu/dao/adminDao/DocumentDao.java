@@ -14,4 +14,6 @@ public interface DocumentDao {
     int deleteDocument(Long documentId);
     int documentCount(@Param("document") Document document);
     Document queryDetailedDocument(Long documentId);
+    Document getMostDetailDocument(Long documentId);
+    void createViewCount(Long documentId);
 }

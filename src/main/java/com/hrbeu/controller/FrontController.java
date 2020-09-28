@@ -1,15 +1,21 @@
 package com.hrbeu.controller;
 
 import com.hrbeu.pojo.Document;
+import com.hrbeu.pojo.Type;
+import com.hrbeu.pojo.pojo_sup.Tag_Count;
+import com.hrbeu.pojo.pojo_sup.Type_Count;
 import com.hrbeu.service.LabDocumentService;
 import com.hrbeu.service.adminService.DocumentService;
+import com.hrbeu.utils.Md2Html;
 import com.hrbeu.utils.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,30 +23,98 @@ import java.util.Map;
 @Controller
 public class FrontController {
     @Autowired
+    private DocumentService documentService;
+    @Autowired
     private LabDocumentService labDocumentService;
     @GetMapping("/")
     public String index(Model model){
         int pageIndex =1;
-        int pageSize = 10;
+        int pageSize = 5;
         List<Document> documentList = labDocumentService.getPublishedDocument(pageIndex,pageSize);
         int maxCount = labDocumentService.getPublishedDocumentCount();
+        Integer typeCount = 6;
+        List<Type_Count> typeCountList = labDocumentService.getTypeAndCount(typeCount);
+        Integer tagCount =10;
+        List<Tag_Count> tagCountList = labDocumentService.getTagAndCount(tagCount);
+        Integer recommendDocumentCount = 10;
+        List<Document> recommendDocumentList = labDocumentService.getRecommendDocumentList(recommendDocumentCount);
         Map<String,Integer> pageInfo = PageUtil.page(pageIndex,pageSize,maxCount);
+        model.addAttribute("recommendDocumentList",recommendDocumentList);
+        model.addAttribute("tagCountList",tagCountList);
         model.addAttribute("currentPage",pageIndex);
+        model.addAttribute("typeCountList",typeCountList);
         model.addAttribute("nextPage",pageInfo.get("nextPage"));
         model.addAttribute("prePage",pageInfo.get("prePage"));
         model.addAttribute("documentList",documentList);
+        model.addAttribute("maxCount",maxCount);
         return "index";
     }
     @GetMapping("/{pageIndex}")
     public String indexInPage(@PathVariable("pageIndex")int pageIndex, Model model){
-        int pageSize = 10;
+        int pageSize = 5;
         List<Document> documentList = labDocumentService.getPublishedDocument(pageIndex,pageSize);
         int maxCount = labDocumentService.getPublishedDocumentCount();
+        Integer typeCount = 6;
+        List<Type_Count> typeCountList = labDocumentService.getTypeAndCount(typeCount);
+        Integer tagCount =10;
+        List<Tag_Count> tagCountList = labDocumentService.getTagAndCount(tagCount);
+        Integer recommendDocumentCount = 10;
+        List<Document> recommendDocumentList = labDocumentService.getRecommendDocumentList(recommendDocumentCount);
         Map<String,Integer> pageInfo = PageUtil.page(pageIndex,pageSize,maxCount);
+        model.addAttribute("recommendDocumentList",recommendDocumentList);
+        model.addAttribute("tagCountList",tagCountList);
         model.addAttribute("currentPage",pageIndex);
+        model.addAttribute("typeCountList",typeCountList);
         model.addAttribute("nextPage",pageInfo.get("nextPage"));
         model.addAttribute("prePage",pageInfo.get("prePage"));
         model.addAttribute("documentList",documentList);
+        model.addAttribute("maxCount",maxCount);
         return "index";
     }
+
+    @RequestMapping("/search/{pageIndex}")
+    public String search(@PathVariable("pageIndex")int pageIndex, Model model, HttpServletRequest request){
+        String query = request.getParameter("query");
+        HttpSession session = request.getSession();;
+        if(query!=null&&!query.equals("")){
+            session.removeAttribute("session");
+        }
+        else {
+            query = (String)session.getAttribute("query");
+        }
+        int pageSize = 4;
+        session.setAttribute("query",query);
+        List<Document> documentList = labDocumentService.queryBySearch(query,pageIndex,pageSize);
+        int maxCount = labDocumentService.queryBySearchCount(query);
+        Map<String,Integer> pageInfo = PageUtil.page(pageIndex,pageSize,maxCount);
+        model.addAttribute("documentList",documentList);
+        model.addAttribute("maxCount",maxCount);
+        model.addAttribute("prePage",pageInfo.get("prePage"));
+        model.addAttribute("nextPage",pageInfo.get("nextPage"));
+        model.addAttribute("query",query);
+        return "searchresult";
+    }
+
+    @GetMapping("/document/{documentId}")
+    public String document(@PathVariable("documentId")Long documentId, Model model){
+        documentService.createViewCount(documentId);
+        Document document = documentService.getMostDetailDocument(documentId);
+        if(document!=null){
+            String flagStr = "原创";
+            if(document.getFlag().equals("2")){
+                flagStr = "转载";
+            }
+            if(document.getFlag().equals("3")){
+                flagStr="翻译";
+            }
+            String contentHtml = Md2Html.md2htmlPro(document.getContent());
+            model.addAttribute("contentHtml",contentHtml);
+            model.addAttribute("document",document);
+            model.addAttribute("flagStr",flagStr);
+        }
+
+        return "document";
+
+    }
+
 }

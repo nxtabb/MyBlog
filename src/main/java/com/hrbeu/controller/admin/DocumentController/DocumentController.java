@@ -245,12 +245,12 @@ public class DocumentController {
         String taglist = sb.toString().substring(0,sb.toString().lastIndexOf(","));
         File file = null;
         java.io.File fileOfFile =null;
-        Long fileLength = null;
+        Double fileLength = null;
         //查询附属文件信息
         file = fileService.getFileInfo(documentId,user.getUserId());
         if(file!=null){
             fileOfFile = new java.io.File(PathUtil.getBasePath()+file.getFilePath()+ java.io.File.separator +file.getFileName());
-            fileLength = fileOfFile.length()/1024/1024;
+            fileLength = fileOfFile.length()/1024.0/1024.0;
         }
         model.addObject("fileLength",fileLength);
         model.addObject("file",file);
