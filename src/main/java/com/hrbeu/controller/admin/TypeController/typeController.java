@@ -2,15 +2,13 @@ package com.hrbeu.controller.admin.TypeController;
 
 import com.hrbeu.pojo.Type;
 import com.hrbeu.service.adminService.TypeService;
+import com.hrbeu.utils.PageUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,44 +18,17 @@ import java.util.Map;
 public class typeController {
     @Autowired
     private TypeService typeService;
-    @RequestMapping(value = "/types/{pageIndex}")
-    @ResponseBody
-    public ModelAndView types(@PathVariable("pageIndex")int pageIndex, ModelAndView modelAndView) {
+    @GetMapping(value = "/types/{pageIndex}")
+    public String types(@PathVariable("pageIndex")int pageIndex, Model model) {
         int maxCount = typeService.typeCount();
         int pageSize = 10;
-        List<Type> typeList = new ArrayList<>();
-        int maxPage = 1;
-        if (maxCount < pageSize) {
-            maxPage = 1;
-        } else if (maxCount % pageSize == 0) {
-            maxPage = maxCount / pageSize;
-        } else {
-            maxPage = maxCount / pageSize + 1;
-        }
-        typeList = typeService.queryTypeList(pageIndex, pageSize);
-        int nextPage = 0;
-        int prePage = 0;
-        int currentPage = pageIndex;
-        if (currentPage >= maxPage) {
-            nextPage = maxPage;
-            prePage = currentPage - 1;
-        } else if (currentPage <= 1) {
-            nextPage = currentPage + 1;
-            prePage = 1;
-        } else {
-            nextPage = currentPage + 1;
-            prePage = currentPage - 1;
-        }
-        if(maxPage==1){
-            prePage = 1;
-            nextPage = 1;
-        }
-        modelAndView.addObject("maxCount",maxCount);
-        modelAndView.addObject("nextPage", nextPage);
-        modelAndView.addObject("prePage", prePage);
-        modelAndView.addObject("typeList", typeList);
-        modelAndView.setViewName("/admin/types");
-        return modelAndView;
+        List<Type> typeList = typeService.queryTypeList(pageIndex, pageSize);
+        Map<String,Integer> pageInfo = PageUtil.page(pageIndex,pageSize,maxCount);
+        model.addAttribute("nextPage",pageInfo.get("nextPage"));
+        model.addAttribute("prePage",pageInfo.get("prePage"));
+        model.addAttribute("maxPage",pageInfo.get("maxPage"));
+        model.addAttribute("typeList", typeList);
+        return "/admin/types";
     }
 
     @PostMapping("/types/addtype")

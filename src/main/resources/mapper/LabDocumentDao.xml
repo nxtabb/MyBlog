@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrbeu.dao.LabDocumentDao">
+    <select id="getPublishedDocument" resultType="com.hrbeu.pojo.Document">
+        select * from tb_document where
+        published=1
+        order by view_count
+        limit #{documentIndex},#{pageSize}
+    </select>
+
+</mapper>

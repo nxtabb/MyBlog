@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%String path=request.getContextPath();%>
 <html lang="en">
 <head>
@@ -26,7 +28,7 @@
         <!--创建一个menu-->
         <div class="ui inverted secondary stackable menu">
             <!--创建一个logo-->
-            <h2 class="ui teal header item">Liujie's Lib</h2>
+            <h2 class="ui teal header item">Liujie's Lab</h2>
             <!--菜单栏-->
             <a href="#" class="active m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
@@ -66,111 +68,43 @@
                 </div>
                 <!--博客的列表容器-->
                 <div class="ui attached segment ">
-                    <!--单个列表-->
-                    <div class="ui padded vertical segment m-padded-tb-large">
-                        <div class="ui mobile reversed stackable grid">
-                            <div class="ui eleven wide column">
-                                <h3 class="ui header">你真的理解java编程吗？</h3>
-                                <p class="m-text">java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的</p>
-                                <div class="ui grid">
-                                    <div class="eleven wide column">
-                                        <div class="ui horizontal mini link list">
-                                            <div class="item">
-                                                <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui avatar image">
-                                                <div class="content">
-                                                    <a href="#" class="header">宁熙桐</a>
+                    <c:forEach items="${documentList}" var="document">
+                        <!--单个列表-->
+                        <div class="ui padded vertical segment m-padded-tb-large">
+                            <div class="ui middle aligned mobile reversed stackable grid">
+                                <div class="ui eleven wide column">
+                                    <h3 class="ui header">${document.title}</h3>
+                                    <p class="m-text">${document.description.substring(0,125)}</p>
+                                    <div class="ui grid">
+                                        <div class="eleven wide column">
+                                            <div class="ui horizontal mini link list">
+                                                <div class="item">
+                                                    <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui avatar image">
+                                                    <div class="content">
+                                                        <a href="#" class="header">宁熙桐</a>
+                                                    </div>
+                                                </div>
+                                                <div class="item">
+                                                    <i class="calendar icon"></i><fmt:formatDate value="${document.lastEditTime}" timeStyle="yyyy-MM-dd"/>
+                                                </div>
+                                                <div class="item">
+                                                    <i class="eye icon"></i>${document.viewCount}
                                                 </div>
                                             </div>
-                                            <div class="item">
-                                                <i class="calendar icon"></i>2020-09-16
-                                            </div>
-                                            <div class="item">
-                                                <i class="eye icon"></i>100
-                                            </div>
+                                        </div>
+                                        <div class="right aligned five wide column">
+                                            <a href="#"class="ui label teal basic m-padded-mini" target="_blank">
+                                                ${document.type.typeName}
+                                            </a>
                                         </div>
                                     </div>
-                                    <div class="right aligned five wide column">
-                                        <a href="#"class="ui label teal basic m-padded-mini" target="_blank">
-                                            认知升级
-                                        </a>
-                                    </div>
+                                </div>
+                                <div class="ui five wide column">
+                                    <a src="#" target="_blank"><img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui rounded image"></a>
                                 </div>
                             </div>
-                            <div class="ui five wide column">
-                                <a src="#" target="_blank"><img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui rounded image"></a>
-                            </div>
                         </div>
-                    </div>
-                    <!--单个列表-->
-                    <div class="ui padded vertical segment m-padded-tb-large">
-                        <div class="ui mobile reversed stackable grid">
-                            <div class="ui eleven wide column">
-                                <h3 class="ui header">你真的理解java编程吗？</h3>
-                                <p class="m-text">java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的</p>
-                                <div class="ui grid">
-                                    <div class="eleven wide column">
-                                        <div class="ui horizontal mini link list">
-                                            <div class="item">
-                                                <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui avatar image">
-                                                <div class="content">
-                                                    <a href="#" class="header">宁熙桐</a>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <i class="calendar icon"></i>2020-09-16
-                                            </div>
-                                            <div class="item">
-                                                <i class="eye icon"></i>100
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="right aligned five wide column">
-                                        <a href="#"class="ui label teal basic m-padded-mini" target="_blank">
-                                            认知升级
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ui five wide column">
-                                <a src="#" target="_blank"><img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui rounded image"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!--单个列表-->
-                    <div class="ui padded vertical segment m-padded-tb-large">
-                        <div class="ui mobile reversed stackable grid">
-                            <div class="ui eleven wide column">
-                                <h3 class="ui header">你真的理解java编程吗？</h3>
-                                <p class="m-text">java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的</p>
-                                <div class="ui grid">
-                                    <div class="eleven wide column">
-                                        <div class="ui horizontal mini link list">
-                                            <div class="item">
-                                                <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui avatar image">
-                                                <div class="content">
-                                                    <a href="#" class="header">宁熙桐</a>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <i class="calendar icon"></i>2020-09-16
-                                            </div>
-                                            <div class="item">
-                                                <i class="eye icon"></i>100
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="right aligned five wide column">
-                                        <a href="#"class="ui label teal basic m-padded-mini" target="_blank">
-                                            认知升级
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ui five wide column">
-                                <a src="#" target="_blank"><img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui rounded image"></a>
-                            </div>
-                        </div>
-                    </div>
+                    </c:forEach>
 
                 </div>
                 <!--左侧footer容器 上一页 下一页-->

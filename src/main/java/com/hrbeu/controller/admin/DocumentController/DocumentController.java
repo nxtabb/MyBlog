@@ -10,6 +10,7 @@ import com.hrbeu.service.adminService.FileService;
 import com.hrbeu.service.adminService.TagService;
 import com.hrbeu.service.adminService.TypeService;
 import com.hrbeu.utils.FileUploadUtil;
+import com.hrbeu.utils.PageUtil;
 import com.hrbeu.utils.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -134,44 +135,17 @@ public class DocumentController {
         }
         int pageSize = 7;
         List<Document> documentList = documentService.getDocumentList(pageIndex,pageSize,document);
-
         int maxCount = documentService.documentCount(document);
-        int maxPage = 0;
-        if(maxCount<pageSize){
-            maxPage = 1;
-        }
-        else if(maxCount%pageSize==0) {
-            maxPage = maxCount/pageSize;
-        }
-        else {
-            maxPage = maxCount/pageSize+1;
-        }
-        int prePage = 0;
-        int nextPage = 0;
-        int currentPage = pageIndex;
-        if(currentPage>=maxPage){
-            nextPage = maxPage;
-            prePage = currentPage-1;
-        }
-        else if(currentPage<=1){
-            prePage = 1;
-            nextPage = currentPage+1;
-        }
-        else {
-            prePage = currentPage-1;
-            nextPage = currentPage+1;
-        }
-        if(maxPage==1){
-            prePage=1;
-            nextPage =1;
-        }
+        Map<String,Integer> pageInfo = PageUtil.page(pageIndex,pageSize,maxCount);
+        model.addAttribute("currentPage",pageIndex);
+        model.addAttribute("nextPage",pageInfo.get("nextPage"));
+        model.addAttribute("prePage",pageInfo.get("prePage"));
+        model.addAttribute("maxPage",pageInfo.get("maxPage"));
         model.addAttribute("typeList",typeList);
-        model.addAttribute("prePage",prePage);
-        model.addAttribute("nextPage",nextPage);
         model.addAttribute("document",document);
         model.addAttribute("maxCount",maxCount);
-        model.addAttribute("currentPage",currentPage);
-        model.addAttribute("maxPage",maxPage);
+        model.addAttribute("currentPage",pageIndex);
+
         request.getSession().setAttribute("document",document);
         model.addAttribute("documentList",documentList);
         return "admin/searchresult";

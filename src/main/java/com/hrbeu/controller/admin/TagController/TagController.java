@@ -1,16 +1,15 @@
 package com.hrbeu.controller.admin.TagController;
 
 import com.hrbeu.pojo.Tag;
-import com.hrbeu.pojo.Type;
+
 import com.hrbeu.service.adminService.TagService;
+import com.hrbeu.utils.PageUtil;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,46 +21,17 @@ public class TagController {
     private TagService tagService;
     //进入标签列表
     @RequestMapping(value = "/tags/{pageIndex}")
-    @ResponseBody
-    public ModelAndView tags(@PathVariable("pageIndex")int pageIndex, ModelAndView modelAndView){
+    public String tags(@PathVariable("pageIndex")int pageIndex, Model model){
         int pageSize = 10;
         int maxCount = tagService.tagCount();
-        int maxPage = 0;
-        if(maxCount<pageSize){
-            maxPage = 1;
-        }
-        else if(maxCount%pageSize==0) {
-            maxPage = maxCount/pageSize;
-        }
-        else {
-            maxPage = maxCount/pageSize+1;
-        }
-        pageSize =10;
-        int prePage = 0;
-        int nextPage = 0;
-        int currentPage = pageIndex;
-        if(currentPage>=maxPage){
-            nextPage = maxPage;
-            prePage = currentPage-1;
-        }
-        else if(currentPage<=1){
-            prePage = 1;
-            nextPage = currentPage+1;
-        }
-        if(maxPage==1){
-            prePage=1;
-            nextPage =1;
-        }
-        else {
-            prePage = currentPage-1;
-            nextPage = currentPage+1;
-        }
+        Map<String,Integer> pageInfo = PageUtil.page(pageIndex,pageSize,maxCount);
         List<Tag> tagList = tagService.queryTagList(pageIndex,pageSize);
-        modelAndView.addObject("nextPage",nextPage);
-        modelAndView.addObject("prePage",prePage);
-        modelAndView.addObject("tagList",tagList);
-        modelAndView.setViewName("admin/tags");
-        return modelAndView;
+        model.addAttribute("currentPage",pageIndex);
+        model.addAttribute("nextPage",pageInfo.get("nextPage"));
+        model.addAttribute("prePage",pageInfo.get("prePage"));
+        model.addAttribute("maxPage",pageInfo.get("maxPage"));
+        model.addAttribute("tagList",tagList);
+        return "admin/tags";
     }
     //新增标签
     @PostMapping("/tags/addtag")
