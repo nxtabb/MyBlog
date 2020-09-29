@@ -118,17 +118,18 @@
             </h1>
             <br>
             <div id="content" class="typo typo-selection js-toc-content m-padded-lr-responsive m-padded-tb-large ">
-                <pre><code class="language-css">p{color: red}</code> </pre>
                 ${contentHtml}
             </div>
             <!--文章标签-->
-            <c:forEach items="${document.tagList}" var="tag">
+
             <div class="m-padded-lr">
+                <c:forEach items="${document.tagList}" var="tag">
                 <div class="ui basic teal left pointing label">
                     ${tag.tagName}
                 </div>
+                </c:forEach>
             </div>
-            </c:forEach>
+
             <!--赞赏-->
             <c:if test="${document.appreciate==1}">
                 <div class="ui center aligned segment basic">
@@ -140,8 +141,111 @@
                 <div class="ui orange basic label">
                     <div class="ui images" style="font-size: inherit !important;">
                         <div class="image">
-                            <img src="<%=path%>/resources/images/wechat.png" class="ui rounded bordered image" style="width: 180px">
+                            <img src="<%=path%>/resources/images/wechat.png" class="ui rounded bordered image" style="width: 80px">
                             <div>微信</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--留言区域容器-->
+            <div class="ui bottom attached segment">
+                <!--留言区域列表容器-->
+                <div id="comment-container" class="ui teal segment">
+                    <!--留言列表-->
+                    <div>
+                        <div class="ui threaded comments" style="max-width: 100%;">
+                            <h3 class="ui dividing header">评论</h3>
+
+                            <c:forEach items="${rootcommentList}" var="rootcomment">
+
+                            <div class="comment">
+                                <div class="content">
+                                    <a class="ui author user icon"><i class="user icon"></i> ${rootcomment.nickname}</a>
+                                    <div class="metadata">
+                                        <span class="date"><fmt:formatDate value="${comment.createTime}" pattern="yyyy-MM-dd"/> </span>
+                                    </div>
+                                    <div class="text">
+                                        <h3>${rootcomment.content}</h3>
+                                    </div>
+                                    <div class="actions">
+                                        <a class="reply" data-commentid="${rootcomment.commentId}" data-commentnickname="${rootcomment.nickname}" onclick="reply(this)">回复</a>
+                                    </div>
+                                </div>
+                                <div class="comments">
+                                    <div class="comment">
+                                        <div class="content">
+                                            <a class="author">Jenny Hess</a>
+                                            <div class="metadata">
+                                                <span class="date">Just now</span>
+                                            </div>
+                                            <div class="text">
+                                                Elliot you are always so right :)
+                                            </div>
+                                            <div class="actions">
+                                                <a class="reply">回复</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </c:forEach>
+
+                        </div>
+<%--                            <div class="comment">--%>
+<%--                                <div class="content">--%>
+<%--                                    <a class="author">Elliot Fu</a>--%>
+<%--                                    <div class="metadata">--%>
+<%--                                        <span class="date">Yesterday at 12:30AM</span>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="text">--%>
+<%--                                        <p>This has been very useful for my research. Thanks as well!</p>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="actions">--%>
+<%--                                        <a class="reply">回复</a>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+
+<%--                            <div class="comment">--%>
+<%--                                <div class="content">--%>
+<%--                                    <a class="author">Joe Henderson</a>--%>
+<%--                                    <div class="metadata">--%>
+<%--                                        <span class="date">5 days ago</span>--%>
+<%--                                    </div>--%>
+<%--                                    <div class="text">--%>
+<%--                                        Dude, this is awesome. Thanks so much--%>
+<%--                                    </div>--%>
+<%--                                    <div class="actions">--%>
+<%--                                        <a class="reply">回复</a>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+                        </div>
+                    </div>
+                </div>
+                <!--提交留言的form-->
+                <div id="comment-form" class="ui form">
+                    <div class="required field">
+                        <textarea name="content" placeholder="请输入评论信息"></textarea>
+                    </div>
+                    <input type="hidden" value="${document.documentId}" name="documentId">
+                    <input type="hidden" name="parentId" value="-1">
+                    <div class="required fields">
+                        <div class="field m-mobile-wide m-margin-bottom-tiny">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input type="text" name="nickname" placeholder="姓名">
+                            </div>
+                        </div>
+                        <div class="field m-mobile-wide m-margin-bottom-tiny">
+                            <div class="ui left icon input">
+                                <i class="mail icon"></i>
+                                <input type="text" name="email" placeholder="邮箱">
+                            </div>
+                        </div>
+
+                        <div class="field m-margin-bottom-tiny m-mobile-wide">
+                            <button id="comment-submit" type="button" class="ui teal button m-mobile-wide"><i class="ui edit icon "></i>发布</button>
                         </div>
                     </div>
                 </div>
@@ -254,7 +358,64 @@
     $("#toTop-button").click(function () {
         $(window).scrollTo(0,500);
 
-    })
+    });
+    $('.ui.form').form({
+        fields:{
+            content:{
+                identifier: 'content',
+                rules:[{
+                    type:'empty',
+                    prompt:'标题：请输入评论内容'
+                }]
+            },
+            nickname:{
+                identifier: 'nickname',
+                rules:[{
+                    type:'empty',
+                    prompt:'标题：请输入昵称'
+                }]
+            },
+            email:{
+                identifier: 'email',
+                rules:[{
+                    type:'email',
+                    prompt:'标题：请输入邮箱'
+                }]
+            }
+        }
+    });
+
+    $("#comment-submit").click(function () {
+        var flag = $('.ui.form').form('validate form');
+        if(flag){
+           postData();
+        }
+    });
+    function postData() {
+        $("#comment-container").load('<%=path%>/comments',
+            {
+                "parentId" :$("[name='parentId']").val(),
+                "documentId":$("[name='documentId']").val(),
+                "nickname":$("[name='nickname']").val(),
+                "email":$("[name='email']").val(),
+                "content":$("[name='content']").val()
+            },function (responseTxt,statusTxt,xhr) {
+            window.location.href = '<%=path%>/document/'+${document.documentId}
+            clear();
+        });
+    }
+    function clear() {
+        $("[name='content']").val('');
+        $("[name='parentId']").val(-1);
+        $("[name='content']").attr("placeholder","请输入评论信息...");
+    }
+    function reply(obj) {
+        var commentId = $(obj).data('commentid');
+        var nickname = $(obj).data('commentnickname');
+        $("[name='content']").attr("placeholder","@"+nickname).focus();
+        $("[name='parentId']").val(commentId);
+        $(window).scrollTo($("#comment-form"),500);
+    }
 </script>
 </body>
 </html>

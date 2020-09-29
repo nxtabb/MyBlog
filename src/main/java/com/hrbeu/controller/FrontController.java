@@ -1,18 +1,17 @@
 package com.hrbeu.controller;
 
-import com.hrbeu.pojo.Document;
-import com.hrbeu.pojo.File;
-import com.hrbeu.pojo.Type;
-import com.hrbeu.pojo.User;
+import com.hrbeu.pojo.*;
 import com.hrbeu.pojo.pojo_sup.File_Len;
 import com.hrbeu.pojo.pojo_sup.Tag_Count;
 import com.hrbeu.pojo.pojo_sup.Type_Count;
+import com.hrbeu.service.CommentService;
 import com.hrbeu.service.LabDocumentService;
 import com.hrbeu.service.adminService.DocumentService;
 import com.hrbeu.service.adminService.FileService;
 import com.hrbeu.utils.Md2Html;
 import com.hrbeu.utils.PageUtil;
 import com.hrbeu.utils.PathUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +33,8 @@ public class FrontController {
     private LabDocumentService labDocumentService;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private CommentService commentService;
     @GetMapping("/")
     public String index(Model model){
         int pageIndex =1;
@@ -134,7 +135,18 @@ public class FrontController {
             model.addAttribute("document",document);
             model.addAttribute("flagStr",flagStr);
         }
+        //评论显示
+        //根评论
+        List<Comment> rootcommentList = commentService.queryRootCommentByDocumentId(documentId);
+        //叶子评论
+        //第二层评论
+        List<List<Comment>> secondComment = commentService.querySecondCommentByRoot(rootcommentList);
+        //第三层评论
+
+        model.addAttribute("rootcommentList",rootcommentList);
         return "document";
     }
+
+
 
 }
