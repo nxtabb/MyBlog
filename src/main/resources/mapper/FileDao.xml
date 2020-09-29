@@ -8,7 +8,7 @@
         values (#{fileName},#{filePath},#{userId},#{documentId},#{fileOriginName},#{createTime},#{lastEditTime})
     </insert>
 
-    <select id="queryFile" resultType="com.hrbeu.pojo.File">
+    <select id="queryFileList" resultType="com.hrbeu.pojo.File">
         select * from tb_file where document_id =#{documentId} and user_id = #{userId}
     </select>
 
@@ -25,4 +25,7 @@
         file_name = #{fileName},file_path=#{filePath},file_origin_name=#{fileOriginName},last_edit_time=#{lastEditTime}
         where file_id =#{fileId}
     </update>
+    <select id="queryFileListByDocumentId" parameterType="long" resultType="com.hrbeu.pojo.File">
+        select * from tb_file where document_id =#{value }
+    </select>
 </mapper>

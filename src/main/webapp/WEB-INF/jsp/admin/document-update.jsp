@@ -92,17 +92,19 @@
             </tr>
             </thead>
             <tbody>
-            <c:if test="${file.fileId!=null}">
+            <c:if test="${fileLenList!=null}">
+                <c:forEach items="${fileLenList}" var="file">
                 <tr>
-                    <td>${file.fileOriginName}</td>
-                    <td><fmt:formatNumber value="${fileLength}" type="number" maxFractionDigits="2" /></td>
-                    <td><fmt:formatDate value="${file.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
-                    <td><fmt:formatDate value="${file.lastEditTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
+                    <td>${file.file.fileOriginName}</td>
+                    <td><fmt:formatNumber value="${file.length}" type="number" maxFractionDigits="2" /></td>
+                    <td><fmt:formatDate value="${file.file.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
+                    <td><fmt:formatDate value="${file.file.lastEditTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
                     <td>
-                        <a href="<%=path%>/admin/files/downloadFile/${file.fileId}" class="ui mini teal button">下载</a>
-                        <a href="<%=path%>/admin/files/onlydeleteFile/${document.documentId}/${file.fileId}" class="ui mini red button">删除</a>
+                        <a href="<%=path%>/admin/files/downloadFile/${file.file.fileId}" class="ui mini teal button">下载</a>
+                        <a href="<%=path%>/admin/files/onlydeleteFile/${document.documentId}/${file.file.fileId}" class="ui mini red button">删除</a>
                     </td>
                 </tr>
+                </c:forEach>
             </c:if>
             </tbody>
         </table>
@@ -200,7 +202,7 @@
                     <label for="commentAble">评论</label>
                 </div>
                 <h6>附属文件再次上传</h6>
-                <input type="file"  name="codefile">
+                <input type="file"  name="codefile" multiple>
             </div>
             <div class="ui error message"></div>
 

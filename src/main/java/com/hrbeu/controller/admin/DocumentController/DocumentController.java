@@ -5,6 +5,7 @@ import com.hrbeu.pojo.File;
 import com.hrbeu.pojo.Tag;
 import com.hrbeu.pojo.Type;
 import com.hrbeu.pojo.User;
+import com.hrbeu.pojo.pojo_sup.File_Len;
 import com.hrbeu.service.adminService.DocumentService;
 import com.hrbeu.service.adminService.FileService;
 import com.hrbeu.service.adminService.TagService;
@@ -25,10 +26,7 @@ import java.io.*;
 import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -200,7 +198,6 @@ public class DocumentController {
         String[] strings = request.getParameterValues("tagIdList");
         List<Tag> tagList = new ArrayList<>();
         String[] tags_Str = strings[0].split(",");
-
         for(String tag_Str:tags_Str){
             Tag tag = new Tag();
             tag.setTagId(Long.parseLong(tag_Str));
@@ -211,12 +208,16 @@ public class DocumentController {
         documentService.saveDocument(document);
         String documentTitle = document.getTitle();
         String nowTimeStr = format.format(new Date());
-        Map<String,String>fileInfo = FileUploadUtil.fileUpload(request,documentTitle,nowTimeStr);
+        Map<String,List<String>>fileInfo = FileUploadUtil.fileUpload(request,documentTitle,nowTimeStr);
         //对文件的数据表进行添加
-        String fileName = fileInfo.get("fileName");
-        String filePath = fileInfo.get("filePath");
-        String fileOriginName = fileInfo.get("fileOriginName");
-        fileService.addFile(fileName,filePath,user.getUserId(),document.getDocumentId(),fileOriginName,new Date(),new Date());
+        if(fileInfo!=null){
+            List<String> fileNameList = fileInfo.get("fileNameList");
+            List<String> filePathList = fileInfo.get("filePathList");
+            List<String> fileOriginNameList = fileInfo.get("fileOriginNameList");
+            for(int i=0;i<fileNameList.size();i++){
+                fileService.addFile(fileNameList.get(i),filePathList.get(i),user.getUserId(),document.getDocumentId(),fileOriginNameList.get(i),new Date(),new Date());
+            }
+        }
         return "redirect:/admin/documentsIndex/1";
     }
 
@@ -243,17 +244,23 @@ public class DocumentController {
             sb.append(",");
         }
         String taglist = sb.toString().substring(0,sb.toString().lastIndexOf(","));
-        File file = null;
         java.io.File fileOfFile =null;
         Double fileLength = null;
         //查询附属文件信息
-        file = fileService.getFileInfo(documentId,user.getUserId());
-        if(file!=null){
-            fileOfFile = new java.io.File(PathUtil.getBasePath()+file.getFilePath()+ java.io.File.separator +file.getFileName());
-            fileLength = fileOfFile.length()/1024.0/1024.0;
+        List<File> fileList = fileService.getFileListInfo(documentId,user.getUserId());
+        List<File_Len> fileLenList = new ArrayList<>();
+        if(fileList!=null){
+
+            for(File file:fileList){
+                File_Len file_len = new File_Len();
+                fileOfFile = new java.io.File(PathUtil.getBasePath()+ java.io.File.separator +user.getUsername()+ java.io.File.separator+document.getTitle()+ java.io.File.separator+file.getFileName());
+                fileLength = fileOfFile.length()/1024.0/1024.0;
+                file_len.setFile(file);
+                file_len.setLength(fileLength);
+                fileLenList.add(file_len);
+            }
         }
-        model.addObject("fileLength",fileLength);
-        model.addObject("file",file);
+        model.addObject("fileLenList",fileLenList);
         model.addObject("taglist_doc",taglist);
         model.setViewName("admin/document-update");
         return model;
@@ -309,30 +316,17 @@ public class DocumentController {
         //更新文件
         String documentTitle = document.getTitle();
         String nowTimeStr = format.format(new Date());
-        //添加新文件
-        Map<String,String>fileInfo = FileUploadUtil.fileUpload(request,documentTitle,nowTimeStr);
+        Map<String,List<String>>fileInfo = FileUploadUtil.fileUpload(request,documentTitle,nowTimeStr);
+        //对文件的数据表进行添加
         if(fileInfo!=null){
-            //删除旧文件
-            File file = fileService.getFileInfo(documentId,user.getUserId());
-            if(file!=null){
-                java.io.File file1 = new java.io.File(PathUtil.getBasePath()+file.getFilePath()+ java.io.File.separator+file.getFileName());
-                if(file1.exists()){
-                    PathUtil.delFileOrPath(PathUtil.getBasePath()+file.getFilePath()+ java.io.File.separator+file.getFileName());
-                }
-                //对文件的数据表进行修改
-                Long fileId = file.getFileId();
-                String fileName = fileInfo.get("fileName");
-                String filePath = fileInfo.get("filePath");
-                String fileOriginName = fileInfo.get("fileOriginName");
-                fileService.updateFile(fileId,fileName,filePath,user.getUserId(),documentId,fileOriginName,file.getCreateTime(),new Date());
-            }else {
-                String fileName = fileInfo.get("fileName");
-                String filePath = fileInfo.get("filePath");
-                String fileOriginName = fileInfo.get("fileOriginName");
-                fileService.addFile(fileName,filePath,user.getUserId(),documentId,fileOriginName,new Date(),new Date());
+            List<String> fileNameList = fileInfo.get("fileNameList");
+            List<String> filePathList = fileInfo.get("filePathList");
+            List<String> fileOriginNameList = fileInfo.get("fileOriginNameList");
+            for(int i=0;i<fileNameList.size();i++){
+                fileService.addFile(fileNameList.get(i),filePathList.get(i),user.getUserId(),document.getDocumentId(),fileOriginNameList.get(i),new Date(),new Date());
             }
         }
-        return "redirect:/admin/documentsIndex/1";
+        return "redirect:/admin/documents/updatedocument/"+documentId;
     }
 }
 

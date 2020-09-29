@@ -166,7 +166,7 @@
                     <label for="commentAble">评论</label>
                 </div>
                 <h6>附属文件上传</h6>
-                <input type="file"  name="codefile">
+                <input type="file"  name="codefile" multiple>
             </div>
 
             <div class="ui error message"></div>

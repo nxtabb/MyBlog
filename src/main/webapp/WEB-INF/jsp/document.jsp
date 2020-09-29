@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -68,7 +69,7 @@
                     </div>
                 </div>
                 <div class="item">
-                    <i class="calendar icon"></i>${document.lastEditTime}
+                    <i class="calendar icon"></i><fmt:formatDate value="${document.lastEditTime}" pattern="yyyy-MM-dd"/>
                 </div>
                 <div class="item">
                     <i class="eye icon"></i>${document.viewCount}
@@ -92,16 +93,18 @@
             </tr>
             </thead>
             <tbody>
-            <c:if test="${file.fileId!=null}">
+            <c:if test="${fileLenList!=null}">
+                <c:forEach items="${fileLenList}" var="file">
                 <tr>
-                    <td>${file.fileOriginName}</td>
-                    <td>${fileLength}</td>
-                    <td><fmt:formatDate value="${file.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
-                    <td><fmt:formatDate value="${file.lastEditTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
+                    <td>${file.file.fileOriginName}</td>
+                    <td><fmt:formatNumber value="${file.length}" maxFractionDigits="3"/> </td>
+                    <td><fmt:formatDate value="${file.file.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
+                    <td><fmt:formatDate value="${file.file.lastEditTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
                     <td>
-                        <a href="<%=path%>/admin/files/downloadFile/${file.fileId}" class="ui mini teal button">下载</a>
+                        <a href="<%=path%>/admin/files/downloadFile/${file.file.fileId}" class="ui mini teal button">下载</a>
                     </td>
                 </tr>
+                </c:forEach>
             </c:if>
             </tbody>
         </table>
@@ -152,7 +155,7 @@
                 <div class="eleven wide column">
                     <ul class="list">
                         <li>作者：${document.user.nickname}</li>
-                        <li>发表时间：${document.createTime}</li>
+                        <li>发表时间：<fmt:formatDate value="${document.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </li>
                         <li>版权声明：自由转载-非商用-保持署名</li>
                         <li>公众号转载 ：请在文本添加作者公众号二维码</li>
                     </ul>

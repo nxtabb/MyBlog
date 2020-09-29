@@ -1,13 +1,18 @@
 package com.hrbeu.controller;
 
 import com.hrbeu.pojo.Document;
+import com.hrbeu.pojo.File;
 import com.hrbeu.pojo.Type;
+import com.hrbeu.pojo.User;
+import com.hrbeu.pojo.pojo_sup.File_Len;
 import com.hrbeu.pojo.pojo_sup.Tag_Count;
 import com.hrbeu.pojo.pojo_sup.Type_Count;
 import com.hrbeu.service.LabDocumentService;
 import com.hrbeu.service.adminService.DocumentService;
+import com.hrbeu.service.adminService.FileService;
 import com.hrbeu.utils.Md2Html;
 import com.hrbeu.utils.PageUtil;
+import com.hrbeu.utils.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +32,8 @@ public class FrontController {
     private DocumentService documentService;
     @Autowired
     private LabDocumentService labDocumentService;
+    @Autowired
+    private FileService fileService;
     @GetMapping("/")
     public String index(Model model){
         int pageIndex =1;
@@ -99,6 +107,19 @@ public class FrontController {
     public String document(@PathVariable("documentId")Long documentId, Model model){
         documentService.createViewCount(documentId);
         Document document = documentService.getMostDetailDocument(documentId);
+        //查询附属文件信息
+        List<File> fileList = fileService.getFileListInfo(documentId);
+        List<File_Len> fileLenList = new ArrayList<>();
+        if(fileList!=null){
+            for(File file:fileList){
+                File_Len file_len = new File_Len();
+                java.io.File fileOfFile = new java.io.File(PathUtil.getBasePath()+file.getFilePath());
+                Double fileLength = fileOfFile.length()/1024.0/1024.0;
+                file_len.setFile(file);
+                file_len.setLength(fileLength);
+                fileLenList.add(file_len);
+            }
+        }
         if(document!=null){
             String flagStr = "原创";
             if(document.getFlag().equals("2")){
@@ -108,13 +129,12 @@ public class FrontController {
                 flagStr="翻译";
             }
             String contentHtml = Md2Html.md2htmlPro(document.getContent());
+            model.addAttribute("fileLenList",fileLenList);
             model.addAttribute("contentHtml",contentHtml);
             model.addAttribute("document",document);
             model.addAttribute("flagStr",flagStr);
         }
-
         return "document";
-
     }
 
 }
