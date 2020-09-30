@@ -118,6 +118,7 @@
         <result property="commentAble" column="comment_able"/>
         <result property="shareInfo" column="share_info"/>
         <result property="recommend" column="recommend"/>
+        <result property="viewCount" column="view_count"/>
         <result property="lastEditTime" column="last_edit_time"/>
         <result property="published" column="published"/>
         <result property="description" column="description"/>
@@ -140,6 +141,7 @@
         doc.comment_able,
         doc.share_info,
         doc.recommend,
+        doc.view_count,
         doc.last_edit_time,
         doc.published,
         doc.description,
@@ -240,6 +242,16 @@
         set view_count = view_count+1
         where document_id =#{value }
     </update>
+
+
+    <select id="queryDocumentByTypeId" resultMap="mostDetailDocument">
+        select * from tb_document doc,tb_user user,tb_type type,tb_document_tag tag,tb_tag tbtag where doc.type_id = type.type_id
+        and doc.document_id = tag.document_id and doc.user_id = user.user_id and tag.tag_id = tbtag.tag_id
+        and doc.type_id = #{typeId} LIMIT #{documentIndex},#{pageSize}
+    </select>
+    <select id="queryDocumentCountByTypeId" parameterType="long" resultType="int">
+        select count(*) from tb_document where type_id = #{value }
+    </select>
 
 
 

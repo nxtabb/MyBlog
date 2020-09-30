@@ -15,4 +15,5 @@ public interface LabDocumentService {
     List<Document> getRecommendDocumentList(Integer recommendDocumentCount);
     List<Document> queryBySearch(String query,int pageIndex,int pageSize);
     int queryBySearchCount(String query);
+    List<Type_Count> getTypeAndCountByTypeId();
 }

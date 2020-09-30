@@ -55,6 +55,17 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    public List<Document> queryDocumentByTypeId(int pageIndex,int pageSize,Long typeId) {
+        int documentIndex = pageSize*(pageIndex-1);
+        return documentDao.queryDocumentByTypeId(documentIndex,pageSize,typeId);
+    }
+
+    @Override
+    public int queryDocumentCountByTypeId(Long typeId) {
+        return documentDao.queryDocumentCountByTypeId(typeId);
+    }
+
+    @Override
     public List<Document> getDocumentList(Document document) {
 
         return documentDao.getList(document);

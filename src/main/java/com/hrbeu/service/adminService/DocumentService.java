@@ -16,4 +16,6 @@ public interface DocumentService {
     Document queryDetailedDocument(Long documentId);
     Document getMostDetailDocument(Long documentId);
     void createViewCount(Long documentId);
+    List<Document> queryDocumentByTypeId(int pageIndex,int pageSize,Long typeId);
+    int queryDocumentCountByTypeId(Long typeId);
 }

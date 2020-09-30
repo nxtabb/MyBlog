@@ -16,4 +16,5 @@ public interface LabDocumentDao {
     List<Document> getRecommendDocumentList(Integer recommendDocumentCount);
     List<Document> queryBySearch(@Param("query") String query,@Param("documentIndex") Integer documentIndex,@Param("pageSize") Integer pageSize);
     int queryCountBySearch(@Param("query") String query);
+    List<Type_Count> getTypeAndCountByTypeId();
 }

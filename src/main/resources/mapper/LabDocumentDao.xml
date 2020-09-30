@@ -107,5 +107,9 @@
         select count(*) from tb_document where title like '%${query}%' or content like '%${query}%' and published=1
     </select>
 
+    <select id="getTypeAndCountByTypeId" parameterType="long" resultType="com.hrbeu.pojo.pojo_sup.Type_Count">
+        select type_id,type_name,count(*) count from tb_type
+    </select>
+
 
 </mapper>

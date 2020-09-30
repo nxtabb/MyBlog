@@ -58,5 +58,10 @@ public class LabDocumentServiceImpl implements LabDocumentService {
         return labDocumentDao.queryCountBySearch(query);
     }
 
+    @Override
+    public List<Type_Count> getTypeAndCountByTypeId() {
+        return labDocumentDao.getTypeAndCountByTypeId();
+    }
+
 
 }
