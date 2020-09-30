@@ -56,7 +56,7 @@
         <div class="ui top attached segment">
             <div class="ui middle aligned two column grid">
                 <div class="column">
-                    <h3 class="ui teal header">标签</h3>
+                    <h3 class="ui teal header">查询结果</h3>
                 </div>
                 <div class="right aligned column">
                     共<h2 class="ui orange header m-inline-block m-text-thin"> ${maxCount} </h2>篇
@@ -71,7 +71,7 @@
                 <div class="ui padded vertical segment m-padded-tb-large">
                     <div class="ui mobile reversed stackable grid">
                         <div class="ui eleven wide column">
-                            <h3 class="ui header">${document.title}</h3>
+                            <a href="<%=path%>/document/${document.documentId}"> <h3 class="ui header">${document.title}</h3></a>
                             <p class="m-text"><c:if test="${document.description.length()>150}">${document.description.substring(0,150)}</c:if>
                                 <c:if test="${document.description.length()<=150}">${document.description}</c:if></p>
                             <div class="ui stackable grid">

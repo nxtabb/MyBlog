@@ -16,4 +16,6 @@ public interface DocumentDao {
     Document queryDetailedDocument(Long documentId);
     Document getMostDetailDocument(Long documentId);
     void createViewCount(Long documentId);
+    List<Document> queryDocumentByTypeId(@Param("documentIndex") int documentIndex,@Param("pageSize") int pageSize,@Param("typeId") Long typeId);
+    int queryDocumentCountByTypeId(Long typeId);
 }
