@@ -1,6 +1,7 @@
 package com.hrbeu.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Comment {
     private Long commentId;
@@ -8,18 +9,45 @@ public class Comment {
     private String email;
     private String content;
     private Date createTime;
-    private Long parentId;
+    private Comment parentComment;
     private Long documentId;
+    private Long parentId;
+    private List<Comment> commnets;
+    private Integer adminComment;
     public Comment(){}
 
-    public Comment(Long commentId, String nickname, String email, String content, Date createTime, Long parentId, Long documentId) {
+    public Comment(Long commentId, String nickname, String email, String content, Date createTime, Long documentId, Long parentId) {
         this.commentId = commentId;
         this.nickname = nickname;
         this.email = email;
         this.content = content;
         this.createTime = createTime;
-        this.parentId = parentId;
         this.documentId = documentId;
+        this.parentId = parentId;
+    }
+
+    public Integer getAdminComment() {
+        return adminComment;
+    }
+
+    public void setAdminComment(Integer adminComment) {
+        this.adminComment = adminComment;
+    }
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public List<Comment> getCommnets() {
+        return commnets;
+    }
+
+    public void setCommnets(List<Comment> commnets) {
+        this.commnets = commnets;
     }
 
     public Long getCommentId() {
@@ -62,12 +90,12 @@ public class Comment {
         this.createTime = createTime;
     }
 
-    public Long getParentId() {
-        return parentId;
+    public Comment getParentComment() {
+        return parentComment;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setParentComment(Comment parentComment) {
+        this.parentComment = parentComment;
     }
 
     public Long getDocumentId() {

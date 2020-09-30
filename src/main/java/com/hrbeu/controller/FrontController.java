@@ -8,6 +8,7 @@ import com.hrbeu.service.CommentService;
 import com.hrbeu.service.LabDocumentService;
 import com.hrbeu.service.adminService.DocumentService;
 import com.hrbeu.service.adminService.FileService;
+import com.hrbeu.utils.CommentUtil;
 import com.hrbeu.utils.Md2Html;
 import com.hrbeu.utils.PageUtil;
 import com.hrbeu.utils.PathUtil;
@@ -137,13 +138,14 @@ public class FrontController {
         }
         //评论显示
         //根评论
-        List<Comment> rootcommentList = commentService.queryRootCommentByDocumentId(documentId);
-        //叶子评论
-        //第二层评论
-        List<List<Comment>> secondComment = commentService.querySecondCommentByRoot(rootcommentList);
-        //第三层评论
-
-        model.addAttribute("rootcommentList",rootcommentList);
+        List<Comment> commentList = commentService.listCommentByDocumentId(documentId);
+        for(Comment comment:commentList){
+            List<Comment> commentsofComment = comment.getCommnets();
+            for(Comment child:commentsofComment){
+                child.setParentComment(commentService.getParentComment(child));
+            }
+        }
+        model.addAttribute("commentList",commentList);
         return "document";
     }
 

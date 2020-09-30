@@ -156,71 +156,46 @@
                     <div>
                         <div class="ui threaded comments" style="max-width: 100%;">
                             <h3 class="ui dividing header">评论</h3>
-
-                            <c:forEach items="${rootcommentList}" var="rootcomment">
-
+                            <c:forEach items="${commentList}" var="comment">
                             <div class="comment">
                                 <div class="content">
-                                    <a class="ui author user icon"><i class="user icon"></i> ${rootcomment.nickname}</a>
+                                    <a class="ui author user icon"><i class="user icon"></i> ${comment.nickname}<c:if test="${comment.adminComment==1}"><div class="ui mini basic teal left pointing label m-padded-mini">管理员</div></c:if></a>
                                     <div class="metadata">
-                                        <span class="date"><fmt:formatDate value="${comment.createTime}" pattern="yyyy-MM-dd"/> </span>
+                                        <span class="date"><fmt:formatDate value="${comment.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </span><c:if test="${sessionScope.user!=null&&comment.commnets.size()==0}"><a href="<%=path%>/deletecomment/${comment.commentId}">删除</a></c:if>
                                     </div>
                                     <div class="text">
-                                        <h3>${rootcomment.content}</h3>
+                                        <h3>${comment.content}</h3>
                                     </div>
                                     <div class="actions">
-                                        <a class="reply" data-commentid="${rootcomment.commentId}" data-commentnickname="${rootcomment.nickname}" onclick="reply(this)">回复</a>
+                                        <a class="reply" data-commentid="${comment.commentId}" data-commentnickname="${comment.nickname}" onclick="reply(this)">回复</a>
                                     </div>
                                 </div>
+                                <c:if test="${comment.commnets!=null&&comment.commnets.size()>0}">
+                                    <c:forEach items="${comment.commnets}" var="childcomment">
                                 <div class="comments">
                                     <div class="comment">
                                         <div class="content">
-                                            <a class="author">Jenny Hess</a>
+
+                                            <a class="ui author user icon"><i class="user icon"></i> ${childcomment.nickname}<c:if test="${childcomment.adminComment==1}"><div class="ui mini basic teal left pointing label m-padded-mini">管理员</div></c:if></a>
+                                            <span class="m-teal">&nbsp;@${comment.nickname}</span><c:if test="${comment.adminComment==1}"><div class="ui mini basic teal left pointing label m-padded-mini">管理员</div></c:if></a>
                                             <div class="metadata">
-                                                <span class="date">Just now</span>
+                                                <span class="date"><fmt:formatDate value="${childcomment.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </span><c:if test="${sessionScope.user!=null&&childcomment.commnets.size()==0}"><a href="<%=path%>/deletecomment/${childcomment.commentId}">删除</a></c:if>
                                             </div>
                                             <div class="text">
-                                                Elliot you are always so right :)
+                                                    ${childcomment.content}
                                             </div>
                                             <div class="actions">
-                                                <a class="reply">回复</a>
+                                                <a class="reply" data-commentid="${childcomment.commentId}" data-commentnickname="${childcomment.nickname}" onclick="reply(this)">回复</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                    </c:forEach>
+                                </c:if>
                             </div>
                             </c:forEach>
-
                         </div>
-<%--                            <div class="comment">--%>
-<%--                                <div class="content">--%>
-<%--                                    <a class="author">Elliot Fu</a>--%>
-<%--                                    <div class="metadata">--%>
-<%--                                        <span class="date">Yesterday at 12:30AM</span>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="text">--%>
-<%--                                        <p>This has been very useful for my research. Thanks as well!</p>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="actions">--%>
-<%--                                        <a class="reply">回复</a>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-
-<%--                            <div class="comment">--%>
-<%--                                <div class="content">--%>
-<%--                                    <a class="author">Joe Henderson</a>--%>
-<%--                                    <div class="metadata">--%>
-<%--                                        <span class="date">5 days ago</span>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="text">--%>
-<%--                                        Dude, this is awesome. Thanks so much--%>
-<%--                                    </div>--%>
-<%--                                    <div class="actions">--%>
-<%--                                        <a class="reply">回复</a>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-                        </div>
+                    </div>
                     </div>
                 </div>
                 <!--提交留言的form-->
@@ -234,13 +209,13 @@
                         <div class="field m-mobile-wide m-margin-bottom-tiny">
                             <div class="ui left icon input">
                                 <i class="user icon"></i>
-                                <input type="text" name="nickname" placeholder="姓名">
+                                <input type="text" name="nickname" placeholder="姓名" value="${sessionScope.user.nickname}">
                             </div>
                         </div>
                         <div class="field m-mobile-wide m-margin-bottom-tiny">
                             <div class="ui left icon input">
                                 <i class="mail icon"></i>
-                                <input type="text" name="email" placeholder="邮箱">
+                                <input type="text" name="email" placeholder="邮箱" value="${sessionScope.user.email}">
                             </div>
                         </div>
 

@@ -15,7 +15,9 @@ body{
     position:  fixed !important;
     z-index: 10 !important;
 }
-
+.m-teal{
+    color: #00B5AD !important;
+}
 .m-right-bottom{
     bottom: 0 !important;
     right: 0 !important;

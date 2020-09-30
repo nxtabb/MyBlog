@@ -10,4 +10,7 @@ public interface CommentDao {
     int saveComment(Comment comment);
     List<Comment> queryRootCommentByDocumentId(Long documentId);
     List<Comment> queryChildComment(Comment comment);
+    Comment queryParentComment(Long parentId);
+    void deleteComment(Long commentId);
+    Long queryDocumentOfComment(Long commentId);
 }
