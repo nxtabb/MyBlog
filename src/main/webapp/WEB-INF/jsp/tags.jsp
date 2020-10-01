@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
 <%String path=request.getContextPath();%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,19 +28,21 @@
         <!--创建一个menu-->
         <div class="ui inverted secondary stackable menu">
             <!--创建一个logo-->
-            <h2 class="ui teal header item">Liujie's Lib</h2>
+            <h2 class="ui teal header item">Liujie's Lab</h2>
             <!--菜单栏-->
-            <a href="#" class="m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
-            <a href="#" class="active m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="<%=path%>/" class="m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
+            <a href="<%=path%>/types/-1/1" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
+            <a href="<%=path%>/tags/-1/1" class="active m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>归档</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
             <!--右侧搜索框-->
             <div class="right item m-mobile-hide">
-                <div class="ui icon input">
-                    <input type="text" placeholder="Search....">
-                    <i class="search link icon"></i>
-                </div>
+                <form action="<%=path%>/search/1" method="post" target="_blank" name="search">
+                    <div class="ui icon input">
+                        <input type="text" placeholder="Search...." name="query">
+                        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -56,210 +60,76 @@
                     <h3 class="ui teal header">标签</h3>
                 </div>
                 <div class="right aligned column">
-                    共<h2 class="ui orange header m-inline-block m-text-thin"> 14 </h2>篇
+                    共<h2 class="ui orange header m-inline-block m-text-thin"> ${count} </h2>篇
                 </div>
             </div>
         </div>
         <!--标签区域-->
         <div class="ui attached segment m-padded-tb-large">
-            <a href="#" target="_blank" class="ui teal basic left pointing large label m-margin-tb-tiny">方法论
-                <div class="detail">23</div>
+            <c:forEach items="${tagCountList}" var="tagCount">
+            <a href="<%=path%>/tags/${tagCount.tagId}/1" target="_blank" class="ui teal basic left pointing large label m-margin-tb-tiny">${tagCount.tagName}
+                <div class="detail">${tagCount.count}</div>
             </a>
-            <a href="#" target="_blank" class="ui  basic left pointing large label m-margin-tb-tiny">方法论
-                <div class="detail">23</div>
-            </a>
-            <a href="#" target="_blank" class="ui  basic left pointing large label m-margin-tb-tiny">方法论
-                <div class="detail">23</div>
-            </a>
-            <a href="#" target="_blank" class="ui  basic left pointing large label m-margin-tb-tiny">方法论
-                <div class="detail">23</div>
-            </a>
+            </c:forEach>
         </div>
         <!--标签下面的博客列表-->
         <div class="ui teal top attached segment ">
             <!--单个博客-->
+            <c:forEach items="${documentList}" var="document">
             <div class="ui padded vertical segment m-padded-tb-large">
                 <div class="ui mobile reversed stackable grid">
                     <div class="ui eleven wide column">
-                        <h3 class="ui header">你真的理解java编程吗？</h3>
-                        <p class="m-text">java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的</p>
+                        <a href="<%=path%>/document/${document.documentId}"><h3 class="ui header">${document.title}</h3></a>
+                        <p class="m-text">${document.description}</p>
                         <div class="ui stackable grid">
                             <div class="row">
                                 <div class="eleven wide column">
                                     <div class="ui horizontal mini link list">
                                         <div class="item">
-                                            <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui avatar image">
+                                            <img src="${document.user.image}" class="ui avatar image">
                                             <div class="content">
-                                                <a href="#" class="header">宁熙桐</a>
+                                                <a href="#" class="header">${document.user.nickname}</a>
                                             </div>
                                         </div>
                                         <div class="item">
-                                            <i class="calendar icon"></i>2020-09-16
+                                            <i class="calendar icon"></i><fmt:formatDate value="${document.lastEditTime}" pattern="yyyy-MM-dd"/>
                                         </div>
                                         <div class="item">
-                                            <i class="eye icon"></i>100
+                                            <i class="eye icon"></i>${document.viewCount}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="right aligned five wide column">
-                                    <a href="#"class="ui label teal basic m-padded-mini" target="_blank">
-                                        认知升级
+                                    <a href="<%=path%>/types/${document.type.typeId}/1"class="ui label teal basic m-padded-mini" target="_blank">
+                                        ${document.type.typeName}
                                     </a>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="column">
-                                    <a href="#" class="ui basic teal left pointing label m-padded-mini">方法论</a>
+                                    <c:forEach items="${document.tagList}" var="tag">
+                                    <a href="<%=path%>/tags/${tag.tagId}/1" class="ui basic teal left pointing label m-padded-mini">${tag.tagName}</a>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>
 
                     </div>
                     <div class="ui five wide column">
-                        <a src="#" target="_blank"><img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui rounded image"></a>
+                        <a src="#" target="_blank"><img src="${document.firstPicture}" class="ui rounded image"></a>
                     </div>
                 </div>
             </div>
-            <!--单个博客-->
-            <div class="ui padded vertical segment m-padded-tb-large">
-                <div class="ui mobile reversed stackable grid">
-                    <div class="ui eleven wide column">
-                        <h3 class="ui header">你真的理解java编程吗？</h3>
-                        <p class="m-text">java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的</p>
-                        <div class="ui stackable grid">
-                            <div class="row">
-                                <div class="eleven wide column">
-                                    <div class="ui horizontal mini link list">
-                                        <div class="item">
-                                            <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui avatar image">
-                                            <div class="content">
-                                                <a href="#" class="header">宁熙桐</a>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <i class="calendar icon"></i>2020-09-16
-                                        </div>
-                                        <div class="item">
-                                            <i class="eye icon"></i>100
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="right aligned five wide column">
-                                    <a href="#"class="ui label teal basic m-padded-mini" target="_blank">
-                                        认知升级
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="column">
-                                    <a href="#" class="ui basic teal left pointing label m-padded-mini">方法论</a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="ui five wide column">
-                        <a src="#" target="_blank"><img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui rounded image"></a>
-                    </div>
-                </div>
-            </div>
-            <!--单个博客-->
-            <div class="ui padded vertical segment m-padded-tb-large">
-                <div class="ui mobile reversed stackable grid">
-                    <div class="ui eleven wide column">
-                        <h3 class="ui header">你真的理解java编程吗？</h3>
-                        <p class="m-text">java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的</p>
-                        <div class="ui stackable grid">
-                            <div class="row">
-                                <div class="eleven wide column">
-                                    <div class="ui horizontal mini link list">
-                                        <div class="item">
-                                            <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui avatar image">
-                                            <div class="content">
-                                                <a href="#" class="header">宁熙桐</a>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <i class="calendar icon"></i>2020-09-16
-                                        </div>
-                                        <div class="item">
-                                            <i class="eye icon"></i>100
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="right aligned five wide column">
-                                    <a href="#"class="ui label teal basic m-padded-mini" target="_blank">
-                                        认知升级
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="column">
-                                    <a href="#" class="ui basic teal left pointing label m-padded-mini">方法论</a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="ui five wide column">
-                        <a src="#" target="_blank"><img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui rounded image"></a>
-                    </div>
-                </div>
-            </div>
-            <!--单个博客-->
-            <div class="ui padded vertical segment m-padded-tb-large">
-                <div class="ui mobile reversed stackable grid">
-                    <div class="ui eleven wide column">
-                        <h3 class="ui header">你真的理解java编程吗？</h3>
-                        <p class="m-text">java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的,java看起来很简单，但真正了解java原理的人并不多，尤其是java虚拟机部分的知识是极其抽象的</p>
-                        <div class="ui stackable grid">
-                            <div class="row">
-                                <div class="eleven wide column">
-                                    <div class="ui horizontal mini link list">
-                                        <div class="item">
-                                            <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui avatar image">
-                                            <div class="content">
-                                                <a href="#" class="header">宁熙桐</a>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <i class="calendar icon"></i>2020-09-16
-                                        </div>
-                                        <div class="item">
-                                            <i class="eye icon"></i>100
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="right aligned five wide column">
-                                    <a href="#"class="ui label teal basic m-padded-mini" target="_blank">
-                                        认知升级
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="column">
-                                    <a href="#" class="ui basic teal left pointing label m-padded-mini">方法论</a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="ui five wide column">
-                        <a src="#" target="_blank"><img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" class="ui rounded image"></a>
-                    </div>
-                </div>
-            </div>
-
+            </c:forEach>
         </div>
-
         <!--上一页 下一页-->
         <div class="ui bottom attached segment">
             <div class="ui middle aligned two column grid">
                 <div class="column">
-                    <a href="#" class="ui teal basic button">上一页</a>
+                    <a href="#" class="ui teal basic button" id="prePage">上一页</a>
                 </div>
                 <div class="right aligned column">
-                    <a href="#" class="ui teal basic button">下一页</a>
+                    <a href="#" class="ui teal basic button" id="nextPage">下一页</a>
                 </div>
             </div>
         </div>
@@ -315,6 +185,13 @@
     $(".menu.toggle").click(function (){
         $(".m-item").toggleClass('m-mobile-hide');
     });
+
+    $("#nextPage").click(function () {
+        window.location.href='<%=path%>/tags/${currenttagId}/${nextPage}'
+    });
+    $("#prePage").click(function () {
+        window.location.href='<%=path%>/tags/${currenttagId}/${prePage}'
+    })
 
 </script>
 </body>

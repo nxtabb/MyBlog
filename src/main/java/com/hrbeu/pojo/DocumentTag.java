@@ -3,7 +3,7 @@ package com.hrbeu.pojo;
 public class DocumentTag {
     private Long documentId;
     private Long tagId;
-
+    public DocumentTag(){}
     public DocumentTag(Long documentId, Long tagId) {
         this.documentId = documentId;
         this.tagId = tagId;

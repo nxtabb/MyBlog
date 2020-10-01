@@ -63,5 +63,10 @@ public class LabDocumentServiceImpl implements LabDocumentService {
         return labDocumentDao.getTypeAndCountByTypeId();
     }
 
+    @Override
+    public List<Tag_Count> getTagAndCountByTagId() {
+        return labDocumentDao.getTagAndCountByTagId();
+    }
+
 
 }

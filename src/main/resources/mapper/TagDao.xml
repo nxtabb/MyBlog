@@ -28,4 +28,6 @@
     <select id="getAllTags" resultType="com.hrbeu.pojo.Tag">
         select * from tb_tag
     </select>
+
+
 </mapper>

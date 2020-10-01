@@ -107,8 +107,21 @@
         select count(*) from tb_document where title like '%${query}%' or content like '%${query}%' and published=1
     </select>
 
-    <select id="getTypeAndCountByTypeId" parameterType="long" resultType="com.hrbeu.pojo.pojo_sup.Type_Count">
-        select type_id,type_name,count(*) count from tb_type
+    <select id="getTypeAndCountByTypeId" resultType="com.hrbeu.pojo.pojo_sup.Type_Count">
+        SELECT tb_type.type_id,count(*) count,tb_type.type_name
+        from
+        tb_document doc
+        ,tb_type where
+        doc.type_id = tb_type.type_id
+        GROUP BY tb_type.type_id ORDER BY count desc
+    </select>
+    <select id="getTagAndCountByTagId" resultType="com.hrbeu.pojo.pojo_sup.Tag_Count">
+        SELECT tb_tag.tag_id,count(*) count,tb_tag.tag_name
+        from
+        tb_document doc
+        ,tb_tag,tb_document_tag where
+        doc.document_id = tb_document_tag.document_id and tb_document_tag.tag_id = tb_tag.tag_id
+        GROUP BY tb_tag.tag_id ORDER BY count desc
     </select>
 
 

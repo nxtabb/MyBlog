@@ -30,7 +30,7 @@
         <!--创建一个menu-->
         <div class="ui inverted secondary stackable menu">
             <!--创建一个logo-->
-            <h2 class="ui teal header item">Liujie's Lib后台管理</h2>
+            <h2 class="ui teal header item">Liujie's Lab后台管理</h2>
             <!--菜单栏-->
             <a href="<%=path%>/admin/documentsIndex/1" class="active m-item item m-mobile-hide"><i class="home icon"></i>文档</a>
             <a href="<%=path%>/admin/types/1" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
@@ -72,7 +72,7 @@
         <div class="ui success message">
             <i class="close icon"></i>
             <div class="header">提示：</div>
-            <p>因为只允许存在一个附属文件，因此建议上传一个压缩文件，里面存放所有代码、配置等</p>
+            <p>建议上传一个压缩文件，里面存放代码、配置文件、环境等</p>
         </div>
         <form class="ui form" action="<%=path%>/admin/documents/adddocument" method="post" id="document_form"  enctype="multipart/form-data">
             <!--输入标题-->

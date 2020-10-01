@@ -16,5 +16,8 @@
     <delete id="deleteById" parameterType="long">
         delete from tb_document_tag where document_id = #{value }
     </delete>
+    <select id="queryTagListByDocumentId" parameterType="long" resultType="com.hrbeu.pojo.DocumentTag">
+        select * from tb_document_tag where document_id =#{value }
+    </select>
 
 </mapper>

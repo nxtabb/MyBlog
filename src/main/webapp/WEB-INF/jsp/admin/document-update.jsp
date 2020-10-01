@@ -31,7 +31,7 @@
         <!--创建一个menu-->
         <div class="ui inverted secondary stackable menu">
             <!--创建一个logo-->
-            <h2 class="ui teal header item">Liujie's Lib后台管理</h2>
+            <h2 class="ui teal header item">Liujie's Lab后台管理</h2>
             <!--菜单栏-->
             <a href="<%=path%>/admin/documentsIndex/1" class="active m-item item m-mobile-hide"><i class="home icon"></i>文档</a>
             <a href="<%=path%>/admin/types/1" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
@@ -76,7 +76,7 @@
         <div class="ui success message">
             <i class="close icon"></i>
             <div class="header">提示：</div>
-            <p>亲爱的用户，您可以先删除附属文件在上传新的附属文件，或直接上传新的附属文件，系统会自动替换原文件</p>
+            <p>亲爱的用户，您可以先删除附属文件在上传新的附属文件，或直接上传新的附属文件，系统不会自动删除同名文件</p>
         </div>
 
 

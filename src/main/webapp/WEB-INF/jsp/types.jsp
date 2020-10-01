@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%String path=request.getContextPath();%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -27,11 +28,11 @@
         <!--创建一个menu-->
         <div class="ui inverted secondary stackable menu">
             <!--创建一个logo-->
-            <h2 class="ui teal header item">Liujie's Lib</h2>
+            <h2 class="ui teal header item">Liujie's Lab</h2>
             <!--菜单栏-->
-            <a href="#" class="m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
-            <a href="#" class="active m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="<%=path%>/" class="m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
+            <a href="<%=path%>/types/-1/1" class="active m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
+            <a href="<%=path%>/tags/-1/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>归档</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
             <!--右侧搜索框-->
@@ -59,7 +60,7 @@
                     <h3 class="ui teal header">分类</h3>
                 </div>
                 <div class="right aligned column">
-                    共<h2 class="ui orange header m-inline-block m-text-thin"> ${count} </h2>篇
+                    共<h2 class="ui orange header m-inline-block m-text-thin">${count} </h2>篇
                 </div>
             </div>
         </div>
@@ -88,13 +89,13 @@
                             <div class="eleven wide column">
                                 <div class="ui horizontal mini link list">
                                     <div class="item">
-                                        <img src="${document.firstPicture}" class="ui avatar image">
+                                        <img src="${document.user.image}" class="ui avatar image">
                                         <div class="content">
                                             <a href="#" class="header">${document.user.nickname}</a>
                                         </div>
                                     </div>
                                     <div class="item">
-                                        <i class="calendar icon"></i>${document.lastEditTime}
+                                        <i class="calendar icon"></i><fmt:formatDate value="${document.lastEditTime}" pattern="yyyy-MM-dd"/>
                                     </div>
                                     <div class="item">
                                         <i class="eye icon"></i>${document.viewCount}
@@ -109,7 +110,7 @@
                         </div>
                     </div>
                     <div class="ui five wide column">
-                        <a src="#" target="_blank"><img src="${document.user.image}" class="ui rounded image"></a>
+                        <a src="#" target="_blank"><img src="${document.firstPicture}" class="ui rounded image"></a>
                     </div>
                 </div>
             </div>
@@ -186,6 +187,7 @@
     $("#prePage").click(function () {
         window.location.href='<%=path%>/types/${currenttypeId}/${prePage}'
     })
+
 
 </script>
 </body>

@@ -16,4 +16,5 @@ public interface LabDocumentService {
     List<Document> queryBySearch(String query,int pageIndex,int pageSize);
     int queryBySearchCount(String query);
     List<Type_Count> getTypeAndCountByTypeId();
+    List<Tag_Count> getTagAndCountByTagId();
 }

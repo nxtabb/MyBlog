@@ -35,9 +35,9 @@
             <!--创建一个logo-->
             <h2 class="ui teal header item">Liujie's Lab</h2>
             <!--菜单栏-->
-            <a href="#" class="m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="<%=path%>/" class="m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
+            <a href="<%=path%>/types/-1/1" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
+            <a href="<%=path%>/tags/-1/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>归档</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
             <!--右侧搜索框-->

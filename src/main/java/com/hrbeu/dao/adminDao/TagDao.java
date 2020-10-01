@@ -1,5 +1,6 @@
 package com.hrbeu.dao.adminDao;
 
+import com.hrbeu.pojo.DocumentTag;
 import com.hrbeu.pojo.Tag;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,4 +15,5 @@ public interface TagDao {
     int tagCount();
     int checkTag(String tagName);
     List<Tag> getAllTags();
+    List<DocumentTag> queryTagListByDocumentId(Long documentId);
 }

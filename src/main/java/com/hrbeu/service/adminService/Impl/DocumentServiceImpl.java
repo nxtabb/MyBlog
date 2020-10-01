@@ -2,12 +2,15 @@ package com.hrbeu.service.adminService.Impl;
 
 import com.hrbeu.dao.adminDao.DocumentDao;
 import com.hrbeu.dao.adminDao.DocumentTagDao;
+import com.hrbeu.dao.adminDao.TagDao;
 import com.hrbeu.pojo.Document;
+import com.hrbeu.pojo.DocumentTag;
 import com.hrbeu.pojo.Tag;
 import com.hrbeu.service.adminService.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,6 +20,8 @@ public class DocumentServiceImpl implements DocumentService {
     private DocumentDao documentDao;
     @Autowired
     private DocumentTagDao documentTagDao;
+    @Autowired
+    private TagDao tagDao;
 
 
     @Override
@@ -63,6 +68,27 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public int queryDocumentCountByTypeId(Long typeId) {
         return documentDao.queryDocumentCountByTypeId(typeId);
+    }
+
+    @Override
+    public List<Document> queryDocumentByTagId(int pageIndex, int pageSize, Long tagId) {
+        int documentIndex = pageSize*(pageIndex-1);
+        List<Document> documentList= documentDao.queryDocumentByTagId(documentIndex,pageSize,tagId);
+        for(Document document:documentList){
+            List<DocumentTag> documentTagList = documentTagDao.queryTagListByDocumentId(document.getDocumentId());
+            List<Tag> tagList = new ArrayList<>();
+            for(DocumentTag documentTag:documentTagList){
+                Tag tag = tagDao.queryTag(documentTag.getTagId());
+                tagList.add(tag);
+            }
+            document.setTagList(tagList);
+        }
+        return documentList;
+    }
+
+    @Override
+    public int queryDocumentCountByTagId(Long tagId) {
+        return documentDao.queryDocumentCountByTagId(tagId);
     }
 
     @Override

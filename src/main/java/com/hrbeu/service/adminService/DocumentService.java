@@ -18,4 +18,6 @@ public interface DocumentService {
     void createViewCount(Long documentId);
     List<Document> queryDocumentByTypeId(int pageIndex,int pageSize,Long typeId);
     int queryDocumentCountByTypeId(Long typeId);
+    List<Document> queryDocumentByTagId(int pageIndex, int pageSize, Long tagId);
+    int queryDocumentCountByTagId(Long tagId);
 }

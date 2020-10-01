@@ -32,7 +32,7 @@
             <!--菜单栏-->
             <a href="<%=path%>/" class="active m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
             <a href="<%=path%>/types/-1/1" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
+            <a href="<%=path%>/tags/-1/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>归档</a>
             <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
             <!--右侧搜索框-->
@@ -96,7 +96,7 @@
                                             </div>
                                         </div>
                                         <div class="right aligned five wide column">
-                                            <a href="#"class="ui label teal basic m-padded-mini" target="_blank">
+                                            <a href="<%=path%>/types/${document.type.typeId}/1"class="ui label teal basic m-padded-mini" target="_blank">
                                                 ${document.type.typeName}
                                             </a>
                                         </div>
