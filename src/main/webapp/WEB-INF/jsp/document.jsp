@@ -38,8 +38,8 @@
             <a href="<%=path%>/" class="m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
             <a href="<%=path%>/types/-1/1" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
             <a href="<%=path%>/tags/-1/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>归档</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+            <a href="<%=path%>/archives" class="m-item item m-mobile-hide"><i class="tags icon"></i>归档</a>
+            <a href="<%=path%>/about" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我们</a>
             <!--右侧搜索框-->
             <div class="right item m-mobile-hide">
                 <form action="<%=path%>/search/1" method="post" target="_blank" name="search">
@@ -147,7 +147,7 @@
                     </div>
                 </div>
             </div>
-
+            <c:if test="${document.commentAble==1}">
             <!--留言区域容器-->
             <div class="ui bottom attached segment">
                 <!--留言区域列表容器-->
@@ -225,6 +225,7 @@
                     </div>
                 </div>
             </div>
+        </c:if>
         </div>
         <!--博客信息说明-->
         <div class="ui attached positive message">
@@ -250,7 +251,7 @@
 <!--小工具条-->
 <div class="m-padded-mini m-fixed m-right-bottom">
     <div class="ui vertical buttons ">
-        <button type="button" class="ui toc teal button">目录</button>
+        <a href="#comment-container" class="ui teal button">评论</a>
         <div id="toTop-button" class="ui teal button"><i class="chevron up icon"></i></div>
     </div>
 </div>
@@ -261,47 +262,7 @@
 </div>
 
 <!--底部容器-->
-<footer class="ui inverted vertical segment m-padded-tb-massive">
-    <div class="ui center aligned container">
-        <!--将页面分成16份-->
-        <div class="ui inverted divided stackable grid">
-            <!--微信头像占三份-->
-            <div class="three wide column">
-                <div class="ui inverted link list">
-                    <div class="item">
-                        <img src="<%=path%>/resources/images/wechat.png" class="ui rounded image" style="width: 150px">
-                    </div>
-                </div>
-            </div>
-            <div class="three wide column">
-                <h4 class="ui inverted header">最新博客</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">用户故事</a>
-                    <a href="#" class="item">java教程大全</a>
-                    <a href="#" class="item">springboot是什么</a>
-                </div>
-            </div>
-            <div class="three wide column">
-                <h4 class="ui inverted header">联系我们</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">Email:519923938@qq.com</a>
-                    <a href="#" class="item">QQ:519923938</a>
-                    <a href="#" class="item">Phone:18646201718</a>
-                </div>
-            </div>
-            <div class="seven wide column">
-                <h4 class="ui inverted header">介绍</h4>
-                <p>
-                    这是我的博客，会分享关于编程 写作 思考等任何相关的内容，希望可以对你起到帮助
-                </p>
-            </div>
-
-        </div>
-        <div class="ui inverted section divider"></div>
-        <p class="m-text-thin m-text-spaced">Copyright(C)2020-2021 Designed by NingXiTong</p>
-
-    </div>
-</footer>
+<<jsp:include page="footer.jsp"/>
 <!--引入jquery-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
 <!--引入semantic的js库-->

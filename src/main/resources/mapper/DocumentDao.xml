@@ -39,6 +39,9 @@
         <if test="document!=null and document.recommend!=null">
             and doc.recommend = #{document.recommend}
         </if>
+        <if test="document!=null and document.user!=null and document.user.userId!=null">
+            and doc.user_id = #{document.user.userId}
+        </if>
         </where>
         limit #{documentIndex},#{pageSize}
     </select>
@@ -77,6 +80,9 @@
         </if>
         <if test="document!=null and document.recommend!=null">
             and doc.recommend = #{document.recommend}
+        </if>
+        <if test="document!=null and document.user!=null and document.user.userId!=null">
+            and doc.user_id = #{document.user.userId}
         </if>
         </where>
     </select>
@@ -260,6 +266,25 @@
     </select>
     <select id="queryDocumentCountByTagId" parameterType="long" resultType="int">
         select count(document_id) from tb_document_tag where tag_id = #{value }
+    </select>
+
+    <select id="getTimeGroupByYearAndMonth" resultType="string">
+        select DATE_FORMAT(doc.last_edit_time,'%Y-%M') as year from tb_document doc GROUP BY year ORDER BY year desc;
+    </select>
+
+    <select id="findDocumentByTime" parameterType="string" resultMap="mostDetailDocument">
+        select * from
+        tb_document doc,
+        tb_user user,
+        tb_type type,
+        tb_document_tag tag,
+        tb_tag tbtag
+        where
+        doc.type_id = type.type_id and
+        doc.document_id = tag.document_id and
+        doc.user_id = user.user_id and
+        tag.tag_id = tbtag.tag_id and
+        DATE_FORMAT(doc.last_edit_time,'%Y-%M') = #{value }
     </select>
 
 

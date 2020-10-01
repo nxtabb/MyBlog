@@ -30,7 +30,7 @@
         <!--创建一个menu-->
         <div class="ui inverted secondary stackable menu">
             <!--创建一个logo-->
-            <h2 class="ui teal header item">Liujie's Lab后台管理</h2>
+            <a href="#"><h2 class="ui teal header item" id="index-btn">Liujie's Lab后台管理</h2></a>
             <!--菜单栏-->
             <a href="<%=path%>/admin/documentsIndex/1" class="active m-item item m-mobile-hide"><i class="home icon"></i>文档</a>
             <a href="<%=path%>/admin/types/1" class="m-item item m-mobile-hide"><i class="idea icon"></i>分类</a>
@@ -91,6 +91,11 @@
                     <input type="text" name="title" placeholder="标题">
                 </div>
             </div>
+            <!--文档描述-->
+            <h2>文档摘要</h2>
+            <div class="required field">
+                <textarea placeholder="文档描述" name="description"></textarea>
+            </div>
             <!--textarea-->
             <div class="required field">
                 <div id="md-content" style="z-index: 1 !important;">
@@ -136,11 +141,8 @@
             <div class="required field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">首图</label>
-                    <input type="text" name="firstPicture" placeholder="首图引用地址">
+                    <input type="text" name="firstPicture" placeholder="首图引用地址" value="https://image.baidu.com/search/detail?ct=503316480&z=undefined&tn=baiduimagedetail&ipn=d&word=heu%20tupian&step_word=&ie=utf-8&in=&cl=2&lm=-1&st=undefined&hd=undefined&latest=undefined&copyright=undefined&cs=1362119574,3866861349&os=3737734021,2348439849&simid=3469554099,330755155&pn=1&rn=1&di=50160&ln=798&fr=&fmq=1601558894711_R&fm=&ic=undefined&s=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&is=0,0&istype=0&ist=&jit=&bdtype=0&spn=0&pi=0&gsm=0&objurl=http%3A%2F%2Fimg.qqzhi.com%2Fupload%2Fimg_4_3523155721D4037630023_26.jpg&rpstart=0&rpnum=0&adpicid=0&force=undefined">
                 </div>
-            </div>
-            <div class="required field">
-                <textarea placeholder="文档描述" name="description"></textarea>
             </div>
             <input type="hidden" name="saveorpublic" id="saveorpublic">
             <!--checkbox的容器-->
@@ -180,47 +182,7 @@
     </div>
 </div>
 <!--底部容器-->
-<footer class="ui inverted vertical segment m-padded-tb-massive">
-    <div class="ui center aligned container">
-        <!--将页面分成16份-->
-        <div class="ui inverted divided stackable grid">
-            <!--微信头像占三份-->
-            <div class="three wide column">
-                <div class="ui inverted link list">
-                    <div class="item">
-                        <img src="<%=path%>/resources/images/wechat.png" class="ui rounded image" style="width: 150px">
-                    </div>
-                </div>
-            </div>
-            <div class="three wide column">
-                <h4 class="ui inverted header">最新文档</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">用户故事</a>
-                    <a href="#" class="item">java教程大全</a>
-                    <a href="#" class="item">springboot是什么</a>
-                </div>
-            </div>
-            <div class="three wide column">
-                <h4 class="ui inverted header">联系我们</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">Email:519923938@qq.com</a>
-                    <a href="#" class="item">QQ:519923938</a>
-                    <a href="#" class="item">Phone:18646201718</a>
-                </div>
-            </div>
-            <div class="seven wide column">
-                <h4 class="ui inverted header">介绍</h4>
-                <p>
-                    这是我的系统，会分享关于编程 写作 思考等任何相关的内容，希望可以对你起到帮助
-                </p>
-            </div>
-
-        </div>
-        <div class="ui inverted section divider"></div>
-        <p class="m-text-thin m-text-spaced">Copyright(C)2020-2021 Designed by NingXiTong</p>
-
-    </div>
-</footer>
+<jsp:include page="../footer.jsp"/>
 <!--引入jquery-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
 <!--引入semantic的js库-->
@@ -304,6 +266,10 @@
         $(this).closest('.message').transition('fade');
 
     });
+    $("#index-btn").click(function () {
+        window.location.href='<%=path%>/admin/index';
+
+    })
 
 </script>
 </body>

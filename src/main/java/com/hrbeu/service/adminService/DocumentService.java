@@ -20,4 +20,6 @@ public interface DocumentService {
     int queryDocumentCountByTypeId(Long typeId);
     List<Document> queryDocumentByTagId(int pageIndex, int pageSize, Long tagId);
     int queryDocumentCountByTagId(Long tagId);
+    List<String> getTimeGroupByYearAndMonth();
+    List<Document> findDocumentByTime(String time);
 }

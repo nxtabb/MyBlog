@@ -20,4 +20,6 @@ public interface DocumentDao {
     int queryDocumentCountByTypeId(Long typeId);
     List<Document> queryDocumentByTagId(@Param("documentIndex") int documentIndex, @Param("pageSize")int pageSize,@Param("tagId") Long tagId);
     int queryDocumentCountByTagId(Long tagId);
+    List<String> getTimeGroupByYearAndMonth();
+    List<Document> findDocumentByTime(String time);
 }

@@ -92,6 +92,16 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    public List<String> getTimeGroupByYearAndMonth() {
+        return documentDao.getTimeGroupByYearAndMonth();
+    }
+
+    @Override
+    public List<Document> findDocumentByTime(String time) {
+        return documentDao.findDocumentByTime(time);
+    }
+
+    @Override
     public List<Document> getDocumentList(Document document) {
 
         return documentDao.getList(document);

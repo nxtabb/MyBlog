@@ -44,45 +44,18 @@ public class DocumentController {
 
     //进入文件列表+页码
     @GetMapping("/documentsIndex/{pageIndex}")
-    public String documents(@PathVariable("pageIndex")int pageIndex,Model model){
+    public String documents(@PathVariable("pageIndex")int pageIndex,Model model,HttpServletRequest request){
         int pageSize = 7;
-        int maxCount = documentService.documentCount(null);
-        List<Document> documentList = documentService.getDocumentList(pageIndex,pageSize,null);
+        User user = (User)request.getSession().getAttribute("user");
+        Document document = new Document();
+        document.setUser(user);
+        int maxCount = documentService.documentCount(document);
+        List<Document> documentList = documentService.getDocumentList(pageIndex,pageSize,document);
         List<Type> typeList = typeService.queryAllType();
-        int maxPage = 0;
-        if(maxCount<pageSize){
-            maxPage = 1;
-        }
-        else if(maxCount%pageSize==0) {
-            maxPage = maxCount/pageSize;
-        }
-        else {
-            maxPage = maxCount/pageSize+1;
-        }
-        int prePage = 0;
-        int nextPage = 0;
-        int currentPage = pageIndex;
-        if(currentPage>=maxPage){
-            nextPage = maxPage;
-            prePage = currentPage-1;
-        }
-        else if(currentPage<=1){
-            prePage = 1;
-            nextPage = currentPage+1;
-        }
-        else {
-            prePage = currentPage-1;
-            nextPage = currentPage+1;
-        }
-        if(maxPage==1){
-            prePage=1;
-            nextPage =1;
-        }
-
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Map<String,Integer> pageInfo = PageUtil.page(pageIndex,pageSize,maxCount);
         model.addAttribute("typeList",typeList);
-        model.addAttribute("prePage",prePage);
-        model.addAttribute("nextPage",nextPage);
+        model.addAttribute("prePage",pageInfo.get("prePage"));
+        model.addAttribute("nextPage",pageInfo.get("nextPage"));
         model.addAttribute("documentList",documentList);
         return "admin/document";
     }

@@ -12,13 +12,14 @@
     <meta charset="UTF-8">
     <!--设置移动端-->
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>标签</title>
+    <title>关于我们</title>
     <!--引入css-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="<%=path%>/resources/css/me.css">
 </head>
 
 <body>
+
 <!--导航栏容器-->
 <nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
     <!--为了让logo更加靠右，因此将其放入container中-->
@@ -31,14 +32,16 @@
             <a href="<%=path%>/" class="m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
             <a href="<%=path%>/types/-1/1" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
             <a href="<%=path%>/tags/-1/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
-            <a href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>归档</a>
-            <a href="#" class="active m-item item m-mobile-hide"><i class="info icon"></i>关于我</a>
+            <a href="<%=path%>/archives" class="m-item item m-mobile-hide"><i class="tags icon"></i>归档</a>
+            <a href="<%=path%>/about" class="active m-item item m-mobile-hide"><i class="info icon"></i>关于我们</a>
             <!--右侧搜索框-->
             <div class="right item m-mobile-hide">
-                <div class="ui icon input">
-                    <input type="text" placeholder="Search....">
-                    <i class="search link icon"></i>
-                </div>
+                <form action="<%=path%>/search/1" method="post" target="_blank" name="search">
+                    <div class="ui icon input">
+                        <input type="text" placeholder="Search...." value="${query}" name="query">
+                        <i onclick="document.forms['search'].submit()" class="search link icon"></i>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -46,6 +49,7 @@
         <i class="sidebar icon"></i>
     </a>
 </nav>
+<br><br>
 <!--中间内容容器-->
 <div class="m-padded-tb-large m-container">
     <div class="ui container">
@@ -53,19 +57,24 @@
             <!--图片部分-->
             <div class="eleven wide column">
                 <div class="ui segment">
-                    <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=800x600&quality=96&stripmeta=0&type=jpg" class="ui rounded image">
+                    <img src="<%=path%>/resources/images/school.png" class="ui rounded image" style="height: 570px" width="1213">
                 </div>
             </div>
             <!--右侧说明部分-->
             <div class="five wide column">
                 <!--关于我-->
                 <div class="ui top attached segment">
-                    <div class="ui header">关于我</div>
+                    <div class="ui header">关于我们</div>
                 </div>
                 <!--第一行文字说明-->
                 <div class="ui attached segment">
-                    <p class="m-text-thin">宁熙桐，一个独立开发者，折腾在0和1的学生，一个终身学习者，将学习无线循环，希望借是可以共同成长的小伙伴。</p>
-                    <p class="m-text-thin">宁熙桐，一个独立开发者，折腾在0和1的学生，一个终身学习者，将学习无线循环，希望借是可以共同成长的小伙伴。</p>
+                    <p class="m-text-thin">研究方向:人工智能、数据与知识工程、软件开发技术</p>
+                    <p class="m-text-thin">承担项目:<br>
+                        1.“自升式钻井平台设计建造信息化管理技术研究”  工信部高技术船舶项目<br>
+                        2.  "基于可拓集理论的数据挖掘技术的研究" 省自然基金项目<br>
+                        3.  "基于组件的知识发现的平台研究"   校基金项目<br>
+                        4. “社会保障联网审计软件系统”  金审工程项目<br>
+                        5. “高校实验室综合管理系统” 省级教改项目<br></p>
                 </div>
                 <!--第二行-->
                 <div class="ui attached segment">
@@ -99,48 +108,9 @@
     </div>
 
 </div>
-<!--底部容器-->
-<footer class="ui inverted vertical segment m-padded-tb-massive">
-    <div class="ui center aligned container">
-        <!--将页面分成16份-->
-        <div class="ui inverted divided stackable grid">
-            <!--微信头像占三份-->
-            <div class="three wide column">
-                <div class="ui inverted link list">
-                    <div class="item">
-                        <img src="http://localhost:8080/MyBlog/resources/images/wechat.png" class="ui rounded image" style="width: 150px">
-                    </div>
-                </div>
-            </div>
-            <div class="three wide column">
-                <h4 class="ui inverted header">最新博客</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">用户故事</a>
-                    <a href="#" class="item">java教程大全</a>
-                    <a href="#" class="item">springboot是什么</a>
-                </div>
-            </div>
-            <div class="three wide column">
-                <h4 class="ui inverted header">联系我们</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">Email:519923938@qq.com</a>
-                    <a href="#" class="item">QQ:519923938</a>
-                    <a href="#" class="item">Phone:18646201718</a>
-                </div>
-            </div>
-            <div class="seven wide column">
-                <h4 class="ui inverted header">介绍</h4>
-                <p>
-                    这是我的博客，会分享关于编程 写作 思考等任何相关的内容，希望可以对你起到帮助
-                </p>
-            </div>
+<br><br><br><br><br><br><br>
 
-        </div>
-        <div class="ui inverted section divider"></div>
-        <p class="m-text-thin m-text-spaced">Copyright(C)2020-2021 Designed by NingXiTong</p>
-
-    </div>
-</footer>
+<jsp:include page="footer.jsp"/>
 <!--引入jquery-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
 <!--引入semantic的js库-->
