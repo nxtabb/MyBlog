@@ -1,14 +1,17 @@
 package com.hrbeu.service.adminService.Impl;
 
+import com.hrbeu.dao.CommentDao;
 import com.hrbeu.dao.adminDao.DocumentDao;
 import com.hrbeu.dao.adminDao.DocumentTagDao;
+import com.hrbeu.dao.adminDao.FileDao;
 import com.hrbeu.dao.adminDao.TagDao;
-import com.hrbeu.pojo.Document;
-import com.hrbeu.pojo.DocumentTag;
-import com.hrbeu.pojo.Tag;
+import com.hrbeu.pojo.*;
 import com.hrbeu.service.adminService.DocumentService;
+import com.hrbeu.service.adminService.FileService;
+import com.hrbeu.utils.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,12 @@ public class DocumentServiceImpl implements DocumentService {
     private DocumentTagDao documentTagDao;
     @Autowired
     private TagDao tagDao;
+    @Autowired
+    private FileDao fileDao;
+    @Autowired
+    private CommentDao commentDao;
+    @Autowired
+    private FileService fileService;
 
 
     @Override
@@ -102,6 +111,17 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    @Transactional
+    public void deleteDocumentAndFileAndComment(Long documentId, User user) {
+        commentDao.deleteCommentByDocumentId(documentId);
+        deleteFile(documentId,user);
+        documentTagDao.deleteById(documentId);
+        documentDao.deleteDocument(documentId);
+
+
+    }
+
+    @Override
     public List<Document> getDocumentList(Document document) {
 
         return documentDao.getList(document);
@@ -129,5 +149,32 @@ public class DocumentServiceImpl implements DocumentService {
         return documentDao.documentCount(document);
     }
 
+    public void deleteFile(Long documentId, User user) {
+        //删除文件
+        Document document = documentDao.queryDocument(documentId);
+        String documentTitle = document.getTitle();
+        String filePathStr = PathUtil.getBasePath()+ java.io.File.separator+user.getUsername()+ java.io.File.separator+documentTitle;
+        java.io.File filePath = new java.io.File(filePathStr);
+        //判断是否存在
+        if(filePath.exists()){
+            //判断是否是文件夹
+            if(filePath.isDirectory()){
+                //获取文件夹下的所有文件
+                java.io.File[] files = filePath.listFiles();
+                //遍历删除
+                for(java.io.File f:files){
+                    f.delete();
+                }
+            }
+            //最后删除该文件夹或文件。
+            filePath.delete();
+            List<File> fileList = fileDao.queryFileList(documentId,user.getUserId());
+            for(File file:fileList){
+                //删除表数据
+                fileDao.deleteFile(file.getFileId());
+            }
+        }
 
+
+    }
 }

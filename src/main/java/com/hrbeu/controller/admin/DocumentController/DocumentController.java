@@ -6,6 +6,7 @@ import com.hrbeu.pojo.Tag;
 import com.hrbeu.pojo.Type;
 import com.hrbeu.pojo.User;
 import com.hrbeu.pojo.pojo_sup.File_Len;
+import com.hrbeu.service.CommentService;
 import com.hrbeu.service.adminService.DocumentService;
 import com.hrbeu.service.adminService.FileService;
 import com.hrbeu.service.adminService.TagService;
@@ -41,6 +42,8 @@ public class DocumentController {
     private TagService tagService;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private CommentService commentService;
 
     //进入文件列表+页码
     @GetMapping("/documentsIndex/{pageIndex}")
@@ -64,8 +67,7 @@ public class DocumentController {
     @GetMapping("/documents/deleteById/{documentId}")
     public String deleteById(@PathVariable("documentId")Long documentId,HttpServletRequest request){
         User user =(User) request.getSession().getAttribute("user");
-        fileService.deleteFile(documentId,user);
-        documentService.deleteDocument(documentId);
+        documentService.deleteDocumentAndFileAndComment(documentId,user);
         return "redirect:/admin/documentsIndex/1";
     }
 

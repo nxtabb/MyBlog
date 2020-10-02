@@ -28,7 +28,6 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    @Transactional
     public void deleteFile(Long documentId, User user) {
         //删除文件
         Document document = documentService.queryDocument(documentId);

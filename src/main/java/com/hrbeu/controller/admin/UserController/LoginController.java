@@ -23,10 +23,10 @@ public class LoginController {
     //登录
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ModelAndView login(@Param("username")String username,@Param("password")String password,HttpServletRequest request){
+        ModelAndView model = new ModelAndView();
         logger.info("====start====");
         long startTime = System.currentTimeMillis();
         User user = userService.checkUser(username, password);
-        ModelAndView model = new ModelAndView();
         if(user==null){
             model.addObject("errMsg","用户名不存在或密码错误");
             model.setViewName("admin/login");

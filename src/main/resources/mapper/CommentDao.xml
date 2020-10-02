@@ -45,4 +45,8 @@
     <select id="queryDocumentOfComment" parameterType="long" resultType="long">
         select document_id from tb_comment where comment_id=#{value }
     </select>
+
+    <update id="deleteCommentByDocumentId" parameterType="long">
+        update tb_comment set document_id = null where document_id = #{value }
+    </update>
 </mapper>

@@ -13,4 +13,5 @@ public interface CommentDao {
     Comment queryParentComment(Long parentId);
     void deleteComment(Long commentId);
     Long queryDocumentOfComment(Long commentId);
+    void deleteCommentByDocumentId(Long documentId);
 }

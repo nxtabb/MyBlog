@@ -2,6 +2,7 @@ package com.hrbeu.service.adminService;
 
 import com.hrbeu.pojo.Document;
 import com.hrbeu.pojo.Type;
+import com.hrbeu.pojo.User;
 
 import java.util.List;
 
@@ -22,4 +23,5 @@ public interface DocumentService {
     int queryDocumentCountByTagId(Long tagId);
     List<String> getTimeGroupByYearAndMonth();
     List<Document> findDocumentByTime(String time);
+    void deleteDocumentAndFileAndComment(Long documentId, User user);
 }
