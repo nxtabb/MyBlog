@@ -20,7 +20,7 @@
         delete from tb_tag where tag_id=#{value }
     </delete>
     <select id="tagCount" resultType="int">
-        select count(*) from tb_type
+        select count(*) from tb_tag
     </select>
     <select id="checkTag" parameterType="java.lang.String" resultType="int">
         select count(*) from tb_tag where tag_name = #{tagName}

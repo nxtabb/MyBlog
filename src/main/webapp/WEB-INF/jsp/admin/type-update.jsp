@@ -31,7 +31,7 @@
             <!--创建一个logo-->
             <a href="#"><h2 class="ui teal header item" id="index-btn">Liujie's Lab后台管理</h2></a>
             <!--菜单栏-->
-            <a href="<%=path%>/admin/documentsIndex/1" class="m-item item m-mobile-hide" ><i class="home icon"></i>博客</a>
+            <a href="<%=path%>/admin/documentsIndex/1" class="m-item item m-mobile-hide" ><i class="home icon"></i>文档</a>
             <a href="<%=path%>/admin/types/1" class="active m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
             <a href="<%=path%>/admin/tags/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <!--头像-->
@@ -64,7 +64,7 @@
     </div>
 
 </div>
-<!--博客内容-->
+<!--文档内容-->
 <div class="m-padded-tb-large m-container-small">
     <div class="ui container">
         <form class="ui form" action="<%=path%>/admin/types/updateType/${typeId}" method="post">
