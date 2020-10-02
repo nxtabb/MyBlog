@@ -28,7 +28,7 @@
         <!--创建一个menu-->
         <div class="ui inverted secondary stackable menu">
             <!--创建一个logo-->
-            <a href="#"><h2 class="ui teal header item" id="index-btn">Liujie's Lab后台管理</h2></a>
+            <a href="#"><h2 class="ui teal header item" id="index-btn">Liujie's Lab</h2></a>
             <!--菜单栏-->
             <a href="<%=path%>/" class="m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
             <a href="<%=path%>/types/-1/1" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
@@ -44,6 +44,22 @@
                     </div>
                 </form>
             </div>
+            <c:if test="${sessionScope.user==null}"><a href="<%=path%>/login" class="m-item item m-mobile-hide"><i class="user icon"></i>登录</a></c:if>
+            <c:if test="${sessionScope.user!=null}">
+                <!--头像-->
+                <div class="right m-item m-mobile-hide menu">
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img src="${sessionScope.user.image}" >
+                                ${sessionScope.user.nickname}
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="<%=path%>/logout" class="item">注销</a>
+                        </div>
+                    </div>
+                </div>
+            </c:if>
         </div>
     </div>
     <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
@@ -72,8 +88,10 @@
             <a href="<%=path%>/document/${document.documentId}"  class="item">
                 <span>
                 <i class="mini teal circle icon"></i>&nbsp;&nbsp;${document.title}
+                    <span>上传人：${document.user.nickname}</span>
                     <div class="ui teal basic left pointing label m-padded-mini"><fmt:formatDate value="${document.lastEditTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </div>
                 </span>
+
                 <div class="ui orange basic left pointing label m-padded-mini">
                     <c:if test="${document.flag==1}">原创</c:if>
                     <c:if test="${document.flag==2}">转载</c:if>
@@ -99,6 +117,9 @@
     $("#index-btn").click(function () {
         window.location.href='<%=path%>/';
 
+    });
+    $('.ui.dropdown').dropdown({
+        on:'hover'
     });
 
 </script>

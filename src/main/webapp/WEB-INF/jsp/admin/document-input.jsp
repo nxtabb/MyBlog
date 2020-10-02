@@ -141,7 +141,7 @@
             <div class="required field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">首图</label>
-                    <input type="text" name="firstPicture" placeholder="首图引用地址" value="https://image.baidu.com/search/detail?ct=503316480&z=undefined&tn=baiduimagedetail&ipn=d&word=heu%20tupian&step_word=&ie=utf-8&in=&cl=2&lm=-1&st=undefined&hd=undefined&latest=undefined&copyright=undefined&cs=1362119574,3866861349&os=3737734021,2348439849&simid=3469554099,330755155&pn=1&rn=1&di=50160&ln=798&fr=&fmq=1601558894711_R&fm=&ic=undefined&s=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&is=0,0&istype=0&ist=&jit=&bdtype=0&spn=0&pi=0&gsm=0&objurl=http%3A%2F%2Fimg.qqzhi.com%2Fupload%2Fimg_4_3523155721D4037630023_26.jpg&rpstart=0&rpnum=0&adpicid=0&force=undefined">
+                    <input type="text" name="firstPicture" placeholder="首图引用地址" value="http://qgxs8kk0x.hb-bkt.clouddn.com/timg.jpg">
                 </div>
             </div>
             <input type="hidden" name="saveorpublic" id="saveorpublic">

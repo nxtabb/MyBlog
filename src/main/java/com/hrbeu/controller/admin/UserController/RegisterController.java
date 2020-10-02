@@ -47,9 +47,8 @@ public class RegisterController {
             return "redirect:/admin";
         }else {
             HttpSession session = request.getSession();
-            User user1 = new User();
-            user1.setNickname(user.getNickname());
-            session.setAttribute("user",user1);
+            user.setPassword(null);
+            session.setAttribute("user",user);
             return "redirect:/admin/index";
         }
 

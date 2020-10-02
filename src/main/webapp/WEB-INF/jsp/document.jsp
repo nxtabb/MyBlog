@@ -33,7 +33,7 @@
         <!--创建一个menu-->
         <div class="ui inverted secondary stackable menu">
             <!--创建一个logo-->
-            <a href="#"><h2 class="ui teal header item" id="index-btn">Liujie's Lab后台管理</h2></a>
+            <a href="#"><h2 class="ui teal header item" id="index-btn">Liujie's Lab</h2></a>
             <!--菜单栏-->
             <a href="<%=path%>/" class="m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
             <a href="<%=path%>/types/-1/1" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
@@ -49,6 +49,22 @@
                     </div>
                 </form>
             </div>
+            <c:if test="${sessionScope.user==null}"><a href="<%=path%>/login" class="m-item item m-mobile-hide"><i class="user icon"></i>登录</a></c:if>
+            <c:if test="${sessionScope.user!=null}">
+                <!--头像-->
+                <div class="right m-item m-mobile-hide menu">
+                    <div class="ui dropdown item">
+                        <div class="text">
+                            <img src="${sessionScope.user.image}" >
+                                ${sessionScope.user.nickname}
+                        </div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a href="<%=path%>/logout" class="item">注销</a>
+                        </div>
+                    </div>
+                </div>
+            </c:if>
         </div>
     </div>
     <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
@@ -161,7 +177,7 @@
                                 <div class="content">
                                     <a class="ui author user icon"><i class="user icon"></i> ${comment.nickname}<c:if test="${comment.adminComment==1}"><div class="ui mini basic teal left pointing label m-padded-mini">管理员</div></c:if></a>
                                     <div class="metadata">
-                                        <span class="date"><fmt:formatDate value="${comment.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </span><c:if test="${sessionScope.user!=null&&comment.commnets.size()==0}"><a href="<%=path%>/deletecomment/${comment.commentId}">删除</a></c:if>
+                                        <span class="date"><fmt:formatDate value="${comment.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/><span>邮箱：${comment.email}</span> </span><c:if test="${sessionScope.user!=null&&comment.commnets.size()==0}"><a href="<%=path%>/deletecomment/${comment.commentId}">删除</a></c:if>
                                     </div>
                                     <div class="text">
                                         <h3>${comment.content}</h3>
@@ -176,10 +192,10 @@
                                     <div class="comment">
                                         <div class="content">
 
-                                            <a class="ui author user icon"><i class="user icon"></i> ${childcomment.nickname}<c:if test="${childcomment.adminComment==1}"><div class="ui mini basic teal left pointing label m-padded-mini">管理员</div></c:if></a>
+                                            <a class="ui author user icon"><i class="user icon"></i> ${childcomment.nickname}<c:if test="${childcomment.adminComment==1}"><div class="ui mini basic teal left pointing label m-padded-mini">管理员</div></c:if></a><span>&nbsp;邮箱：${childcomment.email}</span>
                                             <span class="m-teal">&nbsp;@${comment.nickname}</span><c:if test="${comment.adminComment==1}"><div class="ui mini basic teal left pointing label m-padded-mini">管理员</div></c:if></a>
                                             <div class="metadata">
-                                                <span class="date"><fmt:formatDate value="${childcomment.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </span><c:if test="${sessionScope.user!=null&&childcomment.commnets.size()==0}"><a href="<%=path%>/deletecomment/${childcomment.commentId}">删除</a></c:if>
+                                                <span class="date"><fmt:formatDate value="${childcomment.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>  </span><c:if test="${sessionScope.user!=null&&childcomment.commnets.size()==0}"><a href="<%=path%>/deletecomment/${childcomment.commentId}">删除</a></c:if>
                                             </div>
                                             <div class="text">
                                                     ${childcomment.content}
@@ -355,6 +371,9 @@
     $("#index-btn").click(function () {
         window.location.href='<%=path%>/';
 
+    });
+    $('.ui.dropdown').dropdown({
+        on:'hover'
     });
 </script>
 </body>

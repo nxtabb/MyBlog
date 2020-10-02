@@ -8,13 +8,16 @@ import com.hrbeu.service.CommentService;
 import com.hrbeu.service.LabDocumentService;
 import com.hrbeu.service.adminService.DocumentService;
 import com.hrbeu.service.adminService.FileService;
+import com.hrbeu.service.adminService.UserService;
 import com.hrbeu.utils.Md2Html;
 import com.hrbeu.utils.PageUtil;
 import com.hrbeu.utils.PathUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -33,6 +36,8 @@ public class FrontController {
     private FileService fileService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    UserService userService;
     @GetMapping("/")
     public String index(Model model){
         int pageIndex =1;
@@ -145,6 +150,32 @@ public class FrontController {
         model.addAttribute("commentList",commentList);
         return "document";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginCheck(@Param("username")String username, @Param("password")String password, HttpServletRequest request,Model model){
+        User user = userService.checkUser(username, password);
+        if(user==null){
+            model.addAttribute("errMsg","用户名不存在或密码错误");
+            return "login";
+        }else {
+            user.setPassword(null);
+            HttpSession session = request.getSession();
+            session.setAttribute("user",user);
+        }
+        return "redirect:/";
+    }
+
 
 
 

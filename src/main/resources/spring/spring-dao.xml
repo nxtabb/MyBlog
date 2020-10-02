@@ -9,11 +9,7 @@
     <!--jdbc的属性-->
     <context:property-placeholder location="classpath:db.properties"/>
     <!--数据库连接池的属性-->
-    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="jdbcUrl" value="${jdbc.url}"/>
-        <property name="driverClass" value="${jdbc.driver}"/>
-        <property name="user" value="${jdbc.user}"/>
-        <property name="password" value="${jdbc.password}"/>
+    <bean id="abstractDataSource" abstract="true" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <!--数据库连接池私有属性-->
         <property name="maxPoolSize" value="30"/>
         <property name="minPoolSize" value="5"/>
@@ -22,6 +18,18 @@
         <property name="autoCommitOnClose" value="false"/>
         <property name="acquireRetryAttempts" value="2"/>
     </bean>
+    <bean id="master" parent="abstractDataSource">
+        <property name="jdbcUrl" value="${jdbc.master.url}"/>
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="user" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <bean id="slave" parent="abstractDataSource">
+        <property name="jdbcUrl" value="${jdbc.slave.url}"/>
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="user" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
@@ -29,6 +37,24 @@
         <property name="mapperLocations" value="classpath*:mapper/*.xml"/>
     </bean>
 
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.hrbeu.dao"/>
+    </bean>
+    <!--配置动态数据源 tartgetDataSources就是路由数据源的名称-->
+    <bean id="dynamicDataSource" class="com.hrbeu.dao.split.DynamicDataSource">
+        <property name="targetDataSources">
+            <map>
+                <entry value-ref="master" key="master"/>
+                <entry value-ref="slave" key="slave"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+        <property name="targetDataSource">
+            <ref bean="dynamicDataSource"/>
+        </property>
+    </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <property name="basePackage" value="com.hrbeu.dao"/>

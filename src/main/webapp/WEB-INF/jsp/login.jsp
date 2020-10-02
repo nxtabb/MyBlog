@@ -33,10 +33,10 @@
                 <h2 class="ui teal image header">
                     <!--<img src="../../static/images/logo.png" class="image">-->
                     <div class="content">
-                        后台管理登录
+                        管理员登录
                     </div>
                 </h2>
-                <form class="ui large form" method="post" id="login-form" action="<%=path%>/admin/login">
+                <form class="ui large form" method="post" id="login-form" action="<%=path%>/login">
                     <div class="ui stacked segment">
                         <div class="required field">
                             <div class="ui left icon input">
@@ -53,9 +53,6 @@
                         <div class="ui fluid large teal submit button" id="login">登录</div>
                     </div>
                     <div class="ui error message"></div>
-                    <div class="ui message">
-                        New to us?<a href="<%=path%>/admin/register">Sign Up</a>
-                    </div>
                 </form>
                 <h1>${requestScope.errMsg}</h1>
             </div>
