@@ -22,7 +22,11 @@
     <link rel="stylesheet" href="<%=path%>/resources/lib/prism/prism.css">
     <link rel="stylesheet" href="<%=path%>/resources/lib/tocbot/tocbot.min.js">
     <link rel="stylesheet" href="<%=path%>/resources/css/me.css">
-
+    <style type="text/css">
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
 </head>
 
 <body>
@@ -134,7 +138,7 @@
             </h1>
             <br>
             <div id="content" class="typo typo-selection js-toc-content m-padded-lr-responsive m-padded-tb-large ">
-                ${contentHtml}
+                <p>${contentHtml}</p>
             </div>
             <!--文章标签-->
 

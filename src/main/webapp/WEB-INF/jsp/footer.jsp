@@ -17,7 +17,7 @@
             <div class="three wide column">
                 <div class="ui inverted link list">
                     <div class="item">
-                        <img src="http://localhost:8080/MyBlog/resources/images/wechat.png" class="ui rounded image" style="width: 150px">
+                        <img src="<%=path%>/resources/images/wechat.png" class="ui rounded image" style="width: 150px">
                     </div>
                 </div>
             </div>
