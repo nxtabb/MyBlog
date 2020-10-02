@@ -72,7 +72,7 @@
         <div class="ui success message">
             <i class="close icon"></i>
             <div class="header">提示：</div>
-            <p>建议上传一个压缩文件，里面存放代码、配置文件、环境等</p>
+            <p>上传代码、配置文件、环境、心得等文件</p>
         </div>
         <form class="ui form" action="<%=path%>/admin/documents/adddocument" method="post" id="document_form"  enctype="multipart/form-data">
             <!--输入标题-->

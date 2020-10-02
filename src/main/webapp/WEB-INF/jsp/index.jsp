@@ -151,14 +151,14 @@
                                 <i class="idea icon"></i>分类
                             </div>
                             <div class="right aligned column">
-                                <a href="#" target="_blank" class="">more <i class=" angle double right icon "></i></a>
+                                <a href="<%=path%>/types/-1/1"  class="">more <i class=" angle double right icon "></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="ui teal segment">
                         <div class="ui fluid vertical menu">
                             <c:forEach items="${typeCountList}" var="typeCount">
-                                <a href="#" class="item">${typeCount.typeName}
+                                <a href="<%=path%>/types/${typeCount.typeId}/1" class="item">${typeCount.typeName}
                                     <div class="ui teal basic left pointing label">${typeCount.count}</div>
                                 </a>
                             </c:forEach>
@@ -174,14 +174,14 @@
                                 <i class="tags icon"></i>标签
                             </div>
                             <div class="right aligned column">
-                                <a href="#" target="_blank" class="">more <i class=" angle double right icon "></i></a>
+                                <a href="<%=path%>/tags/-1/1"  class="">more <i class=" angle double right icon "></i></a>
                             </div>
                         </div>
                     </div>
                     <!--标签的具体内容-->
                     <div class="ui teal segment">
                         <c:forEach items="${tagCountList}" var="tag">
-                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">${tag.tagName}
+                        <a href="<%=path%>/tags/${tag.tagId}/1"  class="ui teal basic left pointing label m-margin-tb-tiny">${tag.tagName}
                             <div class="detail">${tag.count}</div>
                         </a>
                         </c:forEach>
@@ -197,7 +197,7 @@
                     <c:forEach items="${recommendDocumentList}" var="recommendDocument">
                         <!--最新推荐的具体内容-->
                         <div class="ui segment">
-                            <a href="#" target="_blank" class="m-black m-text-thin" >${recommendDocument.title}</a>
+                            <a href="<%=path%>/document/${recommendDocument.documentId}"  class="m-black m-text-thin" >${recommendDocument.title}</a>
                         </div>
                     </c:forEach>
                 </div>
