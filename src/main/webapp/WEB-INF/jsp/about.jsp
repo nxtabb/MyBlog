@@ -80,8 +80,8 @@
                 <div class="ui attached segment">
                     <div class="ui orange basic left pointing label m-margin-tb-tiny">编程</div>
                     <div class="ui orange basic left pointing label m-margin-tb-tiny">写作</div>
-                    <div class="ui orange basic left pointing label m-margin-tb-tiny">思考</div>
-                    <div class="ui orange basic left pointing label m-margin-tb-tiny">运动</div>
+                    <div class="ui orange basic left pointing label m-margin-tb-tiny">研究</div>
+                    <div class="ui orange basic left pointing label m-margin-tb-tiny">实践</div>
                 </div>
                 <!--第三行标签-->
                 <div class="ui attached segment">

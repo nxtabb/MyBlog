@@ -6,8 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%String path = request.getContextPath();%>
+
 <!--底部容器-->
-<footer class="ui inverted vertical segment m-padded-tb-massive">
+<footer class="ui inverted vertical segment m-padded-tb-massive " id="footer">
     <div class="ui center aligned container">
         <!--将页面分成16份-->
         <div class="ui inverted divided stackable grid">
