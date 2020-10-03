@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%String path=request.getContextPath();%>
-<%User user = (User)session.getAttribute("user");%>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
@@ -60,7 +59,7 @@
     <div class="ui container">
         <div class="ui success large message">
             <h2>Hi,</h2>
-            <p><%=user.getNickname()%>，欢迎登录</p>
+            <p>${sessionScope.user.nickname}，欢迎登录</p>
         </div>
         <img src="<%=path%>/resources/images/index.jpg" class="ui rounded bordered fluid image">
 

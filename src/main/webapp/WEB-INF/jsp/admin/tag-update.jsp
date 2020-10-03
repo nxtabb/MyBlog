@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false"%>
 <%String path = request.getContextPath();%>
-<%User user = (User)session.getAttribute("user");%>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -38,8 +37,8 @@
             <div class="right m-item m-mobile-hide menu">
                 <div class="ui dropdown item">
                     <div class="text">
-                        <img src="https://imglf5.lf127.net/img/MkQrTXB3T3JXVzZ3Wld6Y1FRNms5VUdYV0tUSDJhQ21IVzJwREtIa3VnVHhjdmdsenRRb0ZRPT0.jpg?imageView&thumbnail=1680x0&quality=96&stripmeta=0&type=jpg" >
-                        <%=user.getNickname()%>
+                        <img src="${sessionScope.user.image}" >
+                        ${sessionScope.user.nickname}
                     </div>
                     <i class="dropdown icon"></i>
                     <div class="menu">

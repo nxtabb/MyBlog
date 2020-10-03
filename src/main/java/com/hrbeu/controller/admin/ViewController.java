@@ -46,9 +46,5 @@ public class ViewController {
         return "admin/tag-input";
     }
 
-    @RequestMapping(value = "/admin/blogs")
-    public String documents(){
-        return "document";
-    }
 
 }

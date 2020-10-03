@@ -22,6 +22,7 @@
 
 <!--导航栏容器-->
 <nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small" >
+    <!--为了让logo更加靠右，因此将其放入container中-->
     <div class="ui container">
         <!--创建一个menu-->
         <div class="ui inverted secondary stackable menu">
@@ -52,13 +53,15 @@
     <div class="m-container-small m-padded-tb-massive">
         <div class="ui error message">
             <div class="ui container">
-                <h2>500</h2>
-                <p>服务器出现了错误</p>
+                <h2>400</h2>
+                <p>请求不支持</p>
             </div>
         </div>
     </div>
 
+    <!--底部容器-->
 </nav>
 <jsp:include page="../footer.jsp"/>
 </body>
 </html>
+

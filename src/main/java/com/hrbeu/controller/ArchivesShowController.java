@@ -5,6 +5,7 @@ import com.hrbeu.service.adminService.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.LinkedHashMap;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class ArchivesShowController {
     @Autowired
     private DocumentService documentService;
-    @RequestMapping("/archives")
+    @GetMapping("/archives")
     public String archives(Model model){
         List<String> timeList = documentService.getTimeGroupByYearAndMonth();
         Map<String,List<Document>> resultMap = new LinkedHashMap<>();
