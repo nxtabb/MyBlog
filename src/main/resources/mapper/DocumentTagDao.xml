@@ -5,7 +5,7 @@
 
 <mapper namespace="com.hrbeu.dao.adminDao.DocumentTagDao">
     <insert id="saveDocumentsAndTags">
-        insert into tb_document_tag(document_id,tag_id) values
+        insert ignore into tb_document_tag(document_id,tag_id) values
         <foreach collection="tagList" item="tag" separator=",">
         <if test="#{tag}!=null and #{tag.tagId}!=null">
             (#{document.documentId},#{tag.tagId})

@@ -130,13 +130,10 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public void updateDocument(Document document) {
-        List<Tag> tagList = document.getTagList();
         documentDao.updateDocument(document.getDocumentId(),document);
-        Long documentId = document.getDocumentId();
         document = documentDao.queryDetailedDocument(document.getDocumentId());
-        document.setDocumentId(documentId);
-        documentTagDao.deleteById(documentId);
-        documentTagDao.saveDocumentsAndTags(document,tagList);
+        documentTagDao.deleteById(document.getDocumentId());
+        documentTagDao.saveDocumentsAndTags(document,document.getTagList());
     }
 
     @Override
