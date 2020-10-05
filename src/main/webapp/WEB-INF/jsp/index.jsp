@@ -112,7 +112,7 @@
                                             </div>
                                         </div>
                                         <div class="right aligned five wide column">
-                                            <a href="<%=path%>/types/${document.type.typeId}/1"class="ui label teal basic m-padded-mini" target="_blank">
+                                            <a href="<%=path%>/types/${document.type.typeId}/1" class="ui label teal basic m-padded-mini" target="_blank">
                                                 ${document.type.typeName}
                                             </a>
                                         </div>

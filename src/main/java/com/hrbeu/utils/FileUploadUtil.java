@@ -24,7 +24,6 @@ public class FileUploadUtil {
             MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
             List<MultipartFile> fileList = multipartHttpServletRequest.getFiles("codefile");
             for(MultipartFile file:fileList){
-
                 String fileName = file.getOriginalFilename();
                 if (fileName != null&&!fileName.equals("")) {
                     String fileWithoutExtensionName = fileName.substring(0,fileName.lastIndexOf("."));

@@ -51,9 +51,7 @@
         </property>
     </bean>
     <bean id="dataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
-        <property name="targetDataSource">
-            <ref bean="dynamicDataSource"/>
-        </property>
+        <property name="targetDataSource" ref="dynamicDataSource"/>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>

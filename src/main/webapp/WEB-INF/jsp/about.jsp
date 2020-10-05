@@ -78,17 +78,16 @@
                 </div>
                 <!--第二行-->
                 <div class="ui attached segment">
-                    <div class="ui orange basic left pointing label m-margin-tb-tiny">编程</div>
-                    <div class="ui orange basic left pointing label m-margin-tb-tiny">写作</div>
-                    <div class="ui orange basic left pointing label m-margin-tb-tiny">研究</div>
-                    <div class="ui orange basic left pointing label m-margin-tb-tiny">实践</div>
+                    <div class="ui orange basic left pointing label m-margin-tb-tiny">人工智能</div>
+                    <div class="ui orange basic left pointing label m-margin-tb-tiny">数据与知识工程</div>
+                    <div class="ui orange basic left pointing label m-margin-tb-tiny">软件开发技术</div>
                 </div>
                 <!--第三行标签-->
                 <div class="ui attached segment">
-                    <div class="ui teal basic left pointing label m-margin-tb-tiny">java</div>
-                    <div class="ui teal basic left pointing label m-margin-tb-tiny">sql</div>
-                    <div class="ui teal basic left pointing label m-margin-tb-tiny">redis</div>
-                    <div class="ui teal basic left pointing label m-margin-tb-tiny">html</div>
+                    <div class="ui teal basic left pointing label m-margin-tb-tiny">数据库原理</div>
+                    <div class="ui teal basic left pointing label m-margin-tb-tiny">数据库课程设计</div>
+                    <div class="ui teal basic left pointing label m-margin-tb-tiny">计算机思维基础</div>
+                    <div class="ui teal basic left pointing label m-margin-tb-tiny">高级人工智能</div>
                     <div class="ui teal basic left pointing label m-margin-tb-tiny">python</div>
                     <div class="ui teal basic left pointing label m-margin-tb-tiny">...</div>
                 </div>

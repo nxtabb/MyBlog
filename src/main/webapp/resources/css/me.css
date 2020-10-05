@@ -10,6 +10,8 @@
 
 body{
     background: url("../images/geometric-leaves.png");
+    /*background-size:100% 100%;
+    background-attachment: fixed;*/
 }
 .m-fixed{
     position:  fixed !important;

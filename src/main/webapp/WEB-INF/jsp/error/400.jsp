@@ -33,7 +33,7 @@
             <a href="<%=path%>/types/-1/1" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
             <a href="<%=path%>/tags/-1/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <a href="<%=path%>/archives" class="m-item item m-mobile-hide"><i class="tags icon"></i>归档</a>
-            <a href="<%=path%>/about" class="active m-item item m-mobile-hide"><i class="info icon"></i>关于我们</a>
+            <a href="<%=path%>/about" class="m-item item m-mobile-hide"><i class="info icon"></i>关于我们</a>
             <!--右侧搜索框-->
             <div class="right item m-mobile-hide">
                 <form action="<%=path%>/search/1" method="post" target="_blank" name="search">

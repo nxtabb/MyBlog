@@ -22,11 +22,11 @@
                 </div>
             </div>
             <div class="three wide column">
-                <h4 class="ui inverted header">最新博客</h4>
+                <h4 class="ui inverted header">相关搜索</h4>
                 <div class="ui inverted link list">
-                    <a href="#" class="item">用户故事</a>
-                    <a href="#" class="item">java教程大全</a>
-                    <a href="#" class="item">springboot是什么</a>
+                    <a href="http://www.hrbeu.edu.cn/" class="item">哈尔滨工程大学</a>
+                    <a href="http://cstc.hrbeu.edu.cn/" class="item">哈尔滨工程大学计算机科学与技术学院</a>
+                    <a href="http://homepage.hrbeu.edu.cn/web/liujie1" class="item">教师主页</a>
                 </div>
             </div>
             <div class="three wide column">
