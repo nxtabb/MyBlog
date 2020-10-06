@@ -15,10 +15,6 @@
   </filter-mapping>
   <filter-mapping>
     <filter-name>LoginFilter</filter-name>
-    <url-pattern>/admin/blogs</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>LoginFilter</filter-name>
     <url-pattern>/admin/types/*</url-pattern>
   </filter-mapping>
   <filter-mapping>
@@ -50,10 +46,10 @@
     <error-code>404</error-code>
     <location>/WEB-INF/jsp/error/404.jsp</location>
   </error-page>
-<!--  <error-page>-->
-<!--    <error-code>500</error-code>-->
-<!--    <location>/WEB-INF/jsp/error/500.jsp</location>-->
-<!--  </error-page>-->
+  <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/jsp/error/500.jsp</location>
+  </error-page>
   <error-page>
     <error-code>400</error-code>
     <location>/WEB-INF/jsp/error/400.jsp</location>
