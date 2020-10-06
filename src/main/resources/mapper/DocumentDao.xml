@@ -252,20 +252,21 @@
 
     <select id="queryDocumentByTypeId" resultMap="mostDetailDocument">
         select * from tb_document doc,tb_user user,tb_type type,tb_document_tag tag,tb_tag tbtag where doc.type_id = type.type_id
-        and doc.document_id = tag.document_id and doc.user_id = user.user_id and tag.tag_id = tbtag.tag_id
+        and doc.document_id = tag.document_id and doc.user_id = user.user_id and tag.tag_id = tbtag.tag_id and doc.published=1
         and doc.type_id = #{typeId} LIMIT #{documentIndex},#{pageSize}
     </select>
     <select id="queryDocumentCountByTypeId" parameterType="long" resultType="int">
-        select count(*) from tb_document where type_id = #{value }
+        select count(*) from tb_document where type_id = #{value } and published=1
     </select>
 
     <select id="queryDocumentByTagId" resultMap="mostDetailDocument">
         select * from tb_document doc,tb_user user,tb_type type,tb_document_tag tag,tb_tag tbtag where doc.type_id = type.type_id
-        and doc.document_id = tag.document_id and doc.user_id = user.user_id and tag.tag_id = tbtag.tag_id
+        and doc.document_id = tag.document_id and doc.user_id = user.user_id and tag.tag_id = tbtag.tag_id and doc.published=1
         and tag.tag_id = #{tagId} LIMIT #{documentIndex},#{pageSize}
     </select>
     <select id="queryDocumentCountByTagId" parameterType="long" resultType="int">
-        select count(document_id) from tb_document_tag where tag_id = #{value }
+        select count(tbtag.document_id) from tb_document_tag tbtag inner join tb_document doc on tbtag.document_id = doc.document_id
+        where tbtag.tag_id = #{value } and doc.published=1
     </select>
 
     <select id="getTimeGroupByYearAndMonth" resultType="string">
