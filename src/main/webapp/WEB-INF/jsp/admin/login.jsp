@@ -54,9 +54,10 @@
                     </div>
                     <div class="ui error message"></div>
                     <div class="ui message">
-                        New to us?<a href="<%=path%>/admin/register">Sign Up</a>
+                        New to us?<a href="<%=path%>/admin/register">注册</a>
                     </div>
                 </form>
+                <h3>2020-2021 © 哈尔滨工程工程大学 - All Rights Reserved.</h3>
                 <h1>${requestScope.errMsg}</h1>
             </div>
         </div>

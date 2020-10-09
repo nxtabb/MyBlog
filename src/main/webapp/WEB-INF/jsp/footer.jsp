@@ -46,7 +46,7 @@
 
         </div>
         <div class="ui inverted section divider"></div>
-        <p class="m-text-thin m-text-spaced">Copyright(C)2020-2021 Designed by NingXiTong</p>
+        <p class="m-text-thin m-text-spaced">2020-2021 © 哈尔滨工程工程大学 - All Rights Reserved.</p>
 
     </div>
 </footer>

@@ -38,7 +38,7 @@ public class FrontController {
     private CommentService commentService;
     @Autowired
     UserService userService;
-    @GetMapping("/")
+    @GetMapping("/plt")
     public String index(Model model){
         int pageIndex =1;
         int pageSize = 5;
@@ -59,9 +59,9 @@ public class FrontController {
         model.addAttribute("prePage",pageInfo.get("prePage"));
         model.addAttribute("documentList",documentList);
         model.addAttribute("maxCount",maxCount);
-        return "index";
+        return "plt-index";
     }
-    @GetMapping("/{pageIndex}")
+    @GetMapping("/plt/{pageIndex}")
     public String indexInPage(@PathVariable("pageIndex")int pageIndex, Model model){
         int pageSize = 5;
         List<Document> documentList = labDocumentService.getPublishedDocument(pageIndex,pageSize);
@@ -81,7 +81,7 @@ public class FrontController {
         model.addAttribute("prePage",pageInfo.get("prePage"));
         model.addAttribute("documentList",documentList);
         model.addAttribute("maxCount",maxCount);
-        return "index";
+        return "plt-index";
     }
 
     @RequestMapping("/search/{pageIndex}")
@@ -173,8 +173,29 @@ public class FrontController {
             HttpSession session = request.getSession();
             session.setAttribute("user",user);
         }
-        return "redirect:/";
+        return "redirect:/plt";
     }
+
+    @GetMapping("/")
+    public String indexLogin(){
+        return "index";
+    }
+
+
+    @PostMapping("/indexLogin")
+    public String indexLogin(@Param("username")String username, @Param("password")String password, HttpServletRequest request,Model model){
+        User user = userService.checkUser(username, password);
+        if(user==null){
+            model.addAttribute("errMsg","用户名不存在或密码错误");
+            return "index";
+        }else {
+            user.setPassword(null);
+            HttpSession session = request.getSession();
+            session.setAttribute("user",user);
+        }
+        return "redirect:/plt";
+    }
+
 
 
 

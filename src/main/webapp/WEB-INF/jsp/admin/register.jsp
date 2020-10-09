@@ -34,7 +34,7 @@
                 <h2 class="ui teal image header">
                     <!--<img src="../../static/images/logo.png" class="image">-->
                     <div class="content">
-                        注册
+                        管理员注册
                     </div>
                 </h2>
                 <form class="ui large form" method="post" id="register-form" action="<%=path%>/admin/register">
@@ -76,6 +76,7 @@
                         <div class="ui fluid large teal submit button" id="register">注册</div>
                     </div>
                 </form>
+                <h3>2020-2021 © 哈尔滨工程工程大学 - All Rights Reserved.</h3>
             </div>
         </div>
     </div>

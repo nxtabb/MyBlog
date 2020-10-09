@@ -33,7 +33,7 @@
                 <h2 class="ui teal image header">
                     <!--<img src="../../static/images/logo.png" class="image">-->
                     <div class="content">
-                        管理员登录
+                        用户登录
                     </div>
                 </h2>
                 <form class="ui large form" method="post" id="login-form" action="<%=path%>/login">
@@ -54,6 +54,7 @@
                     </div>
                     <div class="ui error message"></div>
                 </form>
+                <h3>2020-2021 © 哈尔滨工程工程大学 - All Rights Reserved.</h3>
                 <h1>${requestScope.errMsg}</h1>
             </div>
         </div>

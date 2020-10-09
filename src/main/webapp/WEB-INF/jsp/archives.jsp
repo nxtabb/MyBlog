@@ -30,7 +30,7 @@
             <!--创建一个logo-->
             <a href="#"><h2 class="ui teal header item" id="index-btn">Liujie's Lab</h2></a>
             <!--菜单栏-->
-            <a href="<%=path%>/" class="m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
+            <a href="<%=path%>/plt" class="m-item item m-mobile-hide" ><i class="home icon"></i>首页</a>
             <a href="<%=path%>/types/-1/1" class="m-item item m-mobile-hide"><i class="idea icon"></i> 分类</a>
             <a href="<%=path%>/tags/-1/1" class="m-item item m-mobile-hide"><i class="tags icon"></i>标签</a>
             <a href="<%=path%>/archives" class="active m-item item m-mobile-hide"><i class="tags icon"></i>归档</a>
