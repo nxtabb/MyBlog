@@ -87,7 +87,7 @@
         }
     })
     $("#guest").click(function () {
-        window.location.href='<%=path%>/plt'
+        window.location.href='<%=path%>/plt?guest=1'
 
     })
 </script>

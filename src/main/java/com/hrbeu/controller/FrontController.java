@@ -39,7 +39,12 @@ public class FrontController {
     @Autowired
     UserService userService;
     @GetMapping("/plt")
-    public String index(Model model){
+    public String index(Model model,HttpServletRequest request){
+        String guest = request.getParameter("guest");
+        if(guest!=null&&guest.equals("1")){
+            HttpSession session = request.getSession();
+            session.removeAttribute("user");
+        }
         int pageIndex =1;
         int pageSize = 5;
         List<Document> documentList = labDocumentService.getPublishedDocument(pageIndex,pageSize);
@@ -62,7 +67,12 @@ public class FrontController {
         return "plt-index";
     }
     @GetMapping("/plt/{pageIndex}")
-    public String indexInPage(@PathVariable("pageIndex")int pageIndex, Model model){
+    public String indexInPage(@PathVariable("pageIndex")int pageIndex, Model model,HttpServletRequest request){
+        String guest = request.getParameter("guest");
+        if(guest!=null&&guest.equals("1")){
+            HttpSession session = request.getSession();
+            session.removeAttribute("user");
+        }
         int pageSize = 5;
         List<Document> documentList = labDocumentService.getPublishedDocument(pageIndex,pageSize);
         int maxCount = labDocumentService.getPublishedDocumentCount();
