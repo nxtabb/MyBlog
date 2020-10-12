@@ -53,7 +53,7 @@
         <div class="ui error message">
             <div class="ui container">
                 <h2>500</h2>
-                <p>服务器出现了错误</p>
+                <p>服务器出现了错误，请刷新重试或联系管理员</p>
             </div>
         </div>
     </div>

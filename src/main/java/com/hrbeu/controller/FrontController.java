@@ -158,8 +158,14 @@ public class FrontController {
     }
 
     @GetMapping("/login")
-    public String login(){
-        return "login";
+    public String login(HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("user");
+        if(user!=null){
+            return "redirect:/plt";
+        }
+        else {
+            return "login";
+        }
     }
 
     @PostMapping("/login")
@@ -177,13 +183,20 @@ public class FrontController {
     }
 
     @GetMapping("/")
-    public String indexLogin(){
-        return "index";
+    public String indexLogin(HttpServletRequest request){
+        User user = (User)request.getSession().getAttribute("user");
+        if(user!=null){
+            return "redirect:/plt";
+        }
+        else {
+            return "index";
+        }
     }
 
 
     @PostMapping("/indexLogin")
     public String indexLogin(@Param("username")String username, @Param("password")String password, HttpServletRequest request,Model model){
+
         User user = userService.checkUser(username, password);
         if(user==null){
             model.addAttribute("errMsg","用户名不存在或密码错误");
@@ -196,9 +209,10 @@ public class FrontController {
         return "redirect:/plt";
     }
 
+    @RequestMapping("/files/deleteFile/{documentId}/{fileId}")
+    public String onlyDeleteFile(@PathVariable("documentId")Long documentId,@PathVariable("fileId")Long fileId, HttpServletRequest request){
+        fileService.onlydeleteFile(fileId);
+        return "redirect:/document/"+documentId;
 
-
-
-
-
+    }
 }

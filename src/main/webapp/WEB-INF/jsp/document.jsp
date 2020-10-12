@@ -109,7 +109,7 @@
                 <th>附属文件大小(MB)</th>
                 <th>文档上传时间</th>
                 <th>最后更新时间</th>
-                <th>操作</th>
+                <c:if test="${sessionScope.user!=null}"><th>操作</th></c:if>
             </tr>
             </thead>
             <tbody>
@@ -121,7 +121,8 @@
                     <td><fmt:formatDate value="${file.file.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
                     <td><fmt:formatDate value="${file.file.lastEditTime}" pattern="yyyy-MM-dd HH:mm:ss"/> </td>
                     <td>
-                        <a href="<%=path%>/admin/files/downloadFile/${file.file.fileId}" class="ui mini teal button">下载</a>
+                        <c:if test="${sessionScope.user!=null}"><a href="<%=path%>/admin/files/downloadFile/${file.file.fileId}" class="ui mini teal button">下载</a></c:if>
+                        <c:if test="${sessionScope.user.userId==document.user.userId}"><a href="<%=path%>/files/deleteFile/${document.documentId}/${file.file.fileId}" class="ui mini red button">删除</a></c:if>
                     </td>
                 </tr>
                 </c:forEach>
