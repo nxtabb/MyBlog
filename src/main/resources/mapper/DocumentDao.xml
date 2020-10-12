@@ -75,6 +75,9 @@
         <if test="document!=null and document.title!=null">
             and doc.title like '%${document.title}%'
         </if>
+        <if test="document!=null and document.published!=null">
+            and doc.published = #{document.published}
+        </if>
         <if test="document!=null and document.type!=null and document.type.typeId!=null">
             and doc.type_id = #{document.type.typeId}
         </if>
@@ -270,7 +273,7 @@
     </select>
 
     <select id="getTimeGroupByYearAndMonth" resultType="string">
-        select DATE_FORMAT(doc.last_edit_time,'%Y-%M') as year from tb_document doc GROUP BY year ORDER BY year desc;
+        select DATE_FORMAT(doc.last_edit_time,'%Y-%M') as year from tb_document doc where doc.published=1 GROUP BY year ORDER BY year desc;
     </select>
 
     <select id="findDocumentByTime" parameterType="string" resultMap="mostDetailDocument">
@@ -282,6 +285,7 @@
         tb_tag tbtag
         where
         doc.type_id = type.type_id and
+        doc.published = 1 and
         doc.document_id = tag.document_id and
         doc.user_id = user.user_id and
         tag.tag_id = tbtag.tag_id and

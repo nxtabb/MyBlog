@@ -26,7 +26,9 @@ public class ArchivesShowController {
 
         }
         model.addAttribute("resultMap",resultMap);
-        int count = documentService.documentCount(null);
+        Document document = new Document();
+        document.setPublished(1);
+        int count = documentService.documentCount(document);
         model.addAttribute("count",count);
         return "archives";
     }
